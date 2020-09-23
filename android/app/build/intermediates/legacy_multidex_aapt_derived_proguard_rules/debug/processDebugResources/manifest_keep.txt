@@ -1,0 +1,4 @@
+# Referenced at C:\Users\itsupport.lth\Desktop\Ajinkya\Projects\VChains\android\app\build\intermediates\merged_manifests\debug\AndroidManifest.xml:52
+-keep class androidx.core.app.CoreComponentFactory { <init>(); }
+# Referenced at C:\Users\itsupport.lth\Desktop\Ajinkya\Projects\VChains\android\app\build\intermediates\merged_manifests\debug\AndroidManifest.xml:52
+-keep class com.vchains.MainApplication { <init>(); }

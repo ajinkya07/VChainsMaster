@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "522647406488",
+    "firebase_url": "https://musk-f02b4.firebaseio.com",
+    "project_id": "musk-f02b4",
+    "storage_bucket": "musk-f02b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522647406488:android:1b8807bf065f2b9977cded",
+        "android_client_info": {
+          "package_name": "com.skychains"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq8g1nVXyanzA3r-oYXZF6AjlJI1-CjNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522647406488:android:c29db32e58ca0a8b77cded",
+        "android_client_info": {
+          "package_name": "com.vchains"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq8g1nVXyanzA3r-oYXZF6AjlJI1-CjNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
