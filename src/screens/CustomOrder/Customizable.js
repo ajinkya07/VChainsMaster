@@ -83,6 +83,16 @@ class Customizable extends Component {
     this.remarkRef = React.createRef();
   }
 
+  componentDidMount = async ()=>{
+    const{allParameterData} = this.props
+
+    if(allParameterData && allParameterData.melting){
+      this.setState({
+        karatValue:allParameterData.melting[0].id
+      })
+    }
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     const {successCustomOrderVersion, errorCustomOrderVersion, 
       successAllParameterVersion,errorAllParamaterVersion
@@ -121,7 +131,7 @@ class Customizable extends Component {
 
   async componentDidUpdate(prevProps, prevState) {
     
-    const {customOrderData} = this.props;
+    const {customOrderData,allParameterData} = this.props;
 
     if (this.state.successCustomOrderVersion > prevState.successCustomOrderVersion ) {
       if (customOrderData.ack == '1') {
@@ -146,6 +156,12 @@ class Customizable extends Component {
     }
     if (this.state.errorCustomOrderVersion > prevState.errorCustomOrderVersion) {
       this.showToast(this.props.errorMsg, 'danger');
+    }
+    if (this.state.successAllParameterVersion > prevState.successAllParameterVersion) {
+      let all = allParameterData && allParameterData.melting
+      // this.setState({
+      //   karatValue:all[0].id
+      // })
     }
   }
 
@@ -281,6 +297,7 @@ class Customizable extends Component {
       date,
     } = this.state;
 
+    
     var timeStamp = new Date().getTime() + 10 * 24 * 60 * 60 * 1000;
     var timeStampDate = moment(
       new Date(timeStamp).toISOString().slice(0, 10),
@@ -356,7 +373,6 @@ class Customizable extends Component {
     const{allParameterData} = this.props
 
     let list = allParameterData && allParameterData.melting
-
     return (
       <View>
         <Picker

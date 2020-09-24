@@ -253,3 +253,7 @@ export const ALL_PARAMETER_SUCCESS = "allParameterSuccess";
 export const ALL_PARAMETER_ERROR = "allParameterError";
 export const ALL_PARAMETER_RESET_REDUCER = "allParameterResetReducer";
 
+export const CUSTOM_ORDER_DATA = "accountCustomData";
+export const CUSTOM_ORDER_DATA_SUCCESS = "accountCustomDataSuccess";
+export const CUSTOM_ORDER_DATA_ERROR = "accountCustomDataError";
+export const CUSTOM_ORDER_DATA_RESET_REDUCER = "accountCustomDataResetReducer";

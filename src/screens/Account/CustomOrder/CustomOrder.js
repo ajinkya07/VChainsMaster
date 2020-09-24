@@ -6,7 +6,7 @@ import {
   ScrollView,
   Image,
   Platform,
-  SafeAreaView,
+  SafeAreaView,ActivityIndicator
 } from 'react-native';
 import _CustomHeader from '@customHeader/_CustomHeader'
 import {
@@ -14,24 +14,205 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { color } from '@values/colors';
+import {urls} from '@api/urls';
+import {connect} from 'react-redux';
+import {getCustomOrderList} from '@accountCustomOrder/CustomOrderAction';
+import {Toast} from 'native-base'
+import _Text from '@text/_Text';
+import Theme from '../../../values/Theme';
+import IconPack from '@login/IconPack';
 
 
-const CustomOrderDetails = () => {
-  return (
+class CustomOrder extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      successCustomVersion: 0,
+      errorCustomVersion: 0,
+      };
+      userId = global.userId;
+
+  }
+
+  componentDidMount = async () => {
+    const data = new FormData();
+    data.append('user_id', userId);
+    data.append('user_type', 'client');
+
+    await this.props.getCustomOrderList(data);
+};
+
+static getDerivedStateFromProps(nextProps, prevState) {
+    const { successCustomVersion, errorCustomVersion } = nextProps;
+
+    let newState = null;
+
+    if (successCustomVersion > prevState.successCustomVersion) {
+        newState = {
+            ...newState,
+            successCustomVersion: nextProps.successCustomVersion,
+        };
+    }
+    if (errorCustomVersion > prevState.errorCustomVersion) {
+        newState = {
+            ...newState,
+            errorCustomVersion: nextProps.errorCustomVersion,
+        };
+    }
+
+    return newState;
+}
+
+async componentDidUpdate(prevProps, prevState) {
+    const { customOrderData } = this.props;
+
+    if (this.state.successCustomVersion > prevState.successCustomVersion) {
+
+    }
+    if (this.state.errorCustomVersion > prevState.errorCustomVersion) {
+        Toast.show({
+            text: this.props.errorMsg,
+            duration: 2500,
+        });
+    }
+}
+
+  
+
+ customOrderDetails = (item) => {
+  const {customOrderData } = this.props
+
+   let url2 = urls.imageUrl + customOrderData.path + item.image_name
+
+
+   return (
     <View style={styles.viewContainer}>
       <View style={styles.imageView}>
         <Image
           style={styles.imageStyle}
-          source={{
-            uri:
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSHnx2IxXolP5b4-ZWmOhi6JgsAJDHH7Y1fnw&usqp=CAU',
-          }}
-          defaultSource={require('../../../assets/image/default.png')}
+          source={{ uri: url2 }}
+          defaultSource={IconPack.APP_LOGO}
         />
       </View>
-      <View>
         <View style={styles.contentRowStyle}>
-          <Text>gross wt:</Text>
+
+          <View style={{ flexDirection: 'column' }}>
+            {item.label.map(
+              (key, i) => {
+                return (
+                  <Text style={{
+                      marginTop: 5,
+                      ...Theme.ffLatoRegular15,
+                      
+                    }}>
+                    {key.replace('_', ' ')}
+                  </Text>
+                );
+              },
+            )}
+          </View>
+
+         <View style={{ flexDirection: 'column' }}>
+           {item.value.map(
+             (value, j) => {
+               return (
+                 <Text
+                   style={{
+                     marginTop: 5,
+                     ...Theme.ffLatoRegular15,
+                     color: '#000000',
+                     textAlign: 'right',
+                   }}>
+                   {value ? value : '-'}
+                 </Text>
+               );
+             },
+           )}
+         </View>
+
+      </View>
+      <View style={styles.bottomLine} />
+
+    </View>
+  );
+};
+
+noDataFound = msg => {
+  return (
+    <View
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: hp(90),
+      }}>
+      <Image
+        source={require('../../../assets/gif/noData.gif')}
+        style={{height: hp(20), width: hp(20),}}
+      />
+      <Text style={{fontSize: 18, fontWeight: '400', textAlign: 'center',marginTop:10}}>
+        {msg}
+      </Text>
+    </View>
+  );
+};
+
+renderLoader = () => {
+  return (
+    <View
+      style={{
+        position: 'absolute',
+        height: hp(100),
+        width: wp(100),
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      <ActivityIndicator size="large" color={color.brandColor} />
+    </View>
+  );
+};
+
+
+  render() {
+    const {customOrderData } = this.props
+    const data = customOrderData && customOrderData.data && customOrderData.data.data_list
+
+
+    return (
+      <SafeAreaView style={{ flex: 1,backgroundColor: '#f3fcf9' }}>
+        <_CustomHeader
+          Title='Custom Order History'
+         // RightBtnIcon1={require('../../../assets/image/BlueIcons/Search.png')}
+          RightBtnIcon2={require('../../../assets/image/BlueIcons/Notification-White.png')}
+          LeftBtnPress={() => this.props.navigation.goBack()}
+          //RightBtnPressOne={()=> this.props.navigation.navigate('SearchScreen')}
+          RightBtnPressTwo={()=> this.props.navigation.navigate('Notification')}
+          rightIconHeight2={hp(3.5)}
+          LeftBtnPress={() => this.props.navigation.goBack()}
+          backgroundColor={color.green}
+
+        />
+        {data && data.length > 0 &&
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {data.map((item, i) => {
+              return  this.customOrderDetails(item)}
+              )
+            }
+          </ScrollView>
+        }
+        {!this.props.isFetching && customOrderData.length == 0
+          ? this.noDataFound(this.props.errorMsg)
+          : null}
+
+        {this.props.isFetching ? this.renderLoader() : null}
+
+      </SafeAreaView>
+
+    );
+  }
+}
+
+{/* 
+<Text>gross wt:</Text>
           <Text>24</Text>
         </View>
         <View style={styles.contentRowStyle}>
@@ -73,44 +254,24 @@ const CustomOrderDetails = () => {
         <View style={styles.contentRowStyle}>
           <Text>remark:</Text>
           <Text>REDISH YELLOW</Text>
-        </View>
-        <View style={styles.bottomLine} />
-      </View>
-    </View>
-  );
-};
-export default class CustomOrder extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+        </View> */}
 
-  
 
-  render() {
-    return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <_CustomHeader
-          Title='Custom Order History'
-         // RightBtnIcon1={require('../../../assets/image/BlueIcons/Search.png')}
-          RightBtnIcon2={require('../../../assets/image/BlueIcons/Notification-White.png')}
-          LeftBtnPress={() => this.props.navigation.goBack()}
-          //RightBtnPressOne={()=> this.props.navigation.navigate('SearchScreen')}
-          RightBtnPressTwo={()=> this.props.navigation.navigate('Notification')}
-          rightIconHeight2={hp(3.5)}
-          LeftBtnPress={() => this.props.navigation.goBack()}
-          backgroundColor={color.green}
+function mapStateToProps(state) {
+  return {
+      isFetching: state.accountCustomOrderReducer.isFetching,
+      error: state.accountCustomOrderReducer.error,
+      errorMsg: state.accountCustomOrderReducer.errorMsg,
+      successCustomVersion: state.accountCustomOrderReducer.successCustomVersion,
+      errorCustomVersion: state.accountCustomOrderReducer.errorCustomVersion,
+      customOrderData: state.accountCustomOrderReducer.customOrderData,
 
-        />
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <CustomOrderDetails />
-          <CustomOrderDetails />
-        </ScrollView>
-      </SafeAreaView>
-
-    );
-  }
+  };
 }
+
+export default connect(mapStateToProps, { getCustomOrderList })(CustomOrder);
+
+
 const styles = StyleSheet.create({
   viewContainer: {
     marginHorizontal: 5,
@@ -124,13 +285,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bottomLine: {
-    borderBottomColor: 'gray',
+    borderBottomColor: '#DDDDDD',
     borderBottomWidth: 0.6,
     marginVertical: 10,
+    marginHorizontal:10
+
   },
   contentRowStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: Platform.OS === 'ios' ? 4 : 2,
+    marginHorizontal:10
   },
 });

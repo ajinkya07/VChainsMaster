@@ -20,7 +20,7 @@ class App extends React.Component {
 
 
   componentDidMount = async () => {
-    //  console.disableYellowBox = true;
+    // console.disableYellowBox = true;
      SplashScreen.hide()
 
     await this.checkPermission();
@@ -44,7 +44,7 @@ class App extends React.Component {
   getFcmToken = async () => {
     const fcmToken = await firebase.messaging().getToken();
     if (fcmToken) {
-      console.warn("fcmToken", fcmToken);
+      //console.warn("fcmToken", fcmToken);
     } else {
     }
   }
