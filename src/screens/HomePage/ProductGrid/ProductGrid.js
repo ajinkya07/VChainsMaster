@@ -585,11 +585,12 @@ class ProductGrid extends Component {
          
           <View style={gridItemDesign}>
             <TouchableOpacity
+            style={{width:'100%'}}
               onPress={() => isSelectPressed ? item.quantity > 0 ? this.showAlreadyToast() : this.selectProduct(item, item.product_inventory_id): 
                 this.props.navigation.navigate('ProductDetails', {productItemDetails: item,})}
                onLongPress={() => this.showProductImageModal(item)}>
               <Image
-                resizeMode={'stretch'}
+                //resizeMode={'stretch'}
                 style={gridImage}
                 defaultSource={IconPack.APP_LOGO}
                 source={{ uri: url + item.image_name }}
@@ -856,7 +857,6 @@ showAlreadyToast = () =>{
           item => selectedProductIds[i] == item.product_inventory_id
         );
     
-        console.warn("dd",dd);
         this.state.gridData[dd].isSelect = false;
 
       }
@@ -917,7 +917,6 @@ showAlreadyToast = () =>{
         i => selectedProductIds[j] == i.product_inventory_id
       );
   
-      console.warn("cc",cc);
       this.state.gridData[cc].isSelect = false;
 
     }

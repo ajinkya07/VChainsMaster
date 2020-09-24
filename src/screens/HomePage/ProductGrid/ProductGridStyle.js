@@ -66,8 +66,9 @@ export default {
   },
   gridImage: {
     height: hp(18),
-    width: wp(45),
-    top: 1,
+    // width: wp(45),
+    width:null,
+    // top: 1,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     borderRadius: 15,

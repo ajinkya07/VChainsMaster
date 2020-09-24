@@ -206,7 +206,7 @@ export default {
       },
       android: {
         // flex: 1,
-        borderRadius: 6,
+        borderRadius: 10,
         overflow: 'hidden',
         backgroundColor: '#FFF',
         elevation: 3,

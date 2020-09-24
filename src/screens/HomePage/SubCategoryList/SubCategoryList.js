@@ -43,8 +43,8 @@ export default class SubCategoryList extends Component {
                                     borderWidth: 0.4, borderColor: color.gray
                                 }}
                                 source={{ uri: baseUrl + item.image_name }}
-                                defaultSource={require('../../../assets/image/LoginIcons/SkyChainsLogo.png')}
-                            />
+                                defaultSource={IconPack.APP_LOGO}
+                                />
                         </View>
 
                         <View style={{ alignContent: 'center', justifyContent: 'center', flex: 0.70 }}>

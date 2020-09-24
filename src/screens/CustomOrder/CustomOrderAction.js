@@ -38,12 +38,12 @@ export function onFailure(error, type) {
 }
 
 export function submitCustomOrder(data) {
+  console.warn("submitCustomOrder",data);
   return dispatch => {
     dispatch(showLoadingIndicator(CUSTOMIZE_ORDER_DATA));
 
     axios.post(urls.CustomizeOrder.url, data, header).then(response => {
-
-      console.warn("submitCusomOrder", response.data);
+      console.warn("response",response);
       if (response.data.ack === '1') {
         dispatch(
           onSuccess(response.data, CUSTOMIZE_ORDER_DATA_SUCCESS)

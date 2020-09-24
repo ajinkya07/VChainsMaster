@@ -1282,10 +1282,11 @@ class CartContainer extends Component {
     orderData.append('which_device', type);
     orderData.append('remarks', comments1);
 
-    var timeStamp = new Date().getTime() + 10 * 24 * 60 * 60 * 1000;
-    var timeStampDate = moment(
-      new Date(timeStamp).toISOString().slice(0, 10),
-    ).format('DD-MM-YYYY');
+     var timeStamp = new Date().getTime() + 10 * 24 * 60 * 60 * 1000;
+    var timeStampDate = moment(new Date(timeStamp).toISOString().slice(0, 10),).format('DD-MM-YYYY');
+
+    var date1 = moment(timeStampDate, 'DD-MM-YYYY').valueOf();
+    var date2 = moment(date, 'DD-MM-YYYY').valueOf();
 
     if (!date) {
       Toast.show({
@@ -1294,7 +1295,7 @@ class CartContainer extends Component {
         duration: 2500,
       });
       alert('Please select a date');
-    } else if (date != '' && timeStampDate < date) {
+    } else if (date != '' && date1 < date2) {
       this.props.placeOrderFromCart(orderData);
     } else {
       alert('Date must be 10 days greater');
@@ -1758,7 +1759,7 @@ class CartContainer extends Component {
                     <DateTimePicker
                       isVisible={isDateTimePickerVisible}
                       onConfirm={date => this.handleDatePicked(date)}
-                      onCancel={this.hideDateTimePicker()}
+                      onCancel={()=>this.hideDateTimePicker()}
                     />
                   )}
                 </View>
