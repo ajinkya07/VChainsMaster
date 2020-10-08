@@ -11,7 +11,7 @@ export default class DatePickerComponent extends Component {
         super(props);
         this.state = {
             isDateTimePickerVisible: false,
-            date:''
+            date: ''
             // date: moment(new Date().toISOString().slice(0, 10)).format('DD-MM-YYYY')
         };
     }
@@ -84,7 +84,7 @@ export default class DatePickerComponent extends Component {
                     <DateTimePicker
                         isVisible={isDateTimePickerVisible}
                         onConfirm={date => this.handleDatePicked(date)}
-                        onCancel={() => hideDateTimePicker()}
+                        onCancel={() => this.hideDateTimePicker()}
                     />
                 )}
 

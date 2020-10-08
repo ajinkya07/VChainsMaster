@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import IconPack from '@login/IconPack';
-import {color} from '@values/colors';
+import { color } from '@values/colors';
 import Theme from '../../values/Theme';
 
 export default class FloatingLabelInput extends Component {
@@ -39,8 +39,8 @@ export default class FloatingLabelInput extends Component {
       isFocused: false,
     });
   render() {
-    const {label, ...props} = this.props;
-    const {isFocused} = this.state;
+    const { label, ...props } = this.props;
+    const { isFocused } = this.state;
     const labelStyle = {
       position: 'absolute',
       left: 0,
@@ -76,10 +76,10 @@ export default class FloatingLabelInput extends Component {
             <Image
               source={
                 !isFocused
-                  ? require('../../assets/image/Account/NAMe.png')
+                  ? require('../../assets/image/BlueIcons/Account.png')
                   : require('../../assets/image/BlueIcons/Account.png')
               }
-              style={{width: 25, height: 25, resizeMode: 'cover'}}
+              style={{ width: 25, height: 25, resizeMode: 'cover' }}
             />
           </View>
         ) : null}
@@ -95,10 +95,10 @@ export default class FloatingLabelInput extends Component {
             <Image
               source={
                 !isFocused
-                  ? IconPack.GRAY_EMAIL
+                  ? require('../../assets/image/Profile/Email.png')
                   : require('../../assets/image/Profile/Email.png')
               }
-              style={{width: 25, height: 25, resizeMode: 'cover'}}
+              style={{ width: 25, height: 25, resizeMode: 'cover' }}
             />
           </View>
         ) : null}
@@ -113,10 +113,10 @@ export default class FloatingLabelInput extends Component {
             <Image
               source={
                 !isFocused
-                  ? IconPack.GRAY_EMAIL
+                  ? require('../../assets/image/Profile/mobile.png')
                   : require('../../assets/image/Profile/mobile.png')
               }
-              style={{width: 25, height: 25, resizeMode: 'cover'}}
+              style={{ width: 25, height: 25, resizeMode: 'cover' }}
             />
           </View>
         ) : null}
@@ -129,8 +129,8 @@ export default class FloatingLabelInput extends Component {
               justifyContent: 'center',
             }}>
             <Image
-              source={!isFocused ? IconPack.GRAY_EMAIL : IconPack.REMARK}
-              style={{width: 25, height: 25, resizeMode: 'cover'}}
+              source={!isFocused ? IconPack.REMARK : IconPack.REMARK}
+              style={{ width: 25, height: 25, resizeMode: 'cover' }}
             />
           </View>
         ) : null}
@@ -140,7 +140,7 @@ export default class FloatingLabelInput extends Component {
               paddingTop: 16,
               width: '95%',
             },
-            {width: this.props.width},
+            { width: this.props.width },
           ]}>
           <Animated.Text style={labelStyle}>{label}</Animated.Text>
           <TextInput
@@ -151,13 +151,13 @@ export default class FloatingLabelInput extends Component {
               color: '#000',
               borderBottomWidth: !isFocused ? 0.7 : 2,
               borderBottomColor: !isFocused ? '#a3a3a3' : '#11255a',
-              marginLeft: 3,
+              marginLeft: 10,
             }}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
             ref={this.props.textInputRef}
             onSubmitEditing={this.props.onSubmitEditing}
-            returnKeyType="next"
+            returnKeyType={this.props.returnKeyType ? this.props.returnKeyType : "next"}
           />
           {isFocused && this.props.value !== '' ? (
             <TouchableOpacity

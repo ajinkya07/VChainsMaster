@@ -56,13 +56,13 @@ class ProductGrid extends Component {
     const categoryData = this.props.route.params.gridData;
     const from = this.props.route.params.fromExclusive;
     const name = this.props.route.params.collectionName;
-  
 
-    
-        this.state = {
+
+
+    this.state = {
       categoryData: categoryData,
       fromExclusive: from,
-      collectionName:name,
+      collectionName: name,
 
       successProductGridVersion: 0,
       errorProductGridVersion: 0,
@@ -99,15 +99,15 @@ class ProductGrid extends Component {
       successProductAddToCartPlusOneVersion: 0,
       errorProductAddToCartPlusOneVersion: 0,
       productInventoryId: '',
-      productInventoryId2:'',
+      productInventoryId2: '',
       isGrossWtSelected: true,
       successTotalCartCountVersion: 0,
       errorTotalCartCountVersion: 0,
       filterData: [],
 
-      isSelectPressed:false,
-      selectedItem:'',
-      selectedProducts:[]
+      isSelectPressed: false,
+      selectedItem: '',
+      selectedProducts: []
     };
     userId = global.userId;
   }
@@ -311,7 +311,7 @@ class ProductGrid extends Component {
       totalCartCountData,
     } = this.props;
 
-    const { categoryData, page, selectedSortById, gridData ,fromExclusive} = this.state;
+    const { categoryData, page, selectedSortById, gridData, fromExclusive } = this.state;
 
     // if (prevProps.isFocused !== this.props.isFocused) {
     //   console.warn("isFocused");
@@ -359,7 +359,7 @@ class ProductGrid extends Component {
         this.showToast(strings.serverFailedMsg, 'danger');
       }
     }
-    if (this.state.errorFilteredProductVersion > prevState.errorFilteredProductVersion ) {
+    if (this.state.errorFilteredProductVersion > prevState.errorFilteredProductVersion) {
       Toast.show({
         text: this.props.errorMsg
           ? this.props.errorMsg
@@ -386,18 +386,18 @@ class ProductGrid extends Component {
       }
     }
 
-    if (this.state.successAddProductToWishlistVersion > prevState.successAddProductToWishlistVersion ) {
+    if (this.state.successAddProductToWishlistVersion > prevState.successAddProductToWishlistVersion) {
       if (addProductToWishlistData.ack === '1') {
         Toast.show({
           text: addProductToWishlistData && addProductToWishlistData.msg,
           duration: 2500,
         });
 
-        this.setState({selectedProducts:[], isSelectPressed:false})
+        this.setState({ selectedProducts: [], isSelectPressed: false })
         selectedProductIds = []
       }
     }
-    if (this.state.errorAddProductToWishlistVersion > prevState.errorAddProductToWishlistVersion ) {
+    if (this.state.errorAddProductToWishlistVersion > prevState.errorAddProductToWishlistVersion) {
       Toast.show({
         text: addProductToWishlistData && addProductToWishlistData.msg,
         type: 'danger',
@@ -405,44 +405,44 @@ class ProductGrid extends Component {
       });
     }
 
-    if ( this.state.successAddProductToCartVersion > prevState.successAddProductToCartVersion ) {
+    if (this.state.successAddProductToCartVersion > prevState.successAddProductToCartVersion) {
       if (addProductToCartData.ack === '1') {
-          var dex = this.state.gridData.findIndex(
-            item => item.product_inventory_id == this.state.productInventoryId2,
-          );
-  
-          if (dex !== -1) {
-            if (addProductToCartData.data && addProductToCartData.data.quantity !== null) {
-              this.state.gridData[dex].quantity = parseInt(addProductToCartData.data.quantity);
-  
-              this.setState({quantity: addProductToCartData.data.quantity},
-                () => {
-                  console.log(JSON.stringify(this.state.gridData));
-                },
-              );
-            } else if (addProductToCartData.data == null) {
-              this.state.gridData[dex].quantity = parseInt(0);
-              this.setState({quantity: '0'},
-                () => {
-                  console.log(JSON.stringify(this.state.gridData));
-                },
-              );
-            }
+        var dex = this.state.gridData.findIndex(
+          item => item.product_inventory_id == this.state.productInventoryId2,
+        );
+
+        if (dex !== -1) {
+          if (addProductToCartData.data && addProductToCartData.data.quantity !== null) {
+            this.state.gridData[dex].quantity = parseInt(addProductToCartData.data.quantity);
+
+            this.setState({ quantity: addProductToCartData.data.quantity },
+              () => {
+                console.log(JSON.stringify(this.state.gridData));
+              },
+            );
+          } else if (addProductToCartData.data == null) {
+            this.state.gridData[dex].quantity = parseInt(0);
+            this.setState({ quantity: '0' },
+              () => {
+                console.log(JSON.stringify(this.state.gridData));
+              },
+            );
+          }
         }
 
-      //await this.getData()
+        //await this.getData()
 
         Toast.show({
           text: addProductToCartData && addProductToCartData.msg,
           duration: 2500,
         });
-          this.setState({ isSelectPressed: false, selectedProducts: [] })
-          selectedProductIds = []
+        this.setState({ isSelectPressed: false, selectedProducts: [] })
+        selectedProductIds = []
 
       }
     }
-    
-    if (this.state.errorAddProductToCartVersion > prevState.errorAddProductToCartVersion ) {
+
+    if (this.state.errorAddProductToCartVersion > prevState.errorAddProductToCartVersion) {
       Toast.show({
         text: addProductToCartData && addProductToCartData.msg,
         type: 'danger',
@@ -450,7 +450,7 @@ class ProductGrid extends Component {
       });
     }
 
-    if ( this.state.successProductAddToCartPlusOneVersion > prevState.successProductAddToCartPlusOneVersion ) {
+    if (this.state.successProductAddToCartPlusOneVersion > prevState.successProductAddToCartPlusOneVersion) {
       if (productAddToCartPlusOneData.ack === '1') {
         // var Index = _.findIndex(this.state.gridData, {
         //     product_inventory_id: parseInt(this.state.productInventoryId),
@@ -465,14 +465,14 @@ class ProductGrid extends Component {
               productAddToCartPlusOneData.data.quantity,
             );
 
-            this.setState({quantity: productAddToCartPlusOneData.data.quantity},
+            this.setState({ quantity: productAddToCartPlusOneData.data.quantity },
               () => {
                 console.log(JSON.stringify(this.state.gridData));
               },
             );
           } else if (productAddToCartPlusOneData.data == null) {
             this.state.gridData[Index].quantity = parseInt(0);
-            this.setState({quantity: '0'},
+            this.setState({ quantity: '0' },
               () => {
                 console.log(JSON.stringify(this.state.gridData));
               },
@@ -486,7 +486,7 @@ class ProductGrid extends Component {
         });
       }
     }
-    if ( this.state.errorProductAddToCartPlusOneVersion > prevState.errorProductAddToCartPlusOneVersion  ) {
+    if (this.state.errorProductAddToCartPlusOneVersion > prevState.errorProductAddToCartPlusOneVersion) {
       Toast.show({
         text: productAddToCartPlusOneData && productAddToCartPlusOneData.msg,
         type: 'danger',
@@ -499,8 +499,8 @@ class ProductGrid extends Component {
     }
   }
 
-  getData = async() =>{
-    const { categoryData, page, selectedSortById, gridData ,fromExclusive} = this.state;
+  getData = async () => {
+    const { categoryData, page, selectedSortById, gridData, fromExclusive } = this.state;
 
     if (categoryData && !fromExclusive && categoryData.subcategory.length === 0) {
       const data = new FormData();
@@ -512,7 +512,7 @@ class ProductGrid extends Component {
       data.append('page_no', page);
       data.append('sort_by', '2');
 
-    await  this.props.getProductSubCategoryData(data);
+      await this.props.getProductSubCategoryData(data);
     }
     if (categoryData && fromExclusive) {
       const excl = new FormData();
@@ -530,7 +530,7 @@ class ProductGrid extends Component {
 
   }
 
-  
+
   renderLoader = () => {
     return (
       <View style={styles.loaderView}>
@@ -562,33 +562,33 @@ class ProductGrid extends Component {
 
     let url = urls.imageUrl + 'public/backend/product_images/zoom_image/'
 
-    const { isSelectPressed, selectedItem,selectedProducts} = this.state
+    const { isSelectPressed, selectedItem, selectedProducts } = this.state
 
-    
+
     return (
       <TouchableOpacity
-        onPress={() => isSelectPressed ? item.quantity > 0 ? this.showAlreadyToast() :  this.selectProduct(item, item.product_inventory_id) : 
-          this.props.navigation.navigate('ProductDetails', {productItemDetails: item,})}
-          >
+        onPress={() => isSelectPressed ? item.quantity > 0 ? this.showAlreadyToast() : this.selectProduct(item, item.product_inventory_id) :
+          this.props.navigation.navigate('ProductDetails', { productItemDetails: item, })}
+      >
         <View
           style={{
             backgroundColor: color.white,
-            height: Platform.OS === 'android' ? hp(34) : hp(31),
+            height: Platform.OS === 'android' ? hp(34) : hp(33),
             width: wp(46),
             marginHorizontal: hp(1),
-            borderRadius: 15,shadowColor: '#000',
-            shadowOffset: {width: 0.5,height: 0.5},
-            shadowOpacity: 0.25,shadowRadius: 2, elevation: 2.2,
+            borderRadius: 15, shadowColor: '#000',
+            shadowOffset: { width: 0.5, height: 0.5 },
+            shadowOpacity: 0.25, shadowRadius: 2, elevation: 2.2,
           }}
           activeOpacity={1}>
 
-         
+
           <View style={gridItemDesign}>
             <TouchableOpacity
-            style={{width:'100%'}}
-              onPress={() => isSelectPressed ? item.quantity > 0 ? this.showAlreadyToast() : this.selectProduct(item, item.product_inventory_id): 
-                this.props.navigation.navigate('ProductDetails', {productItemDetails: item,})}
-               onLongPress={() => this.showProductImageModal(item)}>
+              style={{ width: '100%' }}
+              onPress={() => isSelectPressed ? item.quantity > 0 ? this.showAlreadyToast() : this.selectProduct(item, item.product_inventory_id) :
+                this.props.navigation.navigate('ProductDetails', { productItemDetails: item, })}
+              onLongPress={() => this.showProductImageModal(item)}>
               <Image
                 //resizeMode={'stretch'}
                 style={gridImage}
@@ -695,7 +695,7 @@ class ProductGrid extends Component {
             {item.quantity == 0 && (
               <View style={iconView}>
                 <TouchableOpacity
-                  onPress={() =>  isSelectPressed ? this.selectProduct(item, item.product_inventory_id) : this.addProductToWishlist(item)}>
+                  onPress={() => isSelectPressed ? this.selectProduct(item, item.product_inventory_id) : this.addProductToWishlist(item)}>
                   <Image
                     source={require('../../../assets/image/BlueIcons/Green-Heart.png')}
                     style={{ height: hp(3.1), width: hp(3), marginTop: 2 }}
@@ -715,7 +715,7 @@ class ProductGrid extends Component {
             {item.quantity > 0 && (
               <View style={iconView}>
                 <TouchableOpacity
-                  onPress={() => isSelectPressed ? this.showAlreadyToast() :  this.removeProductFromCartByOne(item)}>
+                  onPress={() => isSelectPressed ? this.showAlreadyToast() : this.removeProductFromCartByOne(item)}>
                   <Image
                     source={require('../../../assets/image/BlueIcons/Minus.png')}
                     style={{ height: hp(3), width: hp(3) }}
@@ -727,7 +727,7 @@ class ProductGrid extends Component {
                   textColor={color.brandColor}
                   fsMedium
                   fwHeading>
-                  {item.quantity >=1 ? item.quantity : item.in_cart}
+                  {item.quantity >= 1 ? item.quantity : item.in_cart}
                 </_Text>
 
                 <TouchableOpacity
@@ -759,7 +759,7 @@ class ProductGrid extends Component {
           {isSelectPressed && item.isSelect &&
             <View style={{
               height: 30, width: 30, borderRadius: 30 / 2,
-              backgroundColor: '#FFFFFF',position: 'absolute'
+              backgroundColor: '#FFFFFF', position: 'absolute'
             }}>
               <TouchableOpacity onPress={() => this.selectProduct(item, item.product_inventory_id)}>
                 <Image
@@ -796,7 +796,7 @@ class ProductGrid extends Component {
 
       this.state.gridData[index].isSelect = true;
 
-      selectedProductIds = array2.map(x => { return x.id})
+      selectedProductIds = array2.map(x => { return x.id })
 
 
     }
@@ -804,20 +804,20 @@ class ProductGrid extends Component {
 
       this.state.gridData[index].isSelect = false;
 
-     var ind = selectedProducts.map(x => { return x.id }).indexOf(id);
+      var ind = selectedProducts.map(x => { return x.id }).indexOf(id);
       selectedProducts.splice(ind, 1);
-      this.setState({selectedProducts:selectedProducts})
+      this.setState({ selectedProducts: selectedProducts })
 
-      selectedProductIds = selectedProducts.map(i => { return i.id})
+      selectedProductIds = selectedProducts.map(i => { return i.id })
 
     }
   }
 
 
-showAlreadyToast = () =>{
+  showAlreadyToast = () => {
     Toast.show({
-      text:'Product already added to cart',
-      duration:2500
+      text: 'Product already added to cart',
+      duration: 2500
     })
   }
 
@@ -838,8 +838,8 @@ showAlreadyToast = () =>{
 
 
   addSelectedProductWishList = async () => {
-    const { categoryData, page, selectedSortById,gridData } = this.state;
-  
+    const { categoryData, page, selectedSortById, gridData } = this.state;
+
     let wishData = new FormData();
 
     if (selectedProductIds.length > 0) {
@@ -852,11 +852,11 @@ showAlreadyToast = () =>{
         wishData.append('product_inventory_table', 'product_master');
 
         await this.props.addProductToWishlist(wishData);
-       
+
         const dd = this.state.gridData.findIndex(
           item => selectedProductIds[i] == item.product_inventory_id
         );
-    
+
         this.state.gridData[dd].isSelect = false;
 
       }
@@ -864,7 +864,7 @@ showAlreadyToast = () =>{
     else if (selectedProductIds.length <= 0) {
       Toast.show({
         text: 'Please select product',
-        duration:2000
+        duration: 2000
       })
     }
 
@@ -897,29 +897,29 @@ showAlreadyToast = () =>{
     });
   };
 
-  addSelectedProductCart = async() =>{
+  addSelectedProductCart = async () => {
 
-    const { categoryData, page, selectedSortById,gridData } = this.state;
+    const { categoryData, page, selectedSortById, gridData } = this.state;
 
     let ctData = new FormData();
 
-    if(selectedProductIds.length > 0){
-    for (let j = 0; j < selectedProductIds.length; j++) {
-      ctData.append('product_id', selectedProductIds[j]);
-      ctData.append('user_id', userId);
-      ctData.append('cart_wish_table', 'cart');
-      ctData.append('no_quantity', 1);
-      ctData.append('product_inventory_table', 'product_master');
+    if (selectedProductIds.length > 0) {
+      for (let j = 0; j < selectedProductIds.length; j++) {
+        ctData.append('product_id', selectedProductIds[j]);
+        ctData.append('user_id', userId);
+        ctData.append('cart_wish_table', 'cart');
+        ctData.append('no_quantity', 1);
+        ctData.append('product_inventory_table', 'product_master');
 
-      await this.props.addProductToCart(ctData);
+        await this.props.addProductToCart(ctData);
 
-      const cc = this.state.gridData.findIndex(
-        i => selectedProductIds[j] == i.product_inventory_id
-      );
-  
-      this.state.gridData[cc].isSelect = false;
+        const cc = this.state.gridData.findIndex(
+          i => selectedProductIds[j] == i.product_inventory_id
+        );
 
-    }
+        this.state.gridData[cc].isSelect = false;
+
+      }
 
       const cd = new FormData();
       cd.append('user_id', userId);
@@ -1064,9 +1064,9 @@ showAlreadyToast = () =>{
 
   LoadMoreData = () => {
     this.setState({
-        page: this.state.page + 1,
-        clickedLoadMore: true,
-      },
+      page: this.state.page + 1,
+      clickedLoadMore: true,
+    },
       () => this.LoadRandomData(),
     );
   };
@@ -1077,7 +1077,7 @@ showAlreadyToast = () =>{
 
 
     let accessCheck = allParameterData && allParameterData.access_check
-    
+
     if (accessCheck == '1') {
       if (categoryData && !fromExclusive) {
         const data = new FormData();
@@ -1106,7 +1106,7 @@ showAlreadyToast = () =>{
 
       }
     }
-    else{
+    else {
       alert('Your access to full category has been expired. Please contact administrator to get access.')
     }
 
@@ -1255,9 +1255,9 @@ showAlreadyToast = () =>{
   };
 
 
-  toggleSelect = () =>{
+  toggleSelect = () => {
     this.setState({
-      isSelectPressed:!this.state.isSelectPressed
+      isSelectPressed: !this.state.isSelectPressed
     })
   }
 
@@ -1281,27 +1281,22 @@ showAlreadyToast = () =>{
       isSelectPressed, selectedProducts, selectedItem
     } = this.state;
 
-    const { sortByParamsData, filterParamsData , allParameterData} = this.props;
+    const { sortByParamsData, filterParamsData, allParameterData } = this.props;
 
     let imageUrl = urls.imageUrl + 'public/backend/product_images/zoom_image/'
-  
+
     return (
 
       <SafeAreaView style={{ flex: 1, backgroundColor: '#f3fcf9' }}>
         <_CustomHeader
           Title={
-            `(${gridData.length.toString()})` + ' ' + `${categoryData.col_name !=undefined ? categoryData.col_name : collectionName}`
+            `(${gridData.length.toString()})` + ' ' + `${categoryData.col_name != undefined ? categoryData.col_name : collectionName}`
           }
-          
           // Subtitle={ `(${(gridData.length).toString()})`}
           RightBtnIcon1={require('../../../assets/image/BlueIcons/Search-White.png')}
-          RightBtnIcon2={require('../../../assets/image/BlueIcons/Notification-White.png')}
-          RightBtnPressOne={() =>
-            this.props.navigation.navigate('SearchScreen')
-          }
-          RightBtnPressTwo={() =>
-            this.props.navigation.navigate('Notification')
-          }
+          RightBtnIcon2={require('../../../assets/image/GreyCart.png')}
+          RightBtnPressOne={() => this.props.navigation.navigate('SearchScreen')}
+          RightBtnPressTwo={() => this.props.navigation.navigate('CartContainer', { fromProductGrid: true })}
           rightIconHeight2={hp(3.5)}
           LeftBtnPress={() => this.props.navigation.goBack()}
           backgroundColor="#19af81"
@@ -1345,30 +1340,30 @@ showAlreadyToast = () =>{
           }
 
           {!isSelectPressed &&
-          <TouchableOpacity
-            disabled={!this.state.gridData || this.state.gridData.length === 0}
-            onPress={() => this.toggleFilterModal()}>
-            <View
-              style={{
-                width: wp(33),
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
-                style={{ height: hp(2.8), width: hp(2.8), marginRight: hp(1.5) }}
-                source={require('../../../assets/image/BlueIcons/Green-Filter.png')}
-              />
-              <_Text
-                fsHeading
-                bold
-                textColor={'#19af81'}
-                style={{ ...Theme.ffLatoRegular14 }}>
-                FILTER
+            <TouchableOpacity
+              disabled={!this.state.gridData || this.state.gridData.length === 0}
+              onPress={() => this.toggleFilterModal()}>
+              <View
+                style={{
+                  width: wp(33),
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  style={{ height: hp(2.8), width: hp(2.8), marginRight: hp(1.5) }}
+                  source={require('../../../assets/image/BlueIcons/Green-Filter.png')}
+                />
+                <_Text
+                  fsHeading
+                  bold
+                  textColor={'#19af81'}
+                  style={{ ...Theme.ffLatoRegular14 }}>
+                  FILTER
               </_Text>
-            </View>
-          </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
           }
 
           {isSelectPressed &&
@@ -1386,7 +1381,7 @@ showAlreadyToast = () =>{
                 <Image
                   style={{ height: hp(2.8), width: hp(2.8), marginRight: hp(1.5) }}
                   source={require('../../../assets/image/BlueIcons/Green-Cart.png')}
-                  />
+                />
                 <_Text
                   fsHeading
                   bold
@@ -1413,7 +1408,7 @@ showAlreadyToast = () =>{
                 <Image
                   style={{ height: hp(2.8), width: hp(2.8), marginRight: hp(1.5) }}
                   source={require('../../../assets/image/BlueIcons/Green-Heart.png')}
-                  />
+                />
                 <_Text
                   fsHeading
                   bold
@@ -1436,7 +1431,7 @@ showAlreadyToast = () =>{
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor:isSelectPressed ? 'gold' : '#FFFFFF'
+                backgroundColor: isSelectPressed ? 'gold' : '#FFFFFF'
               }}>
               <Image
                 style={{ height: hp(2.8), width: hp(2.8), marginRight: hp(2) }}
@@ -1451,7 +1446,7 @@ showAlreadyToast = () =>{
               </_Text>
             </View>
           </TouchableOpacity>
-    
+
         </View>
 
         {gridData && (
@@ -1581,6 +1576,7 @@ showAlreadyToast = () =>{
                           {item.value === selectedSortById && (
                             <Image
                               source={require('../../../assets/image/BlueIcons/Tick.png')}
+                              defaultSource={require('../../../assets/image/BlueIcons/Tick.png')}
                               style={{
                                 alignItems: 'flex-end',
                                 marginLeft: hp(1),
@@ -1589,9 +1585,6 @@ showAlreadyToast = () =>{
                               }}
                             />
                           )
-                            // <CheckBox
-                            //     color={color.brandColor}
-                            //     checked={item.value === selectedSortById ? true : false} />
                           }
                         </View>
                       </View>
@@ -1883,12 +1876,13 @@ showAlreadyToast = () =>{
                     }}
                   />
                   <Image
-                    source={{  uri: imageUrl + productImageToBeDisplayed.image_name }}
+                    source={{ uri: imageUrl + productImageToBeDisplayed.image_name }}
                     defaultSource={IconPack.APP_LOGO}
                     style={{
                       height: hp(34),
                       width: wp(90),
-                      marginTop: hp(0.5)}}
+                      marginTop: hp(0.5)
+                    }}
                     resizeMode='stretch'
                   />
                   {/* <FastImage

@@ -1,5 +1,5 @@
 export default {
-  LOGIN_BG: require('../../../assets/image/LoginIcons/login_BG1.jpeg'),
+  LOGIN_BG: require('../../../assets/image/backg1.jpg'),
   MOBILE_LOGO: require('../../../assets/image/BlueIcons/Mobile.png'),
   KEY_LOGO: require('../../../assets/image/Key.png'),
   //EYE_IMAGE: require('../../../assets/image/Account/eye.png'),
@@ -26,7 +26,7 @@ export default {
   ABOUT: require('../../../assets/image/Account/About.png'),
   //SOCIAL_MEDIA: require('../../../assets/image/Account/profile.png'),
   FORWARD: require('../../../assets/image/Account/Forward2-.png'),
-  VERIFY_BG: require('../../../assets/image/Account/BGGradient.png'),
+  VERIFY_BG: require('../../../assets/image/backg1.jpg'),
   BACK_ICON: require('../../../assets/image/Account/back_button.png'),
   VERIFY_OTP_ICON: require('../../../assets/image/Account/Forward-Arrow.png'),
   CUSTOMORDER_BG: require('../../../assets/image/Account/CustomOrder_BG.png'),
@@ -47,5 +47,5 @@ export default {
   APP_LOGO: require('../../../assets/image/LoginIcons/vchain.jpg'),
 
   SEARCH_WHITE: require('../../../assets/image/search_5.png'),
-  WHITE_CLOSE:require('../../../assets/image/Close.png')
+  WHITE_CLOSE: require('../../../assets/image/Close.png')
 };

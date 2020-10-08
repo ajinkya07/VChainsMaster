@@ -37,22 +37,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) wants to access camera while placing custom order</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) wants to access photos while placing custom order</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Bold.ttf</string>
@@ -78,5 +68,22 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

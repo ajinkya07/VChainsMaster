@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import _Text from '@text/_Text';
-import {color} from '@values/colors';
+import { color } from '@values/colors';
 
 const horizontalMargin = 20;
 const slideWidth = 280;
@@ -107,7 +107,7 @@ export default {
 
   horizontalLatestDesign: {
     backgroundColor: color.white,
-    height: Platform.OS === 'ios' ? hp(31) : hp(33),
+    height: Platform.OS === 'ios' ? hp(32.5) : hp(33),
     width: wp(42),
     marginTop: hp(1),
     borderRadius: wp(4.5),
@@ -140,14 +140,14 @@ export default {
   latestImage: {
     height: hp(17),
     // width: wp(38),
-    width:'100%',
+    width: '100%',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     // borderRadius: 10,
     //top: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    resizeMode:'cover'
+    resizeMode: 'cover'
   },
   latestTextView: {
     flexDirection: 'row',

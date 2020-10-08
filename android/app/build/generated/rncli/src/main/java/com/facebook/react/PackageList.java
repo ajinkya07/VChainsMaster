@@ -21,14 +21,18 @@ import com.reactnativecommunity.clipboard.ClipboardPackage;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 // @react-native-community/masked-view
 import org.reactnative.maskedview.RNCMaskedViewPackage;
+// @react-native-firebase/app
+import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
+// @react-native-firebase/messaging
+import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
 // react-native-fast-image
 import com.dylanvann.fastimage.FastImageViewPackage;
-// react-native-firebase
-import io.invertase.firebase.RNFirebasePackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 // react-native-image-crop-picker
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
+// react-native-push-notification
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 // react-native-reanimated
 import com.swmansion.reanimated.ReanimatedPackage;
 // react-native-safe-area-context
@@ -91,10 +95,12 @@ public class PackageList {
       new ClipboardPackage(),
       new RNDateTimePickerPackage(),
       new RNCMaskedViewPackage(),
+      new ReactNativeFirebaseAppPackage(),
+      new ReactNativeFirebaseMessagingPackage(),
       new FastImageViewPackage(),
-      new RNFirebasePackage(),
       new RNGestureHandlerPackage(),
       new PickerPackage(),
+      new ReactNativePushNotificationPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),

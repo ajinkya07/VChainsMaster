@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -14,30 +14,30 @@ import {
   Linking,
   Platform,
 } from 'react-native';
-import {Container, Content, Icon, Toast} from 'native-base';
+import { Container, Content, Icon, Toast } from 'native-base';
 import IconPack from '../../OnBoarding/Login/IconPack';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import _Text from '@text/_Text';
-import {strings} from '@values/strings';
-import {CommonActions, Link} from '@react-navigation/native';
+import { strings } from '@values/strings';
+import { CommonActions, Link } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
-import {color} from '@values/colors';
-import {connect} from 'react-redux'
+import { color } from '@values/colors';
+import { connect } from 'react-redux'
 
-import {version} from '../../../../package.json';
+import { version } from '../../../../package.json';
 import Theme from '../../../values/Theme';
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 import Share from 'react-native-share';
-import {getCallEmailData} from '@accountContainer/AccountAction'
+import { getCallEmailData } from '@accountContainer/AccountAction'
 import { FlatList } from 'react-native-gesture-handler';
 
 
 
-const AccountRow = ({icon, title, onPress}) => {
+const AccountRow = ({ icon, title, onPress }) => {
   return (
     <TouchableOpacity onPress={() => onPress()}>
       <View style={styles.accountRowViewContainer}>
@@ -54,23 +54,23 @@ const AccountRow = ({icon, title, onPress}) => {
   );
 };
 
- class AccountContainer extends Component {
+class AccountContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       accountEmailModal: false,
       isCallModalVisible: false,
-      isSocialMediaModal:false,
+      isSocialMediaModal: false,
       successCallEmailVersion: 0,
       errorCallEmailVersion: 0,
-      selectedPhoneNo:'',
-      fullName:''
-  
+      selectedPhoneNo: '',
+      fullName: ''
+
     };
   }
 
   componentDidMount = () => {
-    const {allParameterData} = this.props
+    const { allParameterData } = this.props
     this.props.getCallEmailData()
     this.getItem()
   }
@@ -82,42 +82,42 @@ const AccountRow = ({icon, title, onPress}) => {
     let newState = null;
 
     if (successCallEmailVersion > prevState.successCallEmailVersion) {
-        newState = {
-            ...newState,
-            successCallEmailVersion: nextProps.successCallEmailVersion,
-        };
+      newState = {
+        ...newState,
+        successCallEmailVersion: nextProps.successCallEmailVersion,
+      };
     }
     if (errorCallEmailVersion > prevState.errorCallEmailVersion) {
-        newState = {
-            ...newState,
-            errorCallEmailVersion: nextProps.errorCallEmailVersion,
-        };
+      newState = {
+        ...newState,
+        errorCallEmailVersion: nextProps.errorCallEmailVersion,
+      };
     }
 
     return newState;
-}
+  }
 
-async componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     const { callEmailData } = this.props;
 
     if (this.state.successCallEmailVersion > prevState.successCallEmailVersion) {
     }
     if (this.state.errorCallEmailVersion > prevState.errorCallEmailVersion) {
-        Toast.show({
-            text: this.props.errorMsg,
-            duration: 2500,
-        });
+      Toast.show({
+        text: this.props.errorMsg,
+        duration: 2500,
+      });
     }
-}
+  }
 
 
   async getItem() {
     let value = await AsyncStorage.getItem('fullName');
 
     if (value) {
-        this.setState({
-          fullName:value
-        })
+      this.setState({
+        fullName: value
+      })
     }
   }
 
@@ -138,13 +138,13 @@ async componentDidUpdate(prevProps, prevState) {
             this.props.navigation.dispatch(
               CommonActions.reset({
                 index: 0,
-                routes: [{name: 'SignIn'}],
+                routes: [{ name: 'SignIn' }],
               }),
             );
           },
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 
@@ -166,31 +166,32 @@ async componentDidUpdate(prevProps, prevState) {
 
   showCallEmailModal = () => {
 
-    this.setState({accountEmailModal: true});
+    this.setState({ accountEmailModal: true });
   };
 
   hideCallEmailModal = () => {
-    this.setState({accountEmailModal: false});
+    this.setState({ accountEmailModal: false });
   };
 
   showCallPopup = (phone) => {
-    this.setState({isCallModalVisible: true, selectedPhoneNo:phone});
+    this.setState({ isCallModalVisible: true, selectedPhoneNo: phone });
   };
 
   hideCallPopup = () => {
-    this.setState({isCallModalVisible: false,selectedPhoneNo:''});
+    this.setState({ isCallModalVisible: false, selectedPhoneNo: '' });
   };
 
-    myCustomShare  = async ()=> {
-     const { allParameterData } = this.props
-     
-     let type = Platform.OS === 'ios' ? 'ios' : 'android'
+  myCustomShare = async () => {
+    const { allParameterData } = this.props
 
-     let androidLink = allParameterData.android_app_link
-     let iosLink = allParameterData.ios_app_link
+    let type = Platform.OS === 'ios' ? 'ios' : 'android'
+
+    let androidLink = allParameterData.android_app_link
+    let iosLink = allParameterData.ios_app_link
 
     const shareOptions = {
-      message: type == 'ios' ? iosLink : androidLink    };
+      message: type == 'ios' ? iosLink : androidLink
+    };
 
     try {
       const ShareResponse = await Share.open(shareOptions);
@@ -202,7 +203,7 @@ async componentDidUpdate(prevProps, prevState) {
 
 
 
-   rateApp = async()=> {
+  rateApp = async () => {
     const { allParameterData } = this.props
     let type1 = Platform.OS === 'ios' ? 'ios' : 'android'
 
@@ -213,14 +214,14 @@ async componentDidUpdate(prevProps, prevState) {
 
     Linking.openURL(link)
 
- }
+  }
 
 
   _pressCall = () => {
-    const { allParameterData} = this.props
+    const { allParameterData } = this.props
 
-   const c = allParameterData.call
-  
+    const c = allParameterData.call
+
     const url = Platform.OS == 'ios' ? `tel://${c}` : `tel:${c}`;
     //TODO ios
     //const url = 'tel://+123456789';
@@ -228,7 +229,7 @@ async componentDidUpdate(prevProps, prevState) {
   };
 
 
-  sentEmail = (email) =>{
+  sentEmail = (email) => {
 
     Linking.openURL(
       `mailto:${email}?subject=write a subject`,
@@ -239,44 +240,44 @@ async componentDidUpdate(prevProps, prevState) {
     // })
   }
 
-  openSocialMediaModal = ()=>{
+  openSocialMediaModal = () => {
     this.setState({
-      isSocialMediaModal:true
+      isSocialMediaModal: true
     })
   }
 
-  closeSocialMediaModal = () =>{
+  closeSocialMediaModal = () => {
     this.setState({
-      isSocialMediaModal:false
+      isSocialMediaModal: false
     })
   }
 
-   openFacebookWebView = () => {
+  openFacebookWebView = () => {
     const { allParameterData } = this.props
 
     let facebook = allParameterData.facebook
 
-     this.props.navigation.navigate('CustomWebview', { title: 'Facebook', link: facebook })
+    this.props.navigation.navigate('CustomWebview', { title: 'Facebook', link: facebook })
 
-     this.closeSocialMediaModal()
-   }
+    this.closeSocialMediaModal()
+  }
 
 
-   openInstaWebView = () => {
-     const { allParameterData } = this.props
+  openInstaWebView = () => {
+    const { allParameterData } = this.props
 
     let instagram = allParameterData.instagram
 
-     this.props.navigation.navigate('CustomWebview', { title: 'Instagram', link: instagram })
+    this.props.navigation.navigate('CustomWebview', { title: 'Instagram', link: instagram })
 
-     this.closeSocialMediaModal()
+    this.closeSocialMediaModal()
 
-   }
+  }
 
 
   render() {
-    const {allParameterData, callEmailData} = this.props
-    const{selectedPhoneNo,fullName} = this.state
+    const { allParameterData, callEmailData } = this.props
+    const { selectedPhoneNo, fullName } = this.state
 
     const aboutUS = allParameterData.about_us
     const privacyPolicy = allParameterData.privacy_policy
@@ -291,10 +292,10 @@ async componentDidUpdate(prevProps, prevState) {
 
 
     return (
-      
-      <View style={{flex: 1, width: wp(100)}}>
-      
-        <ScrollView showsVerticalScrollIndicator={false}>
+
+      <View style={{ flex: 1, width: wp(100) }}>
+
+        <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
           <ImageBackground source={IconPack.LOGIN_BG} style={styles.bgImage}>
             <View style={styles.topViewContainer}>
               <Image
@@ -303,10 +304,10 @@ async componentDidUpdate(prevProps, prevState) {
               />
               <Text style={styles.profileName}>{fullName ? fullName : ''}</Text>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('EditProfile')}>
-                <Text style={styles.editProfileText}>EDIT PROFILE</Text>
+                <Text style={styles.editProfileText}>Edit Profile</Text>
               </TouchableOpacity>
             </View>
-            
+
             <AccountRow
               title="Order History"
               icon={IconPack.ORDER_HISTORY}
@@ -325,26 +326,26 @@ async componentDidUpdate(prevProps, prevState) {
             <AccountRow
               title="Catalog"
               icon={IconPack.EXCLUSIVE}
-              onPress={() => this.props.navigation.navigate('CustomWebview',{link:catalog, title:'Catalog'})}
+              onPress={() => this.props.navigation.navigate('CustomWebview', { link: catalog, title: 'Catalog' })}
             />
             <AccountRow
               title="About Us"
               icon={IconPack.ABOUT}
-             // onPress={() => Linking.openURL(aboutUS)}
-              onPress={() => this.props.navigation.navigate('CustomWebview',{link:aboutUS, title:'About Us'})}
+              // onPress={() => Linking.openURL(aboutUS)}
+              onPress={() => this.props.navigation.navigate('CustomWebview', { link: aboutUS, title: 'About Us' })}
             />
             <AccountRow
               title="Privacy Policy"
               icon={IconPack.ABOUT}
-             // onPress={() => Linking.openURL(privacyPolicy)}
-             onPress={() => this.props.navigation.navigate('CustomWebview',{link:privacyPolicy,title:'Privacy Policy'})}
+              // onPress={() => Linking.openURL(privacyPolicy)}
+              onPress={() => this.props.navigation.navigate('CustomWebview', { link: privacyPolicy, title: 'Privacy Policy' })}
             />
-            
+
             <AccountRow
               title="Terms & Conditions"
               icon={IconPack.ABOUT}
-             // onPress={() => Linking.openURL(terms)}
-              onPress={() => this.props.navigation.navigate('CustomWebview',{link:terms,title:'Terms & Conditions'})}
+              // onPress={() => Linking.openURL(terms)}
+              onPress={() => this.props.navigation.navigate('CustomWebview', { link: terms, title: 'Terms & Conditions' })}
             />
 
             <AccountRow
@@ -362,7 +363,7 @@ async componentDidUpdate(prevProps, prevState) {
               icon={IconPack.WHATS_UP}
               onPress={() => {
                 Linking.openURL(
-                  `whatsapp://send?phone=${'91'+whatsApp}&text=${''}`,
+                  `whatsapp://send?phone=${'91' + whatsApp}&text=${''}`,
                 );
               }}
             />
@@ -395,8 +396,8 @@ async componentDidUpdate(prevProps, prevState) {
             onRequestClose={() => this.hideCallEmailModal()}
             onBackdropPress={() => this.hideCallEmailModal()}
             onBackButtonPress={() => this.hideCallEmailModal()}
-            style={{margin: 0, }}>
-            <TouchableWithoutFeedback style={{flex: 1}} onPress={() => null}>
+            style={{ margin: 0, }}>
+            <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => null}>
               <>
                 <View style={styles.mainContainer}>
                   <View style={styles.content}>
@@ -431,9 +432,9 @@ async componentDidUpdate(prevProps, prevState) {
                             <View style={styles.circleContainer}>
                               <Text style={styles.circleText}>{(item.location).charAt(0).toUpperCase()}</Text>
                             </View>
-                           
+
                             <View style={styles.location}>
-                      <Text style={styles.locationText}>{item.location}</Text>
+                              <Text style={styles.locationText}>{item.location}</Text>
                             </View>
 
                           </View>
@@ -441,12 +442,12 @@ async componentDidUpdate(prevProps, prevState) {
                           <View style={styles.addressContainer}>
                             <Text style={styles.addressText}>
                               Address : {item.address}
-                      </Text>
+                            </Text>
                             <Text style={styles.emailText}>
                               Email : {item.email}
                             </Text>
                           </View>
-          
+
                           <View style={styles.bottomContainer}>
                             <TouchableOpacity onPress={() => this.showCallPopup(item.contact_number[0].phone)}>
                               <Text style={styles.bottomText}>CALL</Text>
@@ -459,17 +460,17 @@ async componentDidUpdate(prevProps, prevState) {
                           </View>
 
                           {/* <View style={{borderWidth:0.5,borderColor:'#DDDDDD'}}/> */}
-                       
+
                         </View>
                       )}
                     />
                     <SafeAreaView />
                   </View>
-                      
+
                 </View>
               </>
             </TouchableWithoutFeedback>
-            
+
 
             <Modal
               isVisible={this.state.isCallModalVisible}
@@ -477,9 +478,9 @@ async componentDidUpdate(prevProps, prevState) {
               onRequestClose={() => this.hideCallPopup()}
               onBackdropPress={() => this.hideCallPopup()}
               onBackButtonPress={() => this.hideCallPopup()}
-              style={{margin: 0}}>
+              style={{ margin: 0 }}>
               <TouchableWithoutFeedback
-                style={{flex: 1}}
+                style={{ flex: 1 }}
                 onPress={this._pressCall}>
                 <View
                   style={{
@@ -491,20 +492,20 @@ async componentDidUpdate(prevProps, prevState) {
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-between',
-                      backgroundColor:color.green,
-                      borderTopLeftRadius:10,borderTopRightRadius:10
+                      backgroundColor: color.green,
+                      borderTopLeftRadius: 10, borderTopRightRadius: 10
                     }}>
                     <Text
                       style={{
                         fontSize: 18,
                         marginLeft: 15,
                         marginVertical: Platform.OS === 'android' ? 8 : 10,
-                        color:'#FFFFFF'
+                        color: '#FFFFFF'
                       }}>
                       Contacts
                     </Text>
                     <TouchableOpacity
-                      onPress={() => this.setState({ isCallModalVisible: false})}>
+                      onPress={() => this.setState({ isCallModalVisible: false })}>
                       <Image style={styles.closeIcon} source={IconPack.WHITE_CLOSE} />
                     </TouchableOpacity>
                   </View>
@@ -515,14 +516,14 @@ async componentDidUpdate(prevProps, prevState) {
                       borderBottomWidth: 0.8,
                       borderColor: '#D3D3D3',
                       marginBottom: 12,
-                      marginLeft:20
+                      marginLeft: 20
                     }}>
                     <Text
-                      style={{fontSize: 15, color: '#A9A9A9', marginBottom: 7}}>
+                      style={{ fontSize: 15, color: '#A9A9A9', marginBottom: 7 }}>
                       Contact : {selectedPhoneNo && selectedPhoneNo}
                     </Text>
                     <Text
-                      style={{fontSize: 15, color: '#A9A9A9', marginBottom: 7}}>
+                      style={{ fontSize: 15, color: '#A9A9A9', marginBottom: 7 }}>
                       Description : Orders
                     </Text>
                   </View>
@@ -542,42 +543,42 @@ async componentDidUpdate(prevProps, prevState) {
             </Modal>
           </Modal>
 
-          
+
           {/* SOCIAL MEDIA MODAL */}
           <Modal
-          isVisible={this.state.isSocialMediaModal}
-          transparent={true}
-          onRequestClose={() => this.closeSocialMediaModal()}
-          onBackdropPress={() => this.closeSocialMediaModal()}
-          onBackButtonPress={() => this.closeSocialMediaModal()}
+            isVisible={this.state.isSocialMediaModal}
+            transparent={true}
+            onRequestClose={() => this.closeSocialMediaModal()}
+            onBackdropPress={() => this.closeSocialMediaModal()}
+            onBackButtonPress={() => this.closeSocialMediaModal()}
 
-          style={{margin: 0}}>
+            style={{ margin: 0 }}>
 
-          <TouchableWithoutFeedback style={styles.flex}>
-            <View style={styles.contain}>
-             
-              <View style={styles.titleContainer}>
-                <Text style={styles.titleText2}>Social Media</Text>
-                <TouchableOpacity
-                  onPress={() => this.closeSocialMediaModal()}>
-                  <Image style={styles.closeIcon} source={IconPack.WHITE_CLOSE} />
-                </TouchableOpacity>
-              </View>
+            <TouchableWithoutFeedback style={styles.flex}>
+              <View style={styles.contain}>
 
-              <View style={styles.spaceHorizontal}>
-                <RowData title="Facebook" onPress={() => this.openFacebookWebView()}/>
-                <RowData title="Instagram" onPress={() => this.openInstaWebView()} />
+                <View style={styles.titleContainer}>
+                  <Text style={styles.titleText2}>Social Media</Text>
+                  <TouchableOpacity
+                    onPress={() => this.closeSocialMediaModal()}>
+                    <Image style={styles.closeIcon} source={IconPack.WHITE_CLOSE} />
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.spaceHorizontal}>
+                  <RowData title="Facebook" onPress={() => this.openFacebookWebView()} />
+                  <RowData title="Instagram" onPress={() => this.openInstaWebView()} />
+                </View>
+                <View style={styles.buttonContainer}>
+                  <ActionButtonRounded
+                    title="CANCEL"
+                    onButonPress={() => this.closeSocialMediaModal()}
+                    containerStyle={styles.buttonStyle}
+                  />
+                </View>
               </View>
-              <View style={styles.buttonContainer}>
-                <ActionButtonRounded
-                  title="CANCEL"
-                  onButonPress={() => this.closeSocialMediaModal()}
-                  containerStyle={styles.buttonStyle}
-                />
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
+            </TouchableWithoutFeedback>
+          </Modal>
 
         </ScrollView>
       </View>
@@ -600,9 +601,9 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor:color.green,
-    borderTopLeftRadius:10,
-    borderTopRightRadius:10
+    backgroundColor: color.green,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10
   },
   spaceHorizontal: {
     marginHorizontal: 18,
@@ -613,10 +614,10 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     marginLeft: 20,
     marginTop: Platform.OS === 'android' ? 8 : 12,
-    textAlign:'center'
+    textAlign: 'center'
   },
   bgImage: {
-    height:'100%',
+    height: '100%',
     width: '100%',
   },
   imageStyle: {
@@ -632,29 +633,29 @@ const styles = StyleSheet.create({
     height: hp(11),
     borderRadius: hp(5),
     overflow: 'hidden',
-    alignSelf:'center'
+    alignSelf: 'center'
   },
   editProfileText: {
     color: '#FFFFFF',
-    fontWeight: 'bold',
-    fontSize: hp(2),
+    fontWeight: '400',
+    fontSize: 18,
     textDecorationLine: 'underline',
-    textAlign:'center'
+    textAlign: 'center'
 
   },
   profileName: {
     color: '#FFFFFF',
     paddingTop: 8,
     paddingBottom: 10,
-    fontSize: hp(3),
-    textAlign:'center'
+    ...Theme.ffLatoBold20,
+    textAlign: 'center'
   },
   topViewContainer: {
     marginBottom: 40,
-   // marginLeft: 16,
+    // marginLeft: 16,
     marginTop: hp(2),
-    alignSelf:'center',
-    
+    alignSelf: 'center',
+
   },
   accountRowViewContainer: {
     flexDirection: 'row',
@@ -664,9 +665,11 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   titleText: {
-    fontSize: hp(2.2),
+    // fontSize: hp(2.2),
     color: '#FFFFFF',
-    fontFamily: 'Lato-Regular',
+    // fontFamily: 'Lato-Regular',
+    ...Theme.ffLatoMedium18,
+
   },
   borderStyle: {
     borderBottomColor: '#d2d2d2',
@@ -677,7 +680,7 @@ const styles = StyleSheet.create({
     color: '#757575',
     marginVertical: 5,
   },
- 
+
   titleView: {
     flex: 1,
     marginLeft: 50,
@@ -779,10 +782,10 @@ const styles = StyleSheet.create({
 });
 
 
-const RowData = ({title, onPress}) => {
+const RowData = ({ title, onPress }) => {
   return (
     <TouchableOpacity onPress={() => onPress()}>
-      <View style={{marginBottom: 14}}>
+      <View style={{ marginBottom: 14 }}>
         <Text style={styles.subTitleStyle}>{title}</Text>
         <View style={styles.borderStyle} />
       </View>
@@ -791,7 +794,7 @@ const RowData = ({title, onPress}) => {
 };
 
 
-const ActionButtonRounded = ({title, onButonPress, containerStyle}) => {
+const ActionButtonRounded = ({ title, onButonPress, containerStyle }) => {
   return (
     <TouchableOpacity
       onPress={() => {
@@ -814,19 +817,19 @@ const ActionButtonRounded = ({title, onButonPress, containerStyle}) => {
 
 function mapStateToProps(state) {
   return {
-     
-      allParameterData: state.homePageReducer.allParameterData,
-      successAllParameterVersion: state.homePageReducer.successAllParameterVersion,
-      errorAllParamaterVersion: state.homePageReducer.errorAllParamaterVersion,
-     
-      callEmailData: state.accountReducer.callEmailData,
-      successCallEmailVersion: state.accountReducer.successCallEmailVersion,
-      errorCallEmailVersion: state.accountReducer.errorCallEmailVersion,
-     
+
+    allParameterData: state.homePageReducer.allParameterData,
+    successAllParameterVersion: state.homePageReducer.successAllParameterVersion,
+    errorAllParamaterVersion: state.homePageReducer.errorAllParamaterVersion,
+
+    callEmailData: state.accountReducer.callEmailData,
+    successCallEmailVersion: state.accountReducer.successCallEmailVersion,
+    errorCallEmailVersion: state.accountReducer.errorCallEmailVersion,
+
   };
 }
 
-export default connect(mapStateToProps,{getCallEmailData})(AccountContainer);
+export default connect(mapStateToProps, { getCallEmailData })(AccountContainer);
 
 
 const actionButtonRoundedStyle = StyleSheet.create({

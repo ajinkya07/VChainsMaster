@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\itsupport.lth\\Desktop\\Ajinkya\\Projects\\VChains\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zh\\values-zh.xml",
+            "outputFile": "/Users/ajinkya/Desktop/Projects/VChainsMaster/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zh/values-zh.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-2\\files-2.1\\2896533cdda4ddc34c448e100e01a69c\\ucrop-2.2.6-native\\res\\values-zh\\values-zh.xml",
+                    "source": "/Users/ajinkya/.gradle/caches/transforms-2/files-2.1/2896533cdda4ddc34c448e100e01a69c/ucrop-2.2.6-native/res/values-zh/values-zh.xml",
                     "from": {
                         "startLines": "2,3,4",
                         "startColumns": "4,4,4",

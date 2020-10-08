@@ -6,6 +6,9 @@ import { View, Platform } from 'react-native';
 import { Provider } from 'react-redux';
 import configureStore from '@redux/store';
 import SplashScreen from 'react-native-splash-screen'
+import AsyncStorage from '@react-native-community/async-storage';
+import { fcmService } from './DS/FCMService';
+import { local } from './DS/Local';
 
 
 const store = configureStore();
@@ -17,9 +20,43 @@ class App extends React.Component {
 
 
   componentDidMount = async () => {
-    // console.disableYellowBox = true;
+    console.disableYellowBox = true;
     SplashScreen.hide()
+
+    fcmService.registerAppWithFCM();
+    fcmService.register(this.onRegister, this.onNotification, this.onOpenNotification);
+    local.configure(this.onOpenNotification)
+
+
   };
+
+  onRegister = (token) => {
+    console.warn("[App] Token", token);
+
+    AsyncStorage.setItem('fcmToken', token)
+  }
+
+
+  onNotification = (notify) => {
+    console.warn("[App] onNotification", notify);
+    const options = {
+      soundName: 'default',
+      playSound: true,
+    }
+
+    local.showNotification(
+      0,
+      notify.title,
+      notify.subtitle,
+      notify,
+      options,
+    )
+  }
+
+  onOpenNotification = async (notify) => {
+
+    console.warn('notify', notify);
+  }
 
 
 

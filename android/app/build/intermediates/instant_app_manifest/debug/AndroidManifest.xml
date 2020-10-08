@@ -22,11 +22,12 @@
         android:name="android.hardware.camera.front"
         android:required="false" />
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Required by older versions of Google Play services to create IID tokens -->
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" /> <!-- for android -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" /> <!-- for android -->
     <!-- <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/> -->
     <!-- <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS"/> -->
     <!-- <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" /> -->
@@ -48,7 +49,6 @@
     <uses-permission android:name="com.oppo.launcher.permission.WRITE_SETTINGS" /> <!-- for EvMe -->
     <uses-permission android:name="me.everything.badger.permission.BADGE_COUNT_READ" />
     <uses-permission android:name="me.everything.badger.permission.BADGE_COUNT_WRITE" />
-    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
 
     <application
         android:name="com.vchains.MainApplication"
@@ -57,6 +57,7 @@
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:testOnly="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true" >
         <activity
@@ -72,67 +73,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" /> <!-- firebase setup like goodmerchant -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@mipmap/ic_launcher" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/blue" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="test-channel" /> <!-- Add this line for Message service -->
-        <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService" >
+        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+
+        <service android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingHeadlessService" />
+        <service
+            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingService"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service> <!-- Add this line to enable backgound messaging services -->
-        <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService" /> <!-- firebase setup -->
-        <receiver android:name="io.invertase.firebase.notifications.RNFirebaseNotificationReceiver" />
-        <receiver
-            android:name="io.invertase.firebase.notifications.RNFirebaseNotificationsRebootReceiver"
-            android:enabled="true"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="io.invertase.firebase.notifications.RNFirebaseBackgroundNotificationActionReceiver"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="io.invertase.firebase.notifications.BackgroundAction" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name="io.invertase.firebase.notifications.RNFirebaseBackgroundNotificationActionsService" />
-        <service
-            android:name="com.google.firebase.components.ComponentDiscoveryService"
-            android:directBootAware="true"
-            android:exported="false" >
-            <meta-data
-                android:name="com.google.firebase.components:io.invertase.firebase.ReactNativeFirebaseAppRegistrar"
-                android:value="com.google.firebase.components.ComponentRegistrar" />
-            <meta-data
-                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
-                android:value="com.google.firebase.components.ComponentRegistrar" />
-            <meta-data
-                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
-                android:value="com.google.firebase.components.ComponentRegistrar" />
-            <meta-data
-                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
-                android:value="com.google.firebase.components.ComponentRegistrar" />
-            <meta-data
-                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
-                android:value="com.google.firebase.components.ComponentRegistrar" />
-            <meta-data
-                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
-                android:value="com.google.firebase.components.ComponentRegistrar" />
         </service>
+
+        <receiver
+            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="true" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/white" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -172,26 +141,32 @@
         -->
         <service
             android:name="com.google.firebase.messaging.FirebaseMessagingService"
+            android:directBootAware="true"
             android:exported="false" >
             <intent-filter android:priority="-500" >
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <receiver
-            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </receiver>
-
-        <activity
-            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-            android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
+        <service
+            android:name="com.google.firebase.components.ComponentDiscoveryService"
+            android:directBootAware="true"
+            android:exported="false" >
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+        </service>
         <service
             android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
             android:exported="false" >
@@ -213,6 +188,15 @@
             android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
             android:value="GlideModule" />
 
+        <receiver
+            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
         <provider
             android:name="com.google.firebase.provider.FirebaseInitProvider"
             android:authorities="com.vchains.firebaseinitprovider"
@@ -224,15 +208,6 @@
             android:enabled="true"
             android:exported="false" >
         </receiver>
-        <receiver
-            android:name="com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.INSTALL_PACKAGES" >
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
 
         <service
             android:name="com.google.android.gms.measurement.AppMeasurementService"
@@ -243,6 +218,11 @@
             android:enabled="true"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <activity
+            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <meta-data
             android:name="com.google.android.gms.version"

@@ -38,7 +38,7 @@ export default class DatePickerComponent extends Component {
   }
 
   render() {
-    const { isDateTimePickerVisible,date } = this.state
+    const { isDateTimePickerVisible, date } = this.state
 
     return (
       <View style={styles.container}>
@@ -83,7 +83,7 @@ export default class DatePickerComponent extends Component {
           <DateTimePicker
             isVisible={isDateTimePickerVisible}
             onConfirm={date => this.handleDatePicked(date)}
-            onCancel={() => hideDateTimePicker()}
+            onCancel={() => this.hideDateTimePicker()}
           />
         )}
 

@@ -8,7 +8,7 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator,
-  Dimensions,
+  Dimensions, KeyboardAvoidingView,
   ScrollView,
   SafeAreaView,
   Platform,
@@ -31,6 +31,8 @@ import {
 } from 'react-native-responsive-screen';
 import _Text from '@text/_Text';
 import { color } from '@values/colors';
+import _CustomHeader from '@customHeader/_CustomHeader';
+
 import {
   getCartData,
   getWishlistData,
@@ -149,7 +151,10 @@ const actionButtonRoundedStyle2 = StyleSheet.create({
 class CartContainer extends Component {
   constructor(props) {
     super(props);
+    const from = this.props.route && this.props.route.params && this.props.route.params.fromProductGrid;
+
     this.state = {
+      fromProductGrid: from,
       currentPage: 0,
       isToggle: false,
       isToogleTwo: false,
@@ -189,7 +194,7 @@ class CartContainer extends Component {
       quantity: '',
       length: '',
       weightArr: [],
-      weight:'',
+      weight: '',
       isModalVisible: false,
       date: '',
       isPlaceOrderModalVisible: false,
@@ -919,7 +924,7 @@ class CartContainer extends Component {
   };
 
   editCartProduct = editData => {
-    console.warn("editData",editData);
+    console.warn("editData", editData.weight[0]);
     this.setState({
       isModalVisible: true,
       productcode: editData.collection_sku_code,
@@ -929,6 +934,7 @@ class CartContainer extends Component {
       length: editData.values[4],
       weightArr: editData.weight,
       editStateData: editData,
+      weight: editData.weight[0].toString()
     });
   };
 
@@ -1282,7 +1288,7 @@ class CartContainer extends Component {
     orderData.append('which_device', type);
     orderData.append('remarks', comments1);
 
-     var timeStamp = new Date().getTime() + 10 * 24 * 60 * 60 * 1000;
+    var timeStamp = new Date().getTime() + 10 * 24 * 60 * 60 * 1000;
     var timeStampDate = moment(new Date(timeStamp).toISOString().slice(0, 10),).format('DD-MM-YYYY');
 
     var date1 = moment(timeStampDate, 'DD-MM-YYYY').valueOf();
@@ -1303,20 +1309,20 @@ class CartContainer extends Component {
   };
 
   render() {
-    const { cartData, wishlistData, isFetching, cartSummaryData,cartWeightData } = this.props;
+    const { cartData, wishlistData, isFetching, cartSummaryData, cartWeightData } = this.props;
     const {
       wishStateData,
       cartStateData,
       isCartImageModalVisibel,
       isDateTimePickerVisible,
       imageToBeDisplayed,
-      weight,
+      weight, fromProductGrid,
       weightArr
     } = this.state;
 
 
     const cartSummary = cartSummaryData && cartSummaryData.cart_summary && cartSummaryData.cart_summary.product_master
-    const cartWeight= cartWeightData && cartWeightData.data && cartWeightData.data.cart_data
+    const cartWeight = cartWeightData && cartWeightData.data && cartWeightData.data.cart_data
 
     const totalWT = cartWeightData && cartWeightData.data && cartWeightData.data.total_weight;
 
@@ -1325,666 +1331,696 @@ class CartContainer extends Component {
     let url = urls.imageUrl + 'public/backend/product_images/zoom_image/';
 
     return (
-      <Container style={{ flex: 1 }}>
-        <Tabs
-          tabBarUnderlineStyle={{ backgroundColor: '#19af81' }}
-          onChangeTab={({ i }) => this.setState({ currentPage: i })}>
-          <Tab
-            heading={
-              <TabHeading style={{ backgroundColor: '#f3fcf9' }}>
-                <Image
-                  resizeMode="contain"
-                  style={{ width: 22, height: 22 }}
-                  source={
-                    this.state.currentPage
-                      ? require('../../assets/image/GreyCart.png')
-                      : require('../../assets/image/BlueIcons/Green-Cart.png')
-                  }
-                />
-              </TabHeading>
-            }>
-            {cartData.length > 0 && !isFetching && this.CartDetails(cartData)}
-          </Tab>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#f3fcf9' }}>
 
-          <Tab
-            heading={
-              <TabHeading style={{ backgroundColor: '#f3fcf9' }}>
-                <Image
-                  resizeMode="contain"
-                  style={{ width: 22, height: 22 }}
-                  source={
-                    this.state.currentPage
-                      ? require('../../assets/image/BlueIcons/Green-Heart.png')
-                      : require('../../assets/image/GreyHeart.png')
-                  }
-                />
-              </TabHeading>
-            }>
-            {wishlistData.length > 0 &&
-              !isFetching &&
-              this.favoriteDetail(wishlistData)}
-          </Tab>
-        </Tabs>
+        <Container style={{}}>
 
-        {cartData.length > 0 && this.state.currentPage === 0 ? (
-          <View
-            style={{
-              height: 52,
-              justifyContent: 'space-between',
-              flexDirection: 'row',
-              marginHorizontal: 20,
-            }}>
-            <ActionButtonRounded
-              title="CART WEIGHT"
-              onButonPress={() =>
-                this.setState({ isCartWeightSummeryVisible: true })
-              }
-              containerStyle={styles.buttonStyle}
+          {fromProductGrid &&
+            <_CustomHeader
+              Title={this.state.currentPage === 0 ? 'Cart' : 'Wishlist'}
+              LeftBtnPress={() => this.props.navigation.goBack()}
+              backgroundColor="#19af81"
             />
-            <ActionButtonRounded
-              title="PLACE ORDER"
-              onButonPress={() => this.placeOrderContinue()}
-              containerStyle={styles.buttonStyle}
-            />
-          </View>
-        ) : null}
-
-        {this.props.isFetching ? this.renderLoader() : null}
-
-        {!this.props.isFetching &&
-          this.props.cartData.length === 0 &&
-          this.state.currentPage === 0
-          ? this.noDataFound(this.props.errorMsgCart)
-          : null}
-        {!this.props.isFetching &&
-          this.props.wishlistData.length === 0 &&
-          this.state.currentPage === 1
-          ? this.noDataFound(this.props.errorMsgWishlist)
-          : null}
-
-        {this.state.isCartImageModalVisibel && (
-          <View>
-            <Modal
-              style={{ justifyContent: 'center' }}
-              isVisible={this.state.isCartImageModalVisibel}
-              onRequestClose={() =>
-                this.setState({ isCartImageModalVisibel: false })
-              }
-              onBackdropPress={() =>
-                this.setState({ isCartImageModalVisibel: false })
-              }
-              onBackButtonPress={() =>
-                this.setState({ isCartImageModalVisibel: false })
-              }>
-              <SafeAreaView>
-                <View
-                  style={{
-                    height: hp(42),
-                    backgroundColor: 'white',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 10,
-                  }}>
-                  <_Text fsMedium style={{ marginTop: hp(0.5) }}>
-                    Code: {imageToBeDisplayed.collection_sku_code}
-                  </_Text>
-                  <View
-                    style={{
-                      marginTop: 5,
-                      borderBottomColor: 'gray',
-                      borderBottomWidth: 1,
-                      width: wp(90),
-                    }}
-                  />
+          }
+          <Tabs
+            tabBarUnderlineStyle={{ backgroundColor: '#19af81' }}
+            onChangeTab={({ i }) => this.setState({ currentPage: i })}>
+            <Tab
+              heading={
+                <TabHeading style={{ backgroundColor: '#f3fcf9' }}>
                   <Image
-                    source={{ uri: url + imageToBeDisplayed.images }}
-                    defaultSource={require('../../assets/image/default.png')}
-                    style={{
-                      height: hp(35),
-                      width: wp(90),
-                      marginTop: hp(1),
-                    }}
-                    resizeMode="cover"
-                  />
-                </View>
-              </SafeAreaView>
-            </Modal>
-          </View>
-        )}
-
-        {this.state.currentPage == 0 && cartData.length > 0 && (
-          <TouchableOpacity
-            hitSlop={{
-              position: 'absolute',
-              top: 5,
-              bottom: 5,
-              left: 5,
-              right: 5,
-            }}
-            style={styles.bottomView}
-            onPress={() => this.openDeleteAllCartModal()}>
-            <Image
-              source={require('../../assets/image/Delete.png')}
-              style={{ height: hp(3), width: hp(3) }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        )}
-
-        {this.state.currentPage == 1 && wishlistData.length > 0 && (
-          <TouchableOpacity
-            hitSlop={{
-              position: 'absolute',
-              top: 5,
-              bottom: 5,
-              left: 5,
-              right: 5,
-            }}
-            style={styles.bottomView}
-            onPress={() => this.openDeleteAllCartModal()}>
-            <Image
-              source={require('../../assets/image/Delete.png')}
-              style={{ height: hp(3), width: hp(3) }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        )}
-
-        {/* EDIT PRODUCT */}
-        <Modal
-          style={{
-            justifyContent: 'flex-end',
-            marginBottom: 0,
-            marginLeft: 0,
-            marginRight: 0,
-          }}
-          isVisible={this.state.isModalVisible}
-          transparent={true}
-          onRequestClose={() => this.setState({ isModalVisible: false })}
-          onBackdropPress={() => this.setState({ isModalVisible: false })}
-          onBackButtonPress={() => this.setState({ isModalVisible: false })}>
-          <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => null}>
-            <View
-              style={[
-                styles.bottomContainer,
-                { borderBottomLeftRadius: 0, borderBottomRightRadius: 0 },
-              ]}>
-              <ScrollView>
-                <View
-                  style={{
-                    height: 45,
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    backgroundColor: color.green
-                  }}>
-                  <Text style={{ fontSize: 18, color: '#FFFFFF', marginLeft: 15 }}>
-                    Edit Product
-                  </Text>
-                  <TouchableOpacity onPress={() => this.closeEditModal()}>
-                    <Image
-                      source={IconPack.WHITE_CLOSE}
-                      style={{ width: 18, height: 18, resizeMode: 'cover', marginRight: 15 }}
-                    />
-                  </TouchableOpacity>
-                </View>
-
-                <View
-                  style={{
-                    borderBottomColor: '#a3a3a3',
-                    borderBottomWidth: 0.5,
-                  }}></View>
-
-                <View style={{ marginHorizontal: 20, marginTop: 5 }}>
-                  <FloatingLabelTextInput
-                    label="Code"
-                    value={this.state.productcode}
-                    onChangeText={this.handleProductcodeChange}
-                    resetValue={this.resetFieldEmail}
-                    imageIcon="email"
-                    editable={false}
-                    selectTextOnFocus={false}
-                    width="95%"
-                    marginLeft={8}
-                  />
-                  <FloatingLabelTextInput
-                    label="Product Name"
-                    value={this.state.productName}
-                    onChangeText={this.handleProductNameChange}
-                    resetValue={this.resetFieldProductName}
-                    imageIcon="email"
-                    editable={false}
-                    width="95%"
-                    marginLeft={8}
-                  />
-                  <FloatingLabelTextInput
-                    label="Quantity"
-                    value={this.state.quantity}
-                    onChangeText={q => this.handleQuantityChange(q)}
-                    resetValue={() => this.resetFieldQuantity()}
-                    imageIcon="email"
-                    keyboardType="numeric"
-                    width="95%"
-                    marginLeft={8}
-                  />
-                </View>
-                <View style={{}}>
-                  <Text
-                    style={{ marginLeft: 58, fontSize: 16, color: '#a3a3a3' }}>
-                    Select Weight
-                  </Text>
-                  <Picker
-                    iosIcon={
-                      <Icon
-                        name="arrow-down"
-                        style={{ marginRight: hp(3), fontSize: 25 }}
-                      />
+                    resizeMode="contain"
+                    style={{ width: 22, height: 22 }}
+                    source={
+                      this.state.currentPage
+                        ? require('../../assets/image/GreyCart.png')
+                        : require('../../assets/image/BlueIcons/Green-Cart.png')
                     }
-                    mode="dropdown"
-                    style={{ marginLeft: 52, height: 45, width: '70%' }}
-                    selectedValue={this.state.weight}
-                    onValueChange={(value) => this.setSelectedValue(value)
-                    }>
-                    {this.state.weightArr!=null && this.state.weightArr.map(w => (
-                      <Picker.Item label={w.toString()} value={parseInt(w)} />
-                    ))}
-                  </Picker>
-                </View>
-
-                <View style={{ marginHorizontal: 20, marginTop: 10 }}>
-                  <FloatingLabelTextInput
-                    label="Length (inches)"
-                    value={this.state.length}
-                    onChangeText={l => this.handleLengthChange(l)}
-                    resetValue={this.resetFieldLength}
-                    imageIcon="email"
-                    keyboardType="numeric"
-                    width="95%"
-                    marginLeft={8}
                   />
-                  <FloatingLabelTextInput
-                    label="Comments"
-                    value={this.state.comments}
-                    onChangeText={c => this.handleCommentsChange(c)}
-                    resetValue={this.resetFieldComment}
-                    imageIcon="comments"
-                    width="95%"
-                    marginLeft={8}
-                  />
-                </View>
-                <View style={styles.btnView}>
-                  {!this.props.isFetching && this.state.isModalVisible ? (
-                    <ActionButtonRounded2
-                      title="UPDATE"
-                      onButonPress={() => this.updateCartProduct()}
-                      containerStyle={styles.buttonStyle}
-                    />
-                  ) : (
-                      <ActivityIndicator size="small" color={color.brandColor} />
-                    )}
-                </View>
-              </ScrollView>
-            </View>
-          </TouchableWithoutFeedback>
-          {/* </View> */}
-        </Modal>
+                </TabHeading>
+              }>
+              {cartData.length > 0 && !isFetching && this.CartDetails(cartData)}
+            </Tab>
 
-        {/* PLACE ORDER */}
-        <Modal
-          style={{
-            justifyContent: 'flex-end',
-            marginBottom: 0,
-            marginLeft: 0,
-            marginRight: 0,
-          }}
-          isVisible={this.state.isPlaceOrderModalVisible}
-          transparent={true}
-          onRequestClose={() =>
-            this.setState({ isPlaceOrderModalVisible: false })
-          }
-          onBackdropPress={() =>
-            this.setState({ isPlaceOrderModalVisible: false })
-          }
-          onBackButtonPress={() =>
-            this.setState({ isPlaceOrderModalVisible: false })
-          }>
-          <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => null}>
-            <View
-              style={[
-                styles.bottomContainer,
-                { borderBottomLeftRadius: 0, borderBottomRightRadius: 0 },
-              ]}>
-              <View
-                style={{
-                  backgroundColor: 'white',
-                  marginLeft: wp(44),
-                  borderColor: 'red',
-                  borderWidth: 2,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: hp(7),
-                  width: hp(7),
-                  borderRadius: hp(3.5),
-                  bottom: hp(3.2),
-                }}>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.setState({ isPlaceOrderModalVisible: false })
-                  }
-                  hitSlop={{
-                    position: 'absolute',
-                    top: 5,
-                    bottom: 5,
-                    left: 5,
-                    right: 5,
-                  }}>
+            <Tab
+              heading={
+                <TabHeading style={{ backgroundColor: '#f3fcf9' }}>
                   <Image
-                    source={require('../../assets/image/remove.png')}
-                    style={{ height: hp(5), width: hp(5) }}
+                    resizeMode="contain"
+                    style={{ width: 22, height: 22 }}
+                    source={
+                      this.state.currentPage
+                        ? require('../../assets/image/BlueIcons/Green-Heart.png')
+                        : require('../../assets/image/GreyHeart.png')
+                    }
                   />
-                </TouchableOpacity>
-              </View>
+                </TabHeading>
+              }>
+              {wishlistData.length > 0 &&
+                !isFetching &&
+                this.favoriteDetail(wishlistData)}
+            </Tab>
+          </Tabs>
 
-              <ScrollView>
-                <View style={{ marginHorizontal: 20, marginTop: 5 }}>
-                  <FloatingLabelTextInput
-                    label="Name"
-                    value={this.state.name}
-                    onChangeText={this.handleNameChange}
-                    resetValue={this.resetFieldName}
-                    imageIcon="profile"
-                    width="95%"
-                    marginLeft={8}
-                  />
-                  <FloatingLabelTextInput
-                    label="Email"
-                    value={this.state.email}
-                    onChangeText={this.handleEmailChange}
-                    resetValue={this.resetFieldEmail1}
-                    imageIcon="email"
-                    editable={false}
-                    selectTextOnFocus={false}
-                    width="95%"
-                    marginLeft={8}
-                  />
-                  <FloatingLabelTextInput
-                    label="Mobile"
-                    value={this.state.mobileNo}
-                    onChangeText={this.handleMobileChange}
-                    resetValue={this.resetFieldMobileNo}
-                    imageIcon="Mobile"
-                    width="95%"
-                    marginLeft={8}
-                  />
-                  <FloatingLabelTextInput
-                    label="Comments"
-                    value={this.state.comments1}
-                    onChangeText={this.handleCommentsChange1}
-                    resetValue={this.resetFieldComment1}
-                    imageIcon="comments"
-                    width="95%"
-                    marginLeft={8}
-                  />
+          {cartData.length > 0 && this.state.currentPage === 0 ? (
+            <View
+              style={{
+                height: 52,
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+                marginHorizontal: 20,
+              }}>
+              <ActionButtonRounded
+                title="CART WEIGHT"
+                onButonPress={() =>
+                  this.setState({ isCartWeightSummeryVisible: true })
+                }
+                containerStyle={styles.buttonStyle}
+              />
+              <ActionButtonRounded
+                title="PLACE ORDER"
+                onButonPress={() => this.placeOrderContinue()}
+                containerStyle={styles.buttonStyle}
+              />
+            </View>
+          ) : null}
+
+          {this.props.isFetching ? this.renderLoader() : null}
+
+          {!this.props.isFetching &&
+            this.props.cartData.length === 0 &&
+            this.state.currentPage === 0
+            ? this.noDataFound(this.props.errorMsgCart)
+            : null}
+          {!this.props.isFetching &&
+            this.props.wishlistData.length === 0 &&
+            this.state.currentPage === 1
+            ? this.noDataFound(this.props.errorMsgWishlist)
+            : null}
+
+          {this.state.isCartImageModalVisibel && (
+            <View>
+              <Modal
+                style={{ justifyContent: 'center' }}
+                isVisible={this.state.isCartImageModalVisibel}
+                onRequestClose={() =>
+                  this.setState({ isCartImageModalVisibel: false })
+                }
+                onBackdropPress={() =>
+                  this.setState({ isCartImageModalVisibel: false })
+                }
+                onBackButtonPress={() =>
+                  this.setState({ isCartImageModalVisibel: false })
+                }>
+                <SafeAreaView>
                   <View
                     style={{
-                      marginTop: 32,
-                      flexDirection: 'row',
+                      height: hp(42),
+                      backgroundColor: 'white',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: 10,
                     }}>
-                    <View style={{ marginRight: 10 }}>
-                      <Image
-                        source={require('../../assets/image/BlueIcons/Date.png')}
-                        style={{ width: 25, height: 25, resizeMode: 'cover' }}
-                      />
-                    </View>
+                    <_Text fsMedium style={{ marginTop: hp(0.5) }}>
+                      Code: {imageToBeDisplayed.collection_sku_code}
+                    </_Text>
                     <View
                       style={{
-                        borderBottomWidth: 0.5,
-                        borderColor: '#a3a3a3',
-                        width: '88%',
-                        marginLeft: 6,
+                        marginTop: 5,
+                        borderBottomColor: 'gray',
+                        borderBottomWidth: 1,
+                        width: wp(90),
+                      }}
+                    />
+                    <Image
+                      source={{ uri: url + imageToBeDisplayed.images }}
+                      defaultSource={require('../../assets/image/default.png')}
+                      style={{
+                        height: hp(35),
+                        width: wp(90),
+                        marginTop: hp(1),
+                      }}
+                      resizeMode="cover"
+                    />
+                  </View>
+                </SafeAreaView>
+              </Modal>
+            </View>
+          )}
+
+          {this.state.currentPage == 0 && cartData.length > 0 && (
+            <TouchableOpacity
+              hitSlop={{
+                position: 'absolute',
+                top: 5,
+                bottom: 5,
+                left: 5,
+                right: 5,
+              }}
+              style={styles.bottomView}
+              onPress={() => this.openDeleteAllCartModal()}>
+              <Image
+                source={require('../../assets/image/Delete.png')}
+                style={{ height: hp(3), width: hp(3) }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          )}
+
+          {this.state.currentPage == 1 && wishlistData.length > 0 && (
+            <TouchableOpacity
+              hitSlop={{
+                position: 'absolute',
+                top: 5,
+                bottom: 5,
+                left: 5,
+                right: 5,
+              }}
+              style={styles.bottomView}
+              onPress={() => this.openDeleteAllCartModal()}>
+              <Image
+                source={require('../../assets/image/Delete.png')}
+                style={{ height: hp(3), width: hp(3) }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          )}
+
+          {/* EDIT PRODUCT */}
+          {this.state.isModalVisible &&
+            <Modal
+              style={{
+                justifyContent: 'flex-end',
+                marginBottom: 0,
+                marginLeft: 0,
+                marginRight: 0,
+              }}
+              isVisible={this.state.isModalVisible}
+              transparent={true}
+              onRequestClose={() => this.setState({ isModalVisible: false })}
+              onBackdropPress={() => this.setState({ isModalVisible: false })}
+              onBackButtonPress={() => this.setState({ isModalVisible: false })}>
+              <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => null}>
+                <View
+                  style={[
+                    styles.bottomContainer,
+                    { borderBottomLeftRadius: 0, borderBottomRightRadius: 0 },
+                  ]}>
+                  <ScrollView>
+                    <View
+                      style={{
+                        height: 45,
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        backgroundColor: color.green
                       }}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.showDateTimePicker();
-                        }}>
-                        <Text style={styles.textDatePickerStyle}>
-                          {!this.state.date ? 'Date' : this.state.date}
-                        </Text>
+                      <Text style={{ fontSize: 18, color: '#FFFFFF', marginLeft: 15 }}>
+                        Edit Product
+                  </Text>
+                      <TouchableOpacity onPress={() => this.closeEditModal()}>
+                        <Image
+                          source={IconPack.WHITE_CLOSE}
+                          style={{ width: 18, height: 18, resizeMode: 'cover', marginRight: 15 }}
+                        />
                       </TouchableOpacity>
                     </View>
-                  </View>
 
-                  {isDateTimePickerVisible && (
-                    <DateTimePicker
-                      isVisible={isDateTimePickerVisible}
-                      onConfirm={date => this.handleDatePicked(date)}
-                      onCancel={()=>this.hideDateTimePicker()}
-                    />
-                  )}
-                </View>
+                    <View
+                      style={{
+                        borderBottomColor: '#a3a3a3',
+                        borderBottomWidth: 0.5,
+                      }}></View>
 
-                <View style={[styles.btnView, { marginVertical: 15 }]}>
-                  {this.state.isPlaceOrderModalVisible &&
-                    !this.props.isFetching ? (
-                      <ActionButtonRounded
-                        title="PLACE ORDER"
-                        onButonPress={() => this.placeOrderFromCart()}
-                        containerStyle={styles.buttonStyle}
+                    <View style={{ marginHorizontal: 20, marginTop: 5 }}>
+                      <FloatingLabelTextInput
+                        label="Code"
+                        value={this.state.productcode}
+                        onChangeText={this.handleProductcodeChange}
+                        resetValue={this.resetFieldEmail}
+                        imageIcon="email"
+                        editable={false}
+                        selectTextOnFocus={false}
+                        width="95%"
+                        marginLeft={8}
                       />
-                    ) : (
-                      <ActivityIndicator size="small" color={color.brandColor} />
-                    )}
-                </View>
-              </ScrollView>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
-
-        {/* CONTINUE PLACE ORDER */}
-        <Modal
-          isVisible={this.state.isContinueModalVisible}
-          transparent={true}
-          onRequestClose={() => this.setState({ isContinueModalVisible: false })}
-          onBackdropPress={() => this.setState({ isContinueModalVisible: false })}
-          onBackButtonPress={() =>
-            this.setState({ isContinueModalVisible: false })
-          }>
-          <TouchableWithoutFeedback
-            style={{ flex: 1 }}
-            onPress={() => this.setState({ isContinueModalVisible: false })}>
-            <View style={styles.mainContainer}>
-              <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => null}>
-                <View>
-                  <View style={styles.alertContainer}>
-                    <Image source={IconPack.RATE} style={styles.alertIcon} />
-                    <Text style={styles.alertText}>Alert !</Text>
-                  </View>
-
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.setState({ isContinueModalVisible: false })
-                    }
-                    style={styles.closeIconContainer}>
-                    <Image source={IconPack.WHITE_CLOSE} style={styles.closeIcon} />
-                  </TouchableOpacity>
-
-                  <View style={styles.bottomContainer}>
-                    <Text style={styles.cartSummaryText}>Cart Summary</Text>
-                    <View style={styles.middleViewContainer}>
-                      <Text style={styles.middleText}>Product Master :</Text>
-                      <Text style={styles.middleText}>
-                        Gross Weight : {cartSummary && cartSummary.gross_wt ? parseInt(cartSummary.gross_wt).toFixed(2) : ''}
-                      </Text>
-                      <Text style={styles.middleText}>Quantity : {cartSummary && cartSummary.quantity ? cartSummary.quantity : ''}</Text>
+                      <FloatingLabelTextInput
+                        label="Product Name"
+                        value={this.state.productName}
+                        onChangeText={this.handleProductNameChange}
+                        resetValue={this.resetFieldProductName}
+                        imageIcon="email"
+                        editable={false}
+                        width="95%"
+                        marginLeft={8}
+                      />
+                      <FloatingLabelTextInput
+                        label="Quantity"
+                        value={this.state.quantity}
+                        onChangeText={q => this.handleQuantityChange(q)}
+                        resetValue={() => this.resetFieldQuantity()}
+                        imageIcon="email"
+                        keyboardType="numeric"
+                        width="95%"
+                        marginLeft={8}
+                        returnKeyType='done'
+                      />
                     </View>
-                    <View style={{ marginHorizontal: 20 }}>
-                      <Text style={styles.middleText}>
-                        Are you sure ? You want to check out, Click continue to
-                        proceed further
-                      </Text>
+                    <View>
+                      <Text
+                        style={{ marginLeft: 58, fontSize: 16, color: '#a3a3a3' }}>
+                        Select Weight
+                  </Text>
+                      <Picker
+                        iosIcon={<Icon type='Feather' name='arrow-down' style={{ fontSize: 25 }} />}
+                        mode="dropdown"
+                        style={{ height: 45, marginLeft: 60, width: '70%' }}
+                        selectedValue={this.state.weight}
+                        onValueChange={(value) => this.setSelectedValue(value)
+                        }>
+                        {this.state.weightArr != null && this.state.weightArr.map(w => (
+                          <Picker.Item label={w.toString()} value={parseInt(w)} />
+                        ))}
+
+
+                      </Picker>
+                    </View>
+
+                    <View style={{ marginHorizontal: 20, marginTop: 10 }}>
+                      <FloatingLabelTextInput
+                        label="Length (inches)"
+                        value={this.state.length}
+                        onChangeText={l => this.handleLengthChange(l)}
+                        resetValue={this.resetFieldLength}
+                        imageIcon="email"
+                        keyboardType="numeric"
+                        width="95%"
+                        marginLeft={8}
+                        returnKeyType='done'
+
+                      />
+                      <FloatingLabelTextInput
+                        label="Comments"
+                        value={this.state.comments}
+                        onChangeText={c => this.handleCommentsChange(c)}
+                        resetValue={this.resetFieldComment}
+                        imageIcon="comments"
+                        width="95%"
+                        marginLeft={8}
+                        returnKeyType='done'
+
+                      />
                     </View>
                     <View style={styles.btnView}>
-                      <ActionButtonRounded
-                        title="CONTINUE"
-                        onButonPress={() => this.placeOrderView()}
-                        containerStyle={styles.buttonStyle}
-                      />
+                      {!this.props.isFetching && this.state.isModalVisible ? (
+                        <ActionButtonRounded2
+                          title="UPDATE"
+                          onButonPress={() => this.updateCartProduct()}
+                          containerStyle={styles.buttonStyle}
+                        />
+                      ) : (
+                          <ActivityIndicator size="small" color={color.brandColor} />
+                        )}
                     </View>
-                  </View>
+                  </ScrollView>
                 </View>
               </TouchableWithoutFeedback>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
-
-        {/* DELETE ALL CART MODAL */}
-        <Modal
-          isVisible={this.state.isDeleteCartVisible}
-          transparent={true}
-          onBackdropPress={() => this.setState({ isDeleteCartVisible: false })}
-          onBackButtonPress={() => this.setState({ isDeleteCartVisible: false })}
-          onRequestClose={() => this.setState({ isDeleteCartVisible: false })}>
-          <TouchableWithoutFeedback
-            style={{ flex: 1 }}
-            onPress={() =>
-              this.setState({
-                isDeleteCartVisible: false,
-              })
-            }>
-            <View style={styles.mainContainer}>
+              {/* </View> */}
+            </Modal>
+          }
+          {/* PLACE ORDER */}
+          {this.state.isPlaceOrderModalVisible &&
+            <Modal
+              style={{
+                justifyContent: 'flex-end',
+                marginBottom: 0,
+                marginLeft: 0,
+                marginRight: 0,
+              }}
+              isVisible={this.state.isPlaceOrderModalVisible}
+              transparent={true}
+              onRequestClose={() =>
+                this.setState({ isPlaceOrderModalVisible: false })
+              }
+              onBackdropPress={() =>
+                this.setState({ isPlaceOrderModalVisible: false })
+              }
+              onBackButtonPress={() =>
+                this.setState({ isPlaceOrderModalVisible: false })
+              }>
               <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => null}>
-                <View>
-                  <View style={styles.alertContainer}>
-                    <Image source={IconPack.RATE} style={styles.alertIcon} />
-                    <Text style={styles.alertText}>Alert !</Text>
+                <KeyboardAvoidingView
+                  behavior={Platform.OS === 'ios' ? 'padding' : null}
+                  keyboardVerticalOffset={Platform.select({
+                    ios: -125,
+                    android: 500,
+                  })}
+                >
+                  <View
+                    style={[
+                      styles.bottomContainer,
+                      { borderBottomLeftRadius: 0, borderBottomRightRadius: 0 },
+                    ]}>
+                    <View
+                      style={{
+                        backgroundColor: 'white',
+                        marginLeft: wp(44),
+                        borderColor: 'red',
+                        borderWidth: 2,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: hp(7),
+                        width: hp(7),
+                        borderRadius: hp(3.5),
+                        bottom: hp(3.2),
+                      }}>
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.setState({ isPlaceOrderModalVisible: false })
+                        }
+                        hitSlop={{
+                          position: 'absolute',
+                          top: 5,
+                          bottom: 5,
+                          left: 5,
+                          right: 5,
+                        }}>
+                        <Image
+                          source={require('../../assets/image/remove.png')}
+                          style={{ height: hp(5), width: hp(5) }}
+                        />
+                      </TouchableOpacity>
+                    </View>
+
+                    <ScrollView>
+                      <View style={{ marginHorizontal: 20, marginTop: 5 }}>
+                        <FloatingLabelTextInput
+                          label="Name"
+                          value={this.state.name}
+                          onChangeText={this.handleNameChange}
+                          resetValue={this.resetFieldName}
+                          imageIcon="profile"
+                          width="95%"
+                          marginLeft={8}
+                        />
+                        <FloatingLabelTextInput
+                          label="Email"
+                          value={this.state.email}
+                          onChangeText={this.handleEmailChange}
+                          resetValue={this.resetFieldEmail1}
+                          imageIcon="email"
+                          editable={false}
+                          selectTextOnFocus={false}
+                          width="95%"
+                          marginLeft={8}
+                        />
+                        <FloatingLabelTextInput
+                          label="Mobile"
+                          value={this.state.mobileNo}
+                          onChangeText={this.handleMobileChange}
+                          resetValue={this.resetFieldMobileNo}
+                          imageIcon="Mobile"
+                          width="95%"
+                          marginLeft={8}
+                        />
+                        <FloatingLabelTextInput
+                          label="Comments"
+                          value={this.state.comments1}
+                          onChangeText={this.handleCommentsChange1}
+                          resetValue={this.resetFieldComment1}
+                          imageIcon="comments"
+                          width="95%"
+                          marginLeft={8}
+                          returnKeyType={'done'}
+
+                        />
+                        <View
+                          style={{
+                            marginTop: 32,
+                            flexDirection: 'row',
+                          }}>
+                          <View style={{ marginRight: 10 }}>
+                            <Image
+                              source={require('../../assets/image/BlueIcons/Date.png')}
+                              style={{ width: 25, height: 25, resizeMode: 'cover' }}
+                            />
+                          </View>
+                          <View
+                            style={{
+                              borderBottomWidth: 0.5,
+                              borderColor: '#a3a3a3',
+                              width: '88%',
+                              marginLeft: 6,
+                            }}>
+                            <TouchableOpacity
+                              onPress={() => {
+                                this.showDateTimePicker();
+                              }}>
+                              <Text style={styles.textDatePickerStyle}>
+                                {!this.state.date ? 'Date' : this.state.date}
+                              </Text>
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+
+                        {isDateTimePickerVisible && (
+                          <DateTimePicker
+                            isVisible={isDateTimePickerVisible}
+                            onConfirm={date => this.handleDatePicked(date)}
+                            onCancel={() => this.hideDateTimePicker()}
+                          />
+                        )}
+                      </View>
+
+                      <View style={[styles.btnView, { marginVertical: 15 }]}>
+                        {this.state.isPlaceOrderModalVisible &&
+                          !this.props.isFetching ? (
+                            <ActionButtonRounded
+                              title="PLACE ORDER"
+                              onButonPress={() => this.placeOrderFromCart()}
+                              containerStyle={styles.buttonStyle}
+                            />
+                          ) : (
+                            <ActivityIndicator size="small" color={color.brandColor} />
+                          )}
+                      </View>
+                    </ScrollView>
                   </View>
-                  <TouchableOpacity
-                    onPress={() => this.setState({ isDeleteCartVisible: false })}
-                    style={styles.closeIconContainer}>
-                    <Image source={IconPack.WHITE_CLOSE} style={styles.closeIcon} />
-                  </TouchableOpacity>
-                  <View style={styles.bottomContainer}>
-                    <View style={{ marginHorizontal: 20, marginTop: 20 }}>
-                      <Text style={styles.middleText}>
-                        Are you sure ? You want to delete all item, Click
-                        continue to proceed further
+
+                </KeyboardAvoidingView>
+              </TouchableWithoutFeedback>
+            </Modal>
+          }
+
+          {/* CONTINUE PLACE ORDER */}
+          {this.state.isContinueModalVisible &&
+            <Modal
+              isVisible={this.state.isContinueModalVisible}
+              transparent={true}
+              onRequestClose={() => this.setState({ isContinueModalVisible: false })}
+              onBackdropPress={() => this.setState({ isContinueModalVisible: false })}
+              onBackButtonPress={() =>
+                this.setState({ isContinueModalVisible: false })
+              }>
+              <TouchableWithoutFeedback
+                style={{ flex: 1 }}
+                onPress={() => this.setState({ isContinueModalVisible: false })}>
+                <View style={styles.mainContainer}>
+                  <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => null}>
+                    <View>
+                      <View style={styles.alertContainer}>
+                        <Image source={IconPack.RATE} style={styles.alertIcon} />
+                        <Text style={styles.alertText}>Alert !</Text>
+                      </View>
+
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.setState({ isContinueModalVisible: false })
+                        }
+                        style={styles.closeIconContainer}>
+                        <Image source={IconPack.WHITE_CLOSE} style={styles.closeIcon} />
+                      </TouchableOpacity>
+
+                      <View style={styles.bottomContainer}>
+                        <Text style={styles.cartSummaryText}>Cart Summary</Text>
+                        <View style={styles.middleViewContainer}>
+                          <Text style={styles.middleText}>Product Master :</Text>
+                          <Text style={styles.middleText}>
+                            Gross Weight : {cartSummary && cartSummary.gross_wt ? parseInt(cartSummary.gross_wt).toFixed(2) : ''}
+                          </Text>
+                          <Text style={styles.middleText}>Quantity : {cartSummary && cartSummary.quantity ? cartSummary.quantity : ''}</Text>
+                        </View>
+                        <View style={{ marginHorizontal: 20 }}>
+                          <Text style={styles.middleText}>
+                            Are you sure ? You want to check out, Click continue to
+                            proceed further
                       </Text>
+                        </View>
+                        <View style={styles.btnView}>
+                          <ActionButtonRounded
+                            title="CONTINUE"
+                            onButonPress={() => this.placeOrderView()}
+                            containerStyle={styles.buttonStyle}
+                          />
+                        </View>
+                      </View>
                     </View>
-                    <View style={styles.btnView}>
-                      <ActionButtonRounded
-                        title="CONTINUE"
-                        onButonPress={() => this.deleteAllProduct()}
-                        containerStyle={styles.buttonStyle}
-                      />
-                    </View>
-                  </View>
+                  </TouchableWithoutFeedback>
                 </View>
               </TouchableWithoutFeedback>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
+            </Modal>
+          }
+          {/* DELETE ALL CART MODAL */}
+          <Modal
+            isVisible={this.state.isDeleteCartVisible}
+            transparent={true}
+            onBackdropPress={() => this.setState({ isDeleteCartVisible: false })}
+            onBackButtonPress={() => this.setState({ isDeleteCartVisible: false })}
+            onRequestClose={() => this.setState({ isDeleteCartVisible: false })}>
+            <TouchableWithoutFeedback
+              style={{ flex: 1 }}
+              onPress={() =>
+                this.setState({
+                  isDeleteCartVisible: false,
+                })
+              }>
+              <View style={styles.mainContainer}>
+                <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => null}>
+                  <View>
+                    <View style={styles.alertContainer}>
+                      <Image source={IconPack.RATE} style={styles.alertIcon} />
+                      <Text style={styles.alertText}>Alert !</Text>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => this.setState({ isDeleteCartVisible: false })}
+                      style={styles.closeIconContainer}>
+                      <Image source={IconPack.WHITE_CLOSE} style={styles.closeIcon} />
+                    </TouchableOpacity>
+                    <View style={styles.bottomContainer}>
+                      <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                        <Text style={styles.middleText}>
+                          Are you sure ? You want to delete all item, Click
+                          continue to proceed further
+                      </Text>
+                      </View>
+                      <View style={styles.btnView}>
+                        <ActionButtonRounded
+                          title="CONTINUE"
+                          onButonPress={() => this.deleteAllProduct()}
+                          containerStyle={styles.buttonStyle}
+                        />
+                      </View>
+                    </View>
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
 
-        {/* CART weight */}
-        <Modal
-          isVisible={this.state.isCartWeightSummeryVisible}
-          transparent={true}
-          onBackButtonPress={() =>
-            this.setState({ isCartWeightSummeryVisible: false })
-          }
-          onRequestClose={() =>
-            this.setState({ isCartWeightSummeryVisible: false })
-          }
-          onRequestClose={() =>
-            this.setState({ isCartWeightSummeryVisible: false })
-          }
-          style={{
-            marginLeft: 20,
-            marginRight: 20,
-            paddingTop: hp(11),
-            paddingBottom: hp(11),
-          }}>
-          <>
-            <View style={styles.flex}>
-              <View style={styles.cartSummaryContainer}>
-                <Text style={[styles.alertText, { marginLeft: 20 }]}>
-                  Cart Summary
+          {/* CART weight */}
+          <Modal
+            isVisible={this.state.isCartWeightSummeryVisible}
+            transparent={true}
+            onBackButtonPress={() =>
+              this.setState({ isCartWeightSummeryVisible: false })
+            }
+            onRequestClose={() =>
+              this.setState({ isCartWeightSummeryVisible: false })
+            }
+            onRequestClose={() =>
+              this.setState({ isCartWeightSummeryVisible: false })
+            }
+            style={{
+              marginLeft: 20,
+              marginRight: 20,
+              paddingTop: hp(11),
+              paddingBottom: hp(11),
+            }}>
+            <>
+              <View style={styles.flex}>
+                <View style={styles.cartSummaryContainer}>
+                  <Text style={[styles.alertText, { marginLeft: 20 }]}>
+                    Cart Summary
                 </Text>
 
-                <View style={styles.closeIconView}>
-                  <TouchableOpacity onPress={() => this.closeSummeryModal()}>
-                    <Image style={styles.closeIcon} source={IconPack.WHITE_CLOSE} />
-                  </TouchableOpacity>
+                  <View style={styles.closeIconView}>
+                    <TouchableOpacity onPress={() => this.closeSummeryModal()}>
+                      <Image style={styles.closeIcon} source={IconPack.WHITE_CLOSE} />
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
 
-              <FlatList
-                style={{ backgroundColor: '#ffffff' }}
-                showsVerticalScrollIndicator={false}
-                data={cartWeight && cartWeight}
-                renderItem={({ item }) => (
-                  <View style={{ marginHorizontal: 16, marginTop: 20}}>
-                    <View style={{marginBottom: 15}}>
-                      <Text style={{fontWeight:'200',fontSize:16}}>{`Category: ${item.key}`}</Text>
-                    </View>
+                <FlatList
+                  style={{ backgroundColor: '#ffffff' }}
+                  showsVerticalScrollIndicator={false}
+                  data={cartWeight && cartWeight}
+                  renderItem={({ item }) => (
+                    <View style={{ marginHorizontal: 16, marginTop: 20 }}>
+                      <View style={{ marginBottom: 15 }}>
+                        <Text style={{ fontWeight: '200', fontSize: 16 }}>{`Category: ${item.key}`}</Text>
+                      </View>
 
-                    <View style={{marginBottom: 20}}>
-                      <Text>{'Description:'}</Text>
-                      {item.cat_data.map(m => {
-                        return (
-                          <View>
-                            <Text style={{marginBottom:2}}>
-                             - Design No: {m.product_id} (Gross Wt:
+                      <View style={{ marginBottom: 20 }}>
+                        <Text>{'Description:'}</Text>
+                        {item.cat_data.map(m => {
+                          return (
+                            <View>
+                              <Text style={{ marginBottom: 2 }}>
+                                - Design No: {m.product_id} (Gross Wt:
                               {parseInt(m.gross_wt).toFixed(2)}, Net Wt:{parseInt(m.net_wt).toFixed(2)}, Quantity:
                               {m.quantity} )
                             </Text>
-                          </View>
-                        );
-                      })}
+                            </View>
+                          );
+                        })}
+                      </View>
+
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          marginBottom: 10,
+                        }}>
+                        <Text>{`Total Quantity: ${item.total_quantity}`}</Text>
+                        <Text>{`Total WT: ${item.total_weight}`}</Text>
+                      </View>
+
+                      <View style={{ borderBottomWidth: 1, borderColor: '#ddd', borderBottomWidth: 0.8 }} />
                     </View>
-
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginBottom: 10,
-                      }}>
-                      <Text>{`Total Quantity: ${item.total_quantity}`}</Text>
-                      <Text>{`Total WT: ${item.total_weight}`}</Text>
+                  )}
+                />
+                <View style={styles.buttonContainer}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      marginTop: 25, marginBottom: 5
+                    }}>
+                    <View>
+                      <Text style={{ fontWeight: '200', fontSize: 16 }}>Total WT: {totalWT && parseInt(totalWT).toFixed(2)}</Text>
                     </View>
+                    <View style={{ marginLeft: 30 }}>
+                      <Text style={{ fontSize: 16, fontWeight: '200' }}>Total Quantity: {totalQuantity}</Text>
+                    </View>
+                  </View>
 
-                    <View style={{borderBottomWidth: 1,borderColor: '#ddd',borderBottomWidth: 0.8}}/>
+                  <View style={[styles.btnView, { bottom: 10, }]}>
+                    <ActionButtonRounded
+                      title="OK"
+                      onButonPress={() => this.closeSummeryModal()}
+                      containerStyle={styles.buttonStyle}
+                    />
                   </View>
-                )}
-              />
-              <View style={styles.buttonContainer}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: 25,marginBottom:5
-                  }}>
-                  <View>
-                <Text style={{fontWeight:'200', fontSize: 16 }}>Total WT: { totalWT && parseInt(totalWT).toFixed(2)}</Text>
-                  </View>
-                  <View style={{ marginLeft: 30 }}>
-                    <Text style={{ fontSize: 16,fontWeight:'200' }}>Total Quantity: {totalQuantity}</Text>
-                  </View>
-                </View>
-
-                <View style={[styles.btnView, { bottom: 10, }]}>
-                  <ActionButtonRounded
-                    title="OK"
-                    onButonPress={() => this.closeSummeryModal()}
-                    containerStyle={styles.buttonStyle}
-                  />
                 </View>
               </View>
-            </View>
-          </>
+            </>
 
-        </Modal>
-      </Container>
+          </Modal>
+
+        </Container>
+
+      </SafeAreaView>
     );
   }
 }
@@ -2019,7 +2055,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica',
     color: 'gray',
     textAlign: 'center',
-    marginTop:5
+    marginTop: 5
   },
   mainContainer: {
     flex: 1,
@@ -2064,7 +2100,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
   },
-  
+
   middleViewContainer: {
     marginVertical: 20,
   },

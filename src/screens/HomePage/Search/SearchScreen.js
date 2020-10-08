@@ -24,21 +24,20 @@ import { color } from '@values/colors';
 import Modal from 'react-native-modal';
 import IconPack from '@login/IconPack';
 import CheckBox from '@react-native-community/checkbox';
-import { Toast,Picker, Icon } from 'native-base'
+import { Toast, Picker, Icon } from 'native-base'
 import { strings } from '@values/strings'
 
-import { searchProducts , searchByCode} from '@search/SearchAction'
+import { searchProducts, searchByCode } from '@search/SearchAction'
 import FromDatePicker from './FromDatePicker'
 import ToDatePicker from './ToDatePicker'
 import FloatingLabelTextInput from '@floatingInputBox/FloatingLabelTextInput';
 import Theme from '../../../values/Theme';
-import { value } from 'react-native-extended-stylesheet';
 
 const { width } = Dimensions.get('window');
 
-var categoryIds=[]
+var categoryIds = []
 
-var karatIds=[]
+var karatIds = []
 
 
 class SearchScreen extends Component {
@@ -54,28 +53,28 @@ class SearchScreen extends Component {
             isModalVisible: false,
             isContinueClicked: false,
             check: {},
-            karat:{},
-            selectedKarat:[],
+            karat: {},
+            selectedKarat: [],
             collection: [],
             selectedCategories: [],
 
             successSearchbyCategoryVersion: 0,
             errorSearchbyCategoryVersion: 0,
             searchText: '',
-            isSearchCodeVisible:false,
+            isSearchCodeVisible: false,
 
             successSearchbyCodeVersion: 0,
             errorSearchbyCodeVersion: 0,
-            search:'',
-            isKaratModalVisible:false,
-            toggleCheckBox:true,
+            search: '',
+            isKaratModalVisible: false,
+            toggleCheckBox: true,
 
             successAllParameterVersion: 0,
             errorAllParamaterVersion: 0,
             karatData: [],
-            isOkKaratClicked:false,
-            selectedStatus:'1',
-            
+            isOkKaratClicked: false,
+            selectedStatus: '1',
+
 
         };
 
@@ -98,9 +97,9 @@ class SearchScreen extends Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         const { successSearchbyCategoryVersion, errorSearchbyCategoryVersion,
-                successSearchbyCodeVersion, errorSearchbyCodeVersion,
-                 errorAllParamaterVersion, successAllParameterVersion,
-            } = nextProps;
+            successSearchbyCodeVersion, errorSearchbyCodeVersion,
+            errorAllParamaterVersion, successAllParameterVersion,
+        } = nextProps;
 
         let newState = null;
 
@@ -132,55 +131,55 @@ class SearchScreen extends Component {
 
         if (successAllParameterVersion > prevState.successAllParameterVersion) {
             newState = {
-              ...newState,
-              successAllParameterVersion: nextProps.successAllParameterVersion,
+                ...newState,
+                successAllParameterVersion: nextProps.successAllParameterVersion,
             };
-          }
-      
-          if (errorAllParamaterVersion > prevState.errorAllParamaterVersion) {
+        }
+
+        if (errorAllParamaterVersion > prevState.errorAllParamaterVersion) {
             newState = {
-              ...newState,
-              errorAllParamaterVersion: nextProps.errorAllParamaterVersion,
+                ...newState,
+                errorAllParamaterVersion: nextProps.errorAllParamaterVersion,
             };
-          }
+        }
 
         return newState;
     }
 
     async componentDidUpdate(prevProps, prevState) {
-        const { searchByCategoryData, searchByCodeData,allParameterData } = this.props;
+        const { searchByCategoryData, searchByCodeData, allParameterData } = this.props;
 
         if (this.state.successSearchbyCategoryVersion > prevState.successSearchbyCategoryVersion) {
-            this.props.navigation.navigate('SearchProductGrid',{fromCodeSearch:false})
+            this.props.navigation.navigate('SearchProductGrid', { fromCodeSearch: false })
         }
         if (this.state.errorSearchbyCategoryVersion > prevState.errorSearchbyCategoryVersion) {
             this.showToast(this.props.errorMsgSearch, 'danger')
         }
         if (this.state.successSearchbyCodeVersion > prevState.successSearchbyCodeVersion) {
-            this.props.navigation.navigate('SearchProductGrid',{fromCodeSearch:true})
+            this.props.navigation.navigate('SearchProductGrid', { fromCodeSearch: true })
         }
         if (this.state.errorSearchbyCodeVersion > prevState.errorSearchbyCodeVersion) {
             this.showToast(this.props.errorMsgSearch, 'danger')
         }
 
         if (this.state.successAllParameterVersion > prevState.successAllParameterVersion) {
-                
+
         }
         if (this.state.errorAllParamaterVersion > prevState.errorAllParamaterVersion) {
-    
+
         }
-    
+
     }
 
 
     showToast = (msg, type, duration) => {
         Toast.show({
-          text: msg ? msg : strings.serverFailedMsg,
-          type: type ? type : 'danger',
-          duration: duration ? duration : 2500,
+            text: msg ? msg : strings.serverFailedMsg,
+            type: type ? type : 'danger',
+            duration: duration ? duration : 2500,
         });
-      };
-    
+    };
+
 
     toggleModal = () => {
         this.setState({ isModalVisible: true, isContinueClicked: false });
@@ -188,8 +187,8 @@ class SearchScreen extends Component {
 
 
     closeModal = () => {
-        this.setState({ isModalVisible: false, isContinueClicked: false,selectedCategories:[] });
-        categoryIds=[]
+        this.setState({ isModalVisible: false, isContinueClicked: false, selectedCategories: [] });
+        categoryIds = []
     };
 
     checkBox_Test = (id, name) => {
@@ -213,7 +212,7 @@ class SearchScreen extends Component {
             let array2 = []
             array = [{ id, name }]
             array2.push(...selectedCategories, ...array);
-            console.warn("array",array2);
+            console.warn("array", array2);
             this.setState({ selectedCategories: array2 });
 
         }
@@ -222,8 +221,8 @@ class SearchScreen extends Component {
     };
 
 
-    setToDate =(newDate)=> {
-        const { fromDate} = this.state
+    setToDate = (newDate) => {
+        const { fromDate } = this.state
 
         // var timeStamp = new Date().getTime() + 1 * 24 * 60 * 60 * 1000;
         // var timeStampDate = moment(new Date(timeStamp).toISOString().slice(0, 10)).format('DD-MM-YYYY');
@@ -235,13 +234,13 @@ class SearchScreen extends Component {
         //     this.setState({ toDate: newDate });   
         //   }    
 
-        this.setState({ toDate: newDate });   
+        this.setState({ toDate: newDate });
 
     }
 
-    setFromDate =(newDate) =>{
+    setFromDate = (newDate) => {
         this.setState({ fromDate: newDate });
-        
+
     }
 
     onTextChanged = (inputKey, value) => {
@@ -267,6 +266,8 @@ class SearchScreen extends Component {
                             maxLength={10}
                             placeholderTextColor="gray"
                             keyboardType={'numeric'}
+                            returnKeyType='done'
+
                         />
                     </View>
                     <_Text fsMedium style={{ marginTop: hp(2) }}>AND   </_Text>
@@ -280,6 +281,8 @@ class SearchScreen extends Component {
                             placeholder="To"
                             placeholderTextColor="gray"
                             keyboardType={'numeric'}
+                            returnKeyType='done'
+
                         />
                     </View>
                 </View>
@@ -302,6 +305,8 @@ class SearchScreen extends Component {
                             placeholder="From"
                             placeholderTextColor="gray"
                             keyboardType={'numeric'}
+                            returnKeyType='done'
+
                         />
                     </View>
                     <_Text fsMedium style={{ marginTop: hp(2) }}>AND   </_Text>
@@ -315,6 +320,8 @@ class SearchScreen extends Component {
                             placeholder="To"
                             placeholderTextColor="gray"
                             keyboardType={'numeric'}
+                            returnKeyType='done'
+
                         />
                     </View>
                 </View>
@@ -322,7 +329,7 @@ class SearchScreen extends Component {
         )
     }
 
-    
+
     productReleaseDate = () => {
         return (
             <View style={{ marginHorizontal: wp(3) }}>
@@ -367,9 +374,7 @@ class SearchScreen extends Component {
 
 
     selectKarat = () => {
-        const { selectedKarat,isOkKaratClicked } = this.state
-
-        console.warn("selectedKarat",selectedKarat);
+        const { selectedKarat, isOkKaratClicked } = this.state
         return (
             <View style={{ marginHorizontal: wp(3) }}>
                 <_Text fsHeading>Melting:</_Text>
@@ -382,10 +387,10 @@ class SearchScreen extends Component {
                             <_Text fsHeading textColor={'gray'} style={{ marginLeft: wp(3) }}>Select Melting:</_Text>
                         }
                         {selectedKarat.length > 0 && isOkKaratClicked &&
-                            <View style={{ flexDirection: 'row', flexWrap: 'wrap',  }}>
+                            <View style={{ flexDirection: 'row', flexWrap: 'wrap', }}>
                                 {selectedKarat.map(s => {
-                                return <_Text fsHeading style={{ marginLeft: wp(3) }}> {s.value},</_Text>
-                            })}
+                                    return <_Text fsHeading style={{ marginLeft: wp(3) }}> {s.value},</_Text>
+                                })}
                             </View>
                         }
 
@@ -401,6 +406,7 @@ class SearchScreen extends Component {
 
     selectCategories = () => {
         const { selectedCategories, isContinueClicked } = this.state
+
         return (
             <View style={{ marginHorizontal: wp(3) }}>
                 <_Text fsHeading>Select Categories:</_Text>
@@ -414,38 +420,47 @@ class SearchScreen extends Component {
                     </View>
                 }
 
-                <View style={{ marginHorizontal: wp(3), justifyContent: 'center', alignItems: 'center' }}>
-                    <TouchableOpacity onPress={() => this.toggleModal()}>
+                {/* <TouchableOpacity onPress={() => this.toggleModal()}>
+                    <View style={{ marginHorizontal: wp(3), justifyContent: 'center', alignItems: 'center' }}>
                         <View style={styles.roundedButton}>
                             <View style={styles.buttonText}>
                                 <_Text fsHeading bold>SELECT CATEGORIES</_Text>
                             </View>
                         </View>
-                    </TouchableOpacity>
+                    </View>
+                </TouchableOpacity> */}
+                <View style={{ marginHorizontal: wp(3), justifyContent: 'center', alignItems: 'center' }}>
+                    <ActionButtonRounded2
+                        title="SELECT CATEGORIES"
+                        onButonPress={() => this.toggleModal()}
+                        containerStyle={styles.roundedButton}
+                        textStyle={styles.buttonText}
+                    />
                 </View>
-            </View>
 
+            </View>
         )
     }
 
     searchButton = () => {
         return (
-            <View style={{ marginBottom: hp(4), marginHorizontal: wp(3), justifyContent: 'center', alignItems: 'center' }}>
-                <TouchableOpacity onPress={() => this.searchProducts()}>
+            <TouchableWithoutFeedback onPress={() => this.searchProducts()}>
+                <View style={{ marginBottom: hp(4), marginHorizontal: wp(3), justifyContent: 'center', alignItems: 'center' }}>
                     <View style={styles.roundedButtonSearch}>
                         <View style={styles.buttonText}>
                             <_Text fsHeading bold textColor={'#FFFFFF'}>SEARCH</_Text>
                         </View>
                     </View>
-                </TouchableOpacity>
-            </View>
+                </View>
+            </TouchableWithoutFeedback>
+
         )
     }
 
     continuecategoryModal = () => {
-        const{selectedCategories} = this.state
+        const { selectedCategories } = this.state
 
-         categoryIds = selectedCategories.map(x => { return x.id})
+        categoryIds = selectedCategories.map(x => { return x.id })
 
         this.setState({
             isModalVisible: false,
@@ -454,29 +469,29 @@ class SearchScreen extends Component {
     }
 
     onOKkaratSelected = () => {
-        const{selectedKarat} = this.state
+        const { selectedKarat } = this.state
 
-         karatIds = selectedKarat.map(x => { return x.id})
-       
-        if(selectedKarat.length == 0) {
+        karatIds = selectedKarat.map(x => { return x.id })
+
+        if (selectedKarat.length == 0) {
             this.setState({
-                isKaratModalVisible:false
+                isKaratModalVisible: false
             })
-        }else if(selectedKarat.length>0){
+        } else if (selectedKarat.length > 0) {
             this.setState({
                 isKaratModalVisible: false,
                 isOkKaratClicked: true
             })
         }
-        
+
     }
 
 
     searchProducts = () => {
-        const { gwFrom, gwTo, nwFrom, nwTo, fromDate, toDate, selectedCategories, selectedKarat , selectedStatus} = this.state
+        const { gwFrom, gwTo, nwFrom, nwTo, fromDate, toDate, selectedCategories,
+            selectedKarat, selectedStatus } = this.state
 
         if (selectedCategories.length > 0) {
-
             // var timeStamp = new Date().getTime() + 1 * 24 * 60 * 60 * 1000;
             // var timeStampDate = moment(new Date(timeStamp).toISOString().slice(0, 10),).format('DD-MM-YYYY');
 
@@ -520,27 +535,27 @@ class SearchScreen extends Component {
         });
 
     searchByCode = () => {
-        const{searchText} = this.state
-        if(searchText!==''){
+        const { searchText } = this.state
+        if (searchText !== '') {
 
             const byCode = new FormData()
-             byCode.append("table",'product_master')
-             byCode.append("mode_type",'filter_data')
-             byCode.append("user_id",userId)
-             byCode.append("design_number",searchText)
+            byCode.append("table", 'product_master')
+            byCode.append("mode_type", 'filter_data')
+            byCode.append("user_id", userId)
+            byCode.append("design_number", searchText)
 
-             this.props.searchByCode(byCode)
+            this.props.searchByCode(byCode)
 
             this.setState({
                 isSearchCodeVisible: false
-            })    
+            })
         }
-        else{
-            this.showToast('please enter design code','danger')
-            
+        else {
+            this.showToast('please enter design code', 'danger')
+
             this.setState({
                 isSearchCodeVisible: false
-            })  
+            })
         }
     }
 
@@ -593,7 +608,7 @@ class SearchScreen extends Component {
     //     const arr = allParameterData && allParameterData.melting
 
     //     const val = { ...this.state.karat };
-        
+
     //     for(let k = 0; k<arr.length; k++){
 
     //         val[arr[k].id] = true;
@@ -607,9 +622,9 @@ class SearchScreen extends Component {
     //         array2.push(...selectedKarat, ...array);
     //         console.warn("array2--==",array2);
     //         this.setState({ selectedKarat: array2 });
-       
+
     //     }
-        
+
     //     this.setState({ karat: val });
     //     console.warn("selectedKarat==",selectedKarat);
     // }
@@ -627,21 +642,23 @@ class SearchScreen extends Component {
 
     setSelectedStatus = value => {
         this.setState({
-          selectedStatus: value,
+            selectedStatus: value,
         });
-      };
+    };
 
 
-      
+
     render() {
 
-        const { collection, selectedCategories,selectedKarat,karatData,selectedStatus } = this.state
-        const{allParameterData} = this.props
+        const { collection, isModalVisible, isSearchCodeVisible, isKaratModalVisible,
+            selectedKarat, karatData, selectedStatus,
+            selectedCategories, isContinueClicked
+        } = this.state
+        const { allParameterData } = this.props
 
         const list = allParameterData && allParameterData.melting
 
-        let statusArray = [{'id':'1','status':'Available'},{'id':'2','status':'Sold'}]
-
+        let statusArray = [{ 'id': '1', 'status': 'Available' }, { 'id': '2', 'status': 'Sold' }]
 
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#f3fcf9' }}>
@@ -653,11 +670,12 @@ class SearchScreen extends Component {
                     rightIconHeight2={hp(3.5)}
                     backgroundColor="#19af81"
                 />
-                <ScrollView>
-
+                <ScrollView alwaysBounceVertical={false}
+                    bounces={false}
+                >
                     <View style={{ paddingVertical: hp(1.5), justifyContent: 'center', alignItems: 'center' }}>
                         <_Text fsHeading>Code Search:</_Text>
-                        <TouchableOpacity onPress={()=>this.searchModal()}>
+                        <TouchableOpacity onPress={() => this.searchModal()}>
                             <View style={styles.roundedButton}>
                                 <View style={styles.buttonText}>
                                     <_Text fsHeading bold>SEARCH BY CODE</_Text>
@@ -672,82 +690,108 @@ class SearchScreen extends Component {
                     <View style={{ paddingVertical: hp(1.5), }}>
                         {this.grossWeight()}
                     </View>
+
                     <View style={{ paddingVertical: hp(1.5), }}>
                         {this.netWeight()}
                     </View>
 
                     <View style={{ paddingVertical: hp(1.5), }}>
                         {this.productReleaseDate()}
-                        
+
                     </View>
 
-                    <View style={{ paddingVertical: hp(1.2), marginHorizontal:wp(3)}}>
-                    <_Text fsHeading>Product Status:</_Text>
-                  <Picker
-                    iosIcon={ <Icon name="arrow-down"  style={{ marginRight: hp(3), fontSize: 25, }}/>
-                    }
-                    mode="dropdown"
-                    style={{ height: 45, width: '70%',justifyContent: 'space-between', width: wp(95),marginTop:-5}}
-                    selectedValue={this.state.selectedStatus}
-                    onValueChange={(value) => this.setSelectedStatus(value)
-                    }>
-                    {statusArray!=null && statusArray.map(s => (
-                      <Picker.Item label={(s.status).toString()} value={parseInt(s.id)} />
-                    ))}
-                  </Picker>
-                </View>
+                    <View style={{ paddingVertical: hp(1), marginHorizontal: wp(3) }}>
+                        <_Text fsHeading>Product Status:</_Text>
+                        <Picker
+                            iosIcon={<Icon type='Feather' name="arrow-down" style={{ marginRight: hp(1.5), fontSize: 22, }} />}
+                            mode="dropdown"
+                            style={{ height: 50, width: '70%', justifyContent: 'space-between', width: wp(95), marginTop: -5 }}
+                            selectedValue={this.state.selectedStatus}
+                            onValueChange={(value) => this.setSelectedStatus(value)
+                            }>
+                            {statusArray && statusArray.map(s => (
+                                <Picker.Item key={(s.id).toString()} label={(s.status)} value={parseInt(s.id)} />
+                            ))}
+                        </Picker>
+                    </View>
 
 
-                    <View style={{ paddingVertical: hp(0.2), }}>
+                    <View style={{ paddingVertical: hp(1), }}>
                         {this.selectKarat()}
                     </View>
 
-                    <View style={{ paddingVertical: 0,marginTop:5 }}>
+                    <View style={{ paddingVertical: hp(0.5), }}>
                         {this.selectCategories()}
                     </View>
 
-                    <View style={{ paddingVertical: hp(0.5), }}>
+
+                    {/* <View style={{ paddingVertical: hp(0.5), }}>
                         {this.searchButton()}
-                    </View>
+                    </View> */}
+
 
                 </ScrollView>
 
-                <Modal
-                    isVisible={this.state.isModalVisible}
-                    transparent={true}
-                    onRequestClose={() => this.closeModal()}
-                    onBackdropPress={() =>  this.closeModal()}
-                    onBackButtonPress={() =>  this.closeModal()}
-                  
-                    style={{ margin: 28 }}>
-                    <TouchableWithoutFeedback
-                        style={{ flex: 1 }}
-                        onPress={() =>this.setState({isModalVisible: false,})
-                        }>
-                        <>
-                            <View style={styles.flex}>
-                                <View style={styles.selectCategoriesContainer}>
-                                    <Text style={styles.selectCategoryText}>
-                                        Select Categories
-                                  </Text>
-                                    <View style={styles.closeIconView}>
-                                        <TouchableOpacity
-                                            onPress={() => this.closeModal() }>
-                                            <Image style={styles.closeIcon} source={IconPack.WHITE_CLOSE} />
-                                        </TouchableOpacity>
-                                    </View>
+                {/* <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    {this.selectCategories()}
+                </View> */}
 
+                <View style={{
+                    alignItems: 'center',
+                    justifyContent: 'center', marginBottom: 10, marginTop: 10,
+                }}>
+                    <ActionButtonRounded
+                        title="SEARCH"
+                        onButonPress={() => this.searchProducts()}
+                        containerStyle={styles.roundedButtonSearch}
+                        textStyle={{
+                            color: '#FFFFFF',
+                            fontSize: 16, fontFamily: 'Lato-Bold',
+                        }}
+                    />
+                </View>
+
+                {isModalVisible &&
+                    <Modal
+                        isVisible={this.state.isModalVisible}
+                        // transparent={true}
+                        onRequestClose={() => this.closeModal()}
+                        onBackdropPress={() => this.closeModal()}
+                        onBackButtonPress={() => this.closeModal()}
+
+                        style={{ marginHorizontal: 24, marginVertical: Platform.OS === 'ios' ? 70 : 0 }}>
+                        <SafeAreaView>
+                            <View style={styles.selectCategoriesContainer}>
+                                <Text style={styles.selectCategoryText}>
+                                    Select Categories
+                                  </Text>
+                                <View style={styles.closeIconView}>
+                                    <TouchableOpacity onPress={() => this.closeModal()}>
+                                        <Image style={styles.closeIcon} source={IconPack.WHITE_CLOSE} />
+                                    </TouchableOpacity>
                                 </View>
 
-                                <FlatList
-                                    style={{ backgroundColor: '#ffffff' }}
-                                    showsVerticalScrollIndicator={false}
-                                    data={collection && collection}
-                                    renderItem={({ item }) => (
-                                        <View style={styles.categoryContainer}>
-                                            <Text style={styles.categoryText}>
-                                                {item.col_name}
-                                            </Text>
+                            </View>
+
+                            <FlatList
+                                style={{ backgroundColor: '#ffffff' }}
+                                showsVerticalScrollIndicator={false}
+                                data={collection && collection}
+                                renderItem={({ item }) => (
+                                    <View style={styles.categoryContainer}>
+                                        <Text numberOfLines={2} style={styles.categoryText}>
+                                            {item.col_name.length > 22 ? (item.col_name).substring(0, 22) + '...' : item.col_name}
+                                        </Text>
+                                        {  Platform.OS === 'ios' ? <CheckBox
+                                            style={styles.checkBox}
+                                            tintColors={{ true: '#11255a', false: 'gray' }}
+                                            value={this.state.check[item.id]}
+                                            onValueChange={() => this.checkBox_Test(item.id, item.col_name)}
+                                            boxType="square"
+                                            onFillColor="#11255a"
+                                            onTintColor="gray"
+                                            onCheckColor="#ffffff"
+                                        /> :
                                             <CheckBox
                                                 style={styles.checkBox}
                                                 tintColors={{ true: '#11255a', false: 'gray' }}
@@ -758,147 +802,152 @@ class SearchScreen extends Component {
                                                 onTintColor="gray"
                                                 onCheckColor="#ffffff"
                                             />
-                                        </View>
-                                    )}
+                                        }
+                                    </View>
+                                )}
+                            />
+                            <View style={styles.buttonContainer}>
+                                <ActionButtonRounded
+                                    title="CONTINUE"
+                                    onButonPress={() => this.continuecategoryModal()}
+                                    containerStyle={styles.buttonStyle}
                                 />
-                                <View style={styles.buttonContainer}>
+                            </View>
+                        </SafeAreaView>
+                    </Modal>
+                }
+
+
+                {  isSearchCodeVisible &&
+                    <View style={styles.flex}>
+                        <Modal isVisible={this.state.isSearchCodeVisible}
+                            onBackdropPress={() => this.setState({ isSearchCodeVisible: false })}
+                            onBackButtonPress={() => this.setState({ isSearchCodeVisible: false })}
+                            onRequestClose={() => this.setState({ isSearchCodeVisible: false })}
+
+                            style={{ margin: 30 }}>
+                            <View style={styles.container}>
+                                <View style={styles.topContainer}>
+                                    <Text style={styles.title}>Search By Code</Text>
+                                </View>
+                                <View style={styles.bottomConatiner}>
+                                    <View style={styles.flexRow}>
+                                        <View style={styles.searchImgView}>
+                                            <Image
+                                                style={{ height: hp(3.2), width: hp(3.2) }}
+                                                source={IconPack.SEARCH_WHITE}
+                                            />
+                                        </View>
+
+                                        <View style={{ marginRight: 15, flex: 1 }}>
+                                            <FloatingLabelTextInput
+                                                label="Search"
+                                                value={this.state.searchText}
+                                                onChangeText={this.handleSearchChange}
+                                                resetValue=""
+                                                width="100%"
+                                                returnKeyType={'done'}
+
+                                            />
+                                        </View>
+                                    </View>
                                     <ActionButtonRounded
                                         title="CONTINUE"
-                                        onButonPress={() => this.continuecategoryModal()}
+                                        onButonPress={() => this.searchByCode()}
+                                        containerStyle={styles.buttonStyle}
+                                    />
+                                </View>
+
+                                <TouchableOpacity style={styles.imageView}
+                                    onPress={() => this.setState({ isSearchCodeVisible: false })}>
+                                    <Image
+                                        source={IconPack.WHITE_CLOSE}
+                                        style={styles.imageStyle}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        </Modal>
+                    </View>
+                }
+
+                {isKaratModalVisible &&
+                    <Modal
+                        isVisible={this.state.isKaratModalVisible}
+                        transparent={true}
+                        onRequestClose={() => this.closeKaratModal()}
+                        onBackdropPress={() => this.closeKaratModal()}
+                        onBackButtonPress={() => this.closeKaratModal()}
+
+                        style={{ margin: 0 }}>
+                        <TouchableWithoutFeedback >
+                            <View style={styles.container1}>
+                                <View style={styles.titleContainer}>
+                                    <Text style={styles.titleText}>Select Melting</Text>
+                                    <View style={styles.closeIconView}>
+                                        <TouchableOpacity
+                                            onPress={() => this.closeKaratModal()}>
+                                            <Image style={styles.closeIcon} source={IconPack.WHITE_CLOSE} />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                                <TextInput
+                                    onChangeText={search => this.setState({ search })}
+                                    style={styles.searchBar}
+                                    placeholder="Find Melting"
+                                    placeholderTextColor="#757575"
+                                    returnKeyType='done'
+
+                                />
+
+                                {list && list.length > 0 && this.filterList(list).length !== 0 ? (
+                                    this.filterList(list).map((listItem, index) => (
+                                        <View style={styles.dataContainer}>
+                                            <Text key={index} style={styles.itemText}>
+                                                {listItem.melting_name}
+                                            </Text>
+
+                                            <View style={{ marginRight: 10 }}>
+                                                {Platform.OS === 'ios' ? <CheckBox
+                                                    disabled={false}
+                                                    value={this.state.karat[listItem.id]}
+                                                    onValueChange={() => this.setToggleCheckBox(listItem.id, listItem.melting_name)}
+                                                    // onFillColor="#FFFFFF"
+                                                    onFillColor="#11255a"
+                                                    onTintColor="gray"
+                                                    onCheckColor="#ffffff"
+                                                /> :
+                                                    <CheckBox
+                                                        disabled={false}
+                                                        value={this.state.karat[listItem.id]}
+                                                        onChange={() => this.setToggleCheckBox(listItem.id, listItem.melting_name)}
+                                                        // onFillColor="#FFFFFF"
+                                                        onFillColor="#11255a"
+                                                        onTintColor="gray"
+                                                        onCheckColor="#ffffff"
+                                                    />
+                                                }
+                                            </View>
+                                        </View>
+                                    ))
+                                ) : (
+                                        <View style={styles.noContainView}>
+                                            <Text style={styles.noFoundText}>No Data found!</Text>
+                                        </View>
+                                    )}
+
+
+                                <View style={[styles.buttonContainer, { marginBottom: hp(1) }]}>
+                                    <ActionButtonRounded
+                                        title="CONTINUE"
+                                        onButonPress={() => this.onOKkaratSelected()}
                                         containerStyle={styles.buttonStyle}
                                     />
                                 </View>
                             </View>
-                           
-                        </>
-                    </TouchableWithoutFeedback>
-                </Modal>
-
-
-                <View style={styles.flex}>
-                    <Modal isVisible={this.state.isSearchCodeVisible} 
-                      onBackdropPress={() => this.setState({ isSearchCodeVisible: false })}
-                      onBackButtonPress={() => this.setState({ isSearchCodeVisible: false })}
-                    onRequestClose={()=>this.setState({ isSearchCodeVisible: false })}
-
-                    style={{ margin: 30 }}>
-                        <View style={styles.container}>
-                            <View style={styles.topContainer}>
-                                <Text style={styles.title}>Search By Code</Text>
-                            </View>
-                            <View style={styles.bottomConatiner}>
-                                <View style={styles.flexRow}>
-                                    <View style={styles.searchImgView}>
-                                        <Image
-                                            style={{ height: hp(3.2), width: hp(3.2) }}
-                                            source={IconPack.SEARCH_WHITE}
-                                        />
-                                    </View>
-
-                                    <View style={{ marginRight: 15, flex: 1 }}>
-                                        <FloatingLabelTextInput
-                                            label="Search"
-                                            value={this.state.searchText}
-                                            onChangeText={this.handleSearchChange}
-                                            resetValue=""
-                                            width="100%"
-                                        />
-                                    </View>
-                                </View>
-                                <ActionButtonRounded
-                                    title="CONTINUE"
-                                    onButonPress={() => this.searchByCode()}
-                                    containerStyle={styles.buttonStyle}
-                                />
-                            </View>
-
-                            <TouchableOpacity style={styles.imageView}
-                             onPress={() => this.setState({ isSearchCodeVisible: false })}>
-                                <Image
-                                    source={IconPack.WHITE_CLOSE}
-                                    style={styles.imageStyle}
-                                />
-                            </TouchableOpacity>
-                        </View>
+                        </TouchableWithoutFeedback>
                     </Modal>
-                </View>
+                }
 
-
-                <Modal
-          isVisible={this.state.isKaratModalVisible}
-          transparent={true}
-          onRequestClose={() => this.closeKaratModal()}
-          onBackdropPress={() => this.closeKaratModal()}
-          onBackButtonPress={() => this.closeKaratModal()}
-
-          style={{margin: 0}}>
-          <TouchableWithoutFeedback >
-            <View style={styles.container1}>
-                            <View style={styles.titleContainer}>
-                                <Text style={styles.titleText}>Select Melting</Text>
-                                <View style={styles.closeIconView}>
-                                    <TouchableOpacity
-                                        onPress={() => this.closeKaratModal()}>
-                                        <Image style={styles.closeIcon} source={IconPack.WHITE_CLOSE} />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-              <TextInput
-                onChangeText={search => this.setState({search})}
-                style={styles.searchBar}
-                placeholder="Find Melting"
-                placeholderTextColor="#757575"
-              />
-              
-              { list && list.length>0 && this.filterList(list).length !== 0 ? (
-                this.filterList(list).map((listItem, index) => (
-                  <View style={styles.dataContainer}>
-                    <Text key={index} style={styles.itemText}>
-                      {listItem.melting_name}
-                    </Text>
-
-                    <View style={{marginRight: 10}}>
-                      <CheckBox
-                        disabled={false}
-                        value={this.state.karat[listItem.id]}
-                        onChange={() => this.setToggleCheckBox(listItem.id,listItem.melting_name)}
-                       // onFillColor="#FFFFFF"
-                        onFillColor="#11255a"
-                        onTintColor="gray"
-                        onCheckColor="#ffffff"
-                      />
-                    </View>
-                  </View>
-                ))
-              ) : (
-                <View style={styles.noContainView}>
-                  <Text style={styles.noFoundText}>No Data found!</Text>
-                </View>
-              )}
-              {/* <View style={styles.bottomView}>
-                <TouchableOpacity onPress={() => alert('inprocess')}>
-                  <Text style={styles.bottomTxt}>SELECT ALL</Text>
-                </TouchableOpacity>
-                
-                <TouchableOpacity onPress={() => this.onOKkaratSelected()}>
-                  <Text style={styles.bottomTxt} >
-                    OK
-                  </Text>
-                </TouchableOpacity>
-              </View>
-         */}
-
-                            <View style={[styles.buttonContainer, { marginBottom: hp(1) }]}>
-                                <ActionButtonRounded
-                                    title="CONTINUE"
-                                    onButonPress={() => this.onOKkaratSelected()}
-                                    containerStyle={styles.buttonStyle}
-                                />
-                            </View>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </Modal>
-   
             </SafeAreaView>
         );
     }
@@ -928,7 +977,7 @@ function mapStateToProps(state) {
         allParameterData: state.homePageReducer.allParameterData,
         successAllParameterVersion: state.homePageReducer.successAllParameterVersion,
         errorAllParamaterVersion: state.homePageReducer.errorAllParamaterVersion,
-    
+
 
     };
 }
@@ -975,9 +1024,9 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
     },
-    flex: {
-        flex: 1,
-    },
+    // flex: {
+    //     flex: 1,
+    // },
     selectCategoriesContainer: {
         height: 50,
         backgroundColor: color.green,
@@ -985,7 +1034,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 14,
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection:'row'
+        flexDirection: 'row'
     },
     selectCategoryText: {
         fontSize: 21,
@@ -1004,8 +1053,8 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 14,
         alignItems: 'center',
         justifyContent: 'center',
-       // marginBottom:hp(2)
-       
+        // marginBottom:hp(2)
+
     },
     closeIconView: {
         position: 'absolute',
@@ -1023,7 +1072,7 @@ const styles = StyleSheet.create({
         marginBottom: 2,
     },
     categoryText: {
-        marginLeft: 32,
+        marginLeft: 25,
         fontFamily: 'Helvetica',
         fontSize: 16,
     },
@@ -1032,14 +1081,14 @@ const styles = StyleSheet.create({
     },
     flex: {
         flex: 1,
-      },
-      container: {
+    },
+    container: {
         alignItems: 'center',
         justifyContent: 'center',
         height: 200,
         borderRadius: 15,
-      },
-      topContainer: {
+    },
+    topContainer: {
         flex: 1,
         backgroundColor: '#19af81',
         width: '100%',
@@ -1047,76 +1096,76 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
-      },
-      bottomConatiner: {
+    },
+    bottomConatiner: {
         flex: 3,
         backgroundColor: '#FFFFFF',
         width: '100%',
         alignItems: 'center',
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
-      },
-      title: {
+    },
+    title: {
         color: '#FFFFFF',
         ...Theme.ffLatoBold20,
-      },
-      imageStyle: {
+    },
+    imageStyle: {
         width: hp(2.5),
         height: hp(2.5),
         resizeMode: 'contain',
-      },
-      imageView: {
+    },
+    imageView: {
         position: 'absolute',
         top: 16,
         right: 14,
-      },
-      buttonStyle: {
+    },
+    buttonStyle: {
         marginTop: 10,
         marginBottom: hp(1),
-      },
-      flexRow: {
+    },
+    flexRow: {
         flexDirection: 'row',
         marginTop: 10,
-      },
-      searchImgView: {
+    },
+    searchImgView: {
         marginHorizontal: 10,
         marginTop: 8,
         justifyContent: 'center',
-      },
-    
-      flex: {
-       // flex: 1,
-      },
-      titleContainer: {
+    },
+
+    flex: {
+        // flex: 1,
+    },
+    titleContainer: {
         //marginLeft: 10,
-        backgroundColor:"#19af81",
-      },
-      titleText: {
+        backgroundColor: "#19af81",
+    },
+    titleText: {
         ...Theme.ffLatoBold20,
         color: '#FFFFFF',
         marginLeft: 15,
         marginTop: Platform.OS === 'android' ? 8 : 12,
         marginBottom: Platform.OS === 'android' ? 8 : 12,
 
-      },
-      borderStyle: {
+    },
+    borderStyle: {
         borderBottomColor: '#d2d2d2',
         borderBottomWidth: 1,
-      },
-      subTitleStyle: {
+    },
+    subTitleStyle: {
         ...Theme.ffLatoRegular16,
         color: '#757575',
         marginVertical: 5,
-      },
-      container1: {
+    },
+    container1: {
         backgroundColor: '#ffffff',
         marginHorizontal: 16,
-              },
-      spaceHorizontal: {
+    },
+    spaceHorizontal: {
         marginHorizontal: 18,
         marginTop: 15,
-      },
-      searchBar: {
+    },
+    searchBar: {
         ...Theme.ffLatoRegular14,
         margin: 10,
         height: 38,
@@ -1124,29 +1173,29 @@ const styles = StyleSheet.create({
         borderColor: '#d2d2d2',
         borderWidth: 1,
         //marginLeft: 7,
-      },
-      itemText: {
+    },
+    itemText: {
         margin: 1,
-       // color: '#FFFFFF',
-       
+        // color: '#FFFFFF',
+
         ...Theme.ffLatoBold15,
         //backgroundColor: '#657fd6',
         height: 45,
         padding: 12,
-      },
-      bottomView: {
+    },
+    bottomView: {
         height: 45,
         backgroundColor: '#FFFFFF',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         marginHorizontal: 20,
-      },
-      bottomTxt: {
+    },
+    bottomTxt: {
         ...Theme.ffLatoRegular13,
         color: '#000000',
-      },
-      dataContainer: {
+    },
+    dataContainer: {
         marginHorizontal: 0,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -1154,19 +1203,19 @@ const styles = StyleSheet.create({
         borderBottomColor: '#d2d2d2',
         borderBottomWidth: 1,
         alignItems: 'center',
-      },
-      noContainView: {
+    },
+    noContainView: {
         height: 35,
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
-      },
-      noFoundText: {
+    },
+    noFoundText: {
         ...Theme.ffLatoRegular18,
         color: 'red',
         letterSpacing: 0.7,
-      },
-    
+    },
+
 });
 
 ///--------------------------------ActionButton------------------
@@ -1181,6 +1230,23 @@ const ActionButtonRounded = ({ title, onButonPress, containerStyle, }) => {
                 ]}>
                 <View style={actionButtonRoundedStyle.innerContainer}>
                     <Text style={actionButtonRoundedStyle.titleStyle}>{title}</Text>
+                </View>
+            </View>
+        </TouchableOpacity>
+    );
+};
+
+const ActionButtonRounded2 = ({ title, onButonPress, containerStyle, }) => {
+    return (
+        <TouchableOpacity
+            onPress={() => { onButonPress() }}>
+            <View
+                style={[
+                    actionButtonRoundedStyle.mainContainerStyle,
+                    containerStyle || null,
+                ]}>
+                <View style={actionButtonRoundedStyle.innerContainer}>
+                    <Text style={actionButtonRoundedStyle.titleStyle2}>{title}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -1203,10 +1269,19 @@ const actionButtonRoundedStyle = StyleSheet.create({
     },
     titleStyle: {
         color: '#FFFFFF',
-        fontSize: 14,
+        fontSize: 16,
         textAlign: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        fontWeight: '400',
+        fontFamily: 'Lato-Bold',
     },
+    titleStyle2: {
+        color: '#000000',
+        fontSize: 16,
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: 'Lato-Bold',
+    },
+
 });

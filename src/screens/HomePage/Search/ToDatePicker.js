@@ -3,8 +3,8 @@ import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {
-    widthPercentageToDP as wp,
-    heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
 
@@ -42,45 +42,45 @@ export default class ToDatePicker extends Component {
   }
 
   render() {
-    const { isDateTimePickerVisible,date } = this.state
+    const { isDateTimePickerVisible, date } = this.state
 
     return (
-        <View style={styles.container}>
-        
+      <View style={styles.container}>
+
         <View
           style={{
             flexDirection: 'row',
             marginright: 0,
           }}>
-         
+
           <View
             style={{
-                marginTop:5,
-                borderColor: 'gray',
-                borderBottomWidth: 1,
-                 width: wp(35),
-                 height: 40,
-                    }}>
-                    <TouchableOpacity
-                        onPress={() => this.showDateTimePicker()}>
-                        {this.props.toDate!=='' &&
-                         <Text style={styles.textDatePickerStyle}> {this.props.toDate}</Text>}
+              marginTop: 5,
+              borderColor: 'gray',
+              borderBottomWidth: 1,
+              width: wp(35),
+              height: 40,
+            }}>
+            <TouchableOpacity
+              onPress={() => this.showDateTimePicker()}>
+              {this.props.toDate !== '' &&
+                <Text style={styles.textDatePickerStyle}> {this.props.toDate}</Text>}
 
-                        {this.props.toDate==''&& <Text style={styles.textDatePickerStyle2}>{' To Date'}</Text>}
-                    </TouchableOpacity>
-                </View>
+              {this.props.toDate == '' && <Text style={styles.textDatePickerStyle2}>{' To Date'}</Text>}
+            </TouchableOpacity>
+          </View>
         </View>
-      
+
         {isDateTimePickerVisible && (
           <DateTimePicker
             isVisible={isDateTimePickerVisible}
             onConfirm={date => this.handleDatePicked(date)}
-            onCancel={() => hideDateTimePicker()}
+            onCancel={() => this.hideDateTimePicker()}
           />
         )}
 
       </View>
-     );
+    );
   }
 }
 

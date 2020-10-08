@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, { Component, useState } from 'react';
 import {
   Text,
   View,
@@ -26,22 +26,22 @@ import IconPack from '@login/IconPack';
 import FloatingLabelTextInput from '@floatingInputBox/FloatingLabelTextInput';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import ImagePicker from 'react-native-image-crop-picker';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import moment from 'moment';
-import {color} from '@values/colors';
-import {submitCustomOrder} from '@customOrder/CustomOrderAction';
+import { color } from '@values/colors';
+import { submitCustomOrder } from '@customOrder/CustomOrderAction';
 import Theme from '../../values/Theme';
-import {ScrollView} from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 
 var BUTTONS = ['Take Photo', 'Choose from Library', 'Cancel'];
 var DESTRUCTIVE_INDEX = 2;
 var CANCEL_INDEX = 2;
 
 var userId = '';
-var karatIds=[]
+var karatIds = []
 
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 class Customizable extends Component {
   constructor(props) {
@@ -65,10 +65,10 @@ class Customizable extends Component {
       successCustomOrderVersion: 0,
       errorCustomOrderVersion: 0,
 
-      karat:{},
+      karat: {},
       successAllParameterVersion: 0,
       errorAllParamaterVersion: 0,
-      
+
     };
 
     userId = global.userId;
@@ -83,19 +83,19 @@ class Customizable extends Component {
     this.remarkRef = React.createRef();
   }
 
-  componentDidMount = async ()=>{
-    const{allParameterData} = this.props
+  componentDidMount = async () => {
+    const { allParameterData } = this.props
 
-    if(allParameterData && allParameterData.melting){
+    if (allParameterData && allParameterData.melting) {
       this.setState({
-        karatValue:allParameterData.melting[0].id
+        karatValue: allParameterData.melting[0].id
       })
     }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const {successCustomOrderVersion, errorCustomOrderVersion, 
-      successAllParameterVersion,errorAllParamaterVersion
+    const { successCustomOrderVersion, errorCustomOrderVersion,
+      successAllParameterVersion, errorAllParamaterVersion
     } = nextProps;
     let newState = null;
 
@@ -130,10 +130,10 @@ class Customizable extends Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    
-    const {customOrderData,allParameterData} = this.props;
 
-    if (this.state.successCustomOrderVersion > prevState.successCustomOrderVersion ) {
+    const { customOrderData, allParameterData } = this.props;
+
+    if (this.state.successCustomOrderVersion > prevState.successCustomOrderVersion) {
       if (customOrderData.ack == '1') {
         Toast.show({
           text: this.props.errorMsg
@@ -190,7 +190,7 @@ class Customizable extends Component {
   handleGrossWeightChange = newText =>
     this.setState({
       grossWeight: newText,
-      netWeight:newText
+      netWeight: newText
     });
 
   handleNetWeightChange = newText =>
@@ -263,7 +263,7 @@ class Customizable extends Component {
       includeBase64: true,
       hideBottomControls: true,
     }).then(image => {
-      this.setState({imageUrl: image.path, imageData: image});
+      this.setState({ imageUrl: image.path, imageData: image });
     });
   };
 
@@ -276,7 +276,7 @@ class Customizable extends Component {
       cropping: false,
       hideBottomControls: true,
     }).then(image => {
-      this.setState({imageUrl: image.path, imageData: image});
+      this.setState({ imageUrl: image.path, imageData: image });
     });
   };
 
@@ -297,7 +297,7 @@ class Customizable extends Component {
       date,
     } = this.state;
 
-    
+
     var timeStamp = new Date().getTime() + 10 * 24 * 60 * 60 * 1000;
     var timeStampDate = moment(
       new Date(timeStamp).toISOString().slice(0, 10),
@@ -321,9 +321,9 @@ class Customizable extends Component {
       this.showToast('Please enter net weight', 'danger');
     } else if (!length) {
       this.showToast('Please enter length', 'danger');
-    }  else if (!quantity) {
+    } else if (!quantity) {
       this.showToast('Please enter quantity', 'danger');
-    }  else if (!date) {
+    } else if (!date) {
       this.showToast('Please select delivery date', 'danger');
     } else if (date != '' && date1 > date2) {
       // here showing alert hence > , in cart hitting api hence <
@@ -359,7 +359,7 @@ class Customizable extends Component {
     });
   };
 
-  
+
   setSelectedValue = karat => {
     this.setState({
       karatValue: karat,
@@ -369,28 +369,23 @@ class Customizable extends Component {
 
 
   PickerDropDown = () => {
-    const {karatValue} = this.state;
-    const{allParameterData} = this.props
+    const { karatValue } = this.state;
+    const { allParameterData } = this.props
 
     let list = allParameterData && allParameterData.melting
     return (
       <View>
         <Picker
-          iosIcon={
-            <Image
-              source={IconPack.DOWN_ARROW}
-              style={{width: 12, height: 12, resizeMode: 'cover'}}
-            />
-          }
+          iosIcon={<Icon type='Feather' name='arrow-down' style={{ fontSize: 25 }} />}
           mode="dropdown"
-          style={{height: 40, width: wp(55)}}
+          style={{ height: 40, width: wp(55) }}
           selectedValue={karatValue}
-          onValueChange={(itemValue, itemIndex) =>this.setSelectedValue(itemValue)
+          onValueChange={(itemValue, itemIndex) => this.setSelectedValue(itemValue)
           }>
           {list && list.length > 0 ? (
             list.map((listItem, index) => (
               <Picker.Item label={(listItem.melting_name).toString()} value={parseInt(`${listItem.id}`)} />
-              )))
+            )))
 
             : null
           }
@@ -418,10 +413,10 @@ class Customizable extends Component {
 
 
   render() {
-    const {isDateTimePickerVisible} = this.state;
+    const { isDateTimePickerVisible } = this.state;
 
     return (
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Container
           style={{
             flex: 1,
@@ -452,7 +447,7 @@ class Customizable extends Component {
                     height: hp(30),
                     resizeMode: 'contain',
                   }}
-                  source={{uri: this.state.imageUrl}}
+                  source={{ uri: this.state.imageUrl }}
                 />
               )}
             </View>
@@ -468,7 +463,7 @@ class Customizable extends Component {
                   borderTopRightRadius: 20,
                   backgroundColor: '#ffffff',
                 }}>
-                <View style={{marginHorizontal: 16, marginTop: 20}}>
+                <View style={{ marginHorizontal: 16, marginTop: 20 }}>
                   <FloatingLabelTextInput
                     label="Gross Weight (gm)"
                     value={this.state.grossWeight}
@@ -477,6 +472,8 @@ class Customizable extends Component {
                     width="100%"
                     keyboardType="numeric"
                     onSubmitEditing={() => this.netWeightRef.current.focus()}
+                    returnKeyType='done'
+
                   />
                   <FloatingLabelTextInput
                     label="Net Weight (gm)"
@@ -487,6 +484,7 @@ class Customizable extends Component {
                     keyboardType="numeric"
                     textInputRef={this.netWeightRef}
                     onSubmitEditing={() => this.lengthRef.current.focus()}
+                    returnKeyType='done'
                   />
 
                   <FloatingLabelTextInput
@@ -498,8 +496,9 @@ class Customizable extends Component {
                     keyboardType="numeric"
                     textInputRef={this.lengthRef}
                     onSubmitEditing={() => this.quantityRef.current.focus()}
+                    returnKeyType='done'
                   />
-{/* 
+                  {/* 
                   <FloatingLabelTextInput
                     label="Size (Inches)"
                     value={this.state.size}
@@ -520,8 +519,9 @@ class Customizable extends Component {
                     keyboardType="numeric"
                     textInputRef={this.quantityRef}
                     onSubmitEditing={() => this.remarkRef.current.focus()}
+                    returnKeyType='done'
                   />
-                 
+
                   {/* <FloatingLabelTextInput
                     label="Hook Type"
                     value={this.state.hookType}
@@ -557,13 +557,15 @@ class Customizable extends Component {
                     resetValue={this.resetFieldRemark}
                     width="100%"
                     textInputRef={this.remarkRef}
+                    returnKeyType='done'
+
                   />
-                  <View style={{flexDirection: 'row',justifyContent: 'space-between',marginTop:10}}>
-                    <View style={{ alignItems: 'center',justifyContent: 'center'}}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                       <Text
                         style={{
                           ...Theme.ffLatoRegular16,
-                          color: '#000000',
+                          color: '#aaa',
                           marginLeft: 10,
                         }}>
                         Melting
@@ -603,7 +605,7 @@ class Customizable extends Component {
                     <DateTimePicker
                       isVisible={isDateTimePickerVisible}
                       onConfirm={date => this.handleDatePicked(date)}
-                      onCancel={() => hideDateTimePicker()}
+                      onCancel={() => this.hideDateTimePicker()}
                     />
                   )}
                 </View>
@@ -611,7 +613,7 @@ class Customizable extends Component {
             </View>
           </ScrollView>
 
-          <View style={{position: 'absolute', top: height / 3.8, right: wp(6)}}>
+          <View style={{ position: 'absolute', top: height / 3.8, right: wp(6) }}>
             <TouchableOpacity onPress={() => this.showActionSheet()}>
               <Image
                 style={{
@@ -651,7 +653,7 @@ class Customizable extends Component {
               borderTopLeftRadius: 16,
               borderTopRightRadius: 16,
             }}>
-            <Text style={{fontSize: 16, color: '#fbcb84'}}>SUBMIT ORDER</Text>
+            <Text style={{ fontSize: 16, color: '#fbcb84' }}>SUBMIT ORDER</Text>
           </View>
         </TouchableOpacity>
 
@@ -662,7 +664,7 @@ class Customizable extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: { flex: 1 },
   textWrapper: {
     height: hp('90%'),
     width: wp('80%'),
@@ -678,7 +680,7 @@ function mapStateToProps(state) {
     isFetching: state.customOrderReducer.isFetching,
     error: state.customOrderReducer.error,
     errorMsg: state.customOrderReducer.errorMsg,
-    successCustomOrderVersion:state.customOrderReducer.successCustomOrderVersion,
+    successCustomOrderVersion: state.customOrderReducer.successCustomOrderVersion,
     errorCustomOrderVersion: state.customOrderReducer.errorCustomOrderVersion,
     customOrderData: state.customOrderReducer.customOrderData,
 
@@ -689,4 +691,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {submitCustomOrder})(Customizable);
+export default connect(mapStateToProps, { submitCustomOrder })(Customizable);
