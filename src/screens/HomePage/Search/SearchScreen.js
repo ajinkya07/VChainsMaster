@@ -697,7 +697,6 @@ class SearchScreen extends Component {
 
                     <View style={{ paddingVertical: hp(1.5), }}>
                         {this.productReleaseDate()}
-
                     </View>
 
                     <View style={{ paddingVertical: hp(1), marginHorizontal: wp(3) }}>

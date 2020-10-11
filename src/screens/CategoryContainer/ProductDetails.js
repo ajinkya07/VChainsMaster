@@ -167,7 +167,6 @@ class ProductDetails extends React.Component {
   async componentDidUpdate(prevProps, prevState) {
     const { productDetailsData, addCartDetailsData } = this.props;
 
-    console.warn("productDetailsData", productDetailsData.data);
 
     if (this.state.successProductDetailsVersion > prevState.successProductDetailsVersion) {
       if (productDetailsData.ack == '1') {
@@ -546,6 +545,8 @@ class ProductDetails extends React.Component {
     });
 
     const { productDetailsStateData, weight, weightArray, lengthArray } = this.state;
+
+    console.log('productDetailsStateData', productDetailsStateData);
 
     let url =
       urls.imageUrl +
