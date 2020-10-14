@@ -107,7 +107,7 @@ export default {
 
   horizontalLatestDesign: {
     backgroundColor: color.white,
-    height: Platform.OS === 'ios' ? hp(32.5) : hp(33),
+    height: Platform.OS === 'ios' ? hp(32) : hp(33),
     width: wp(42),
     marginTop: hp(1),
     borderRadius: wp(4.5),

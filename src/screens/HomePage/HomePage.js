@@ -506,41 +506,6 @@ class HomePage extends Component {
     }
   };
 
-  getCategoryDesigns = (item, index) => {
-    const { homePageData } = this.props;
-    const {
-      categoryView,
-      categoryImage,
-      horizontalCategory,
-      categoryImageViewStyle,
-    } = HomePageStyle;
-    let baseUrl = urls.imageUrl + 'public/backend/collection/'
-
-    return (
-      <TouchableOpacity
-        onPress={() => this.getProductGridOrNot(item)}
-        activeOpacity={0.7}>
-        <View animation="zoomIn" style={categoryView}>
-          <View style={categoryImageViewStyle}>
-            <Animatable.Image
-              animation="zoomIn"
-              resizeMode={'cover'}
-              style={categoryImage}
-              defaultSource={IconPack.APP_LOGO}
-              source={{ uri: baseUrl + item.image_name }}
-            />
-          </View>
-
-          <_Text
-            numberOfLines={2}
-            fsPrimary
-            style={{ ...Theme.ffLatoRegular13, color: '#000000', textAlign: 'center' }}>
-            {item.col_name}
-          </_Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
 
   categoryViewDesign = (item, index) => {
     const { homePageData } = this.props;
@@ -552,7 +517,7 @@ class HomePage extends Component {
         onPress={() => this.getProductGridOrNot(item)}
         activeOpacity={0.7}>
 
-        <View style={{ flexDirection: item.position % 2 === 1 ? 'row' : 'row-reverse', marginTop: hp(1) }}>
+        <View style={{ flexDirection: item.position % 2 === 1 ? 'row' : 'row-reverse', marginTop: hp(0.5) }}>
           {item.position % 2 === 1 ?
             <View style={{ height: hp(18), width: wp(35), marginRight: hp(1), }}>
               <Image
@@ -568,7 +533,7 @@ class HomePage extends Component {
               </_Text>
             </View>
             :
-            <View style={{ marginTop: -hp(19), height: hp(18), width: wp(63), }}>
+            <View style={{ marginTop: -hp(18.5), height: hp(18), width: wp(63), }}>
               <Image
                 resizeMode={'cover'}
                 style={{ height: hp(18), width: wp(63), }}
@@ -591,26 +556,131 @@ class HomePage extends Component {
     );
   };
 
+  categoryViewDesignNew = (item, index) => {
+    const { collection } = this.state;
 
-  categoryViewDesignTwo = (item, index) => {
-    const { homePageData } = this.props;
+    let baseUrl = urls.imageUrl + 'public/backend/collection/';
 
-    let baseUrl = urls.imageUrl + 'public/backend/collection/'
 
     return (
       <TouchableOpacity
         onPress={() => this.getProductGridOrNot(item)}
         activeOpacity={0.7}>
-        <View style={{ flexDirection: 'row', marginBottom: hp(1), }}>
+        <View
+          style={{
+            //flexDirection: item.position % 2 === 1 ? 'row' : 'row-reverse',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          {index % 4 == 1 && (
+            <View style={{ height: hp(18), width: wp(35), marginVertical: hp(1), marginRight: hp(1) }}>
+              <Image
+                resizeMode={'cover'}
+                style={{ height: hp(18), width: wp(35) }}
+                defaultSource={IconPack.APP_LOGO}
+                source={{ uri: baseUrl + item.image_name }}
+              />
+              <_Text
+                numberOfLines={2}
+                style={{
+                  ...Theme.ffLatoMedium18,
+                  position: 'absolute',
+                  color: '#000000',
+                  top: 10,
+                  left: 10,
+                }}>
+                {item.col_name}
+              </_Text>
+            </View>
+          )}
 
-          <View style={{ height: hp(20), width: wp(65), marginRight: hp(1), backgroundColor: 'red' }}>
+          {index % 4 == 2 && (
+            <View
+              style={{
+                marginTop: -hp(19),
+                marginLeft: wp(36),
+                height: hp(18),
+                width: wp(63),
+                // marginVertical: hp(1),
+              }}>
+              <Image
+                resizeMode={'cover'}
+                style={{ height: hp(18), width: wp(63) }}
+                defaultSource={IconPack.APP_LOGO}
+                source={{ uri: baseUrl + item.image_name }}
+              />
+              <_Text
+                numberOfLines={2}
+                style={{
+                  ...Theme.ffLatoMedium18,
+                  position: 'absolute',
+                  top: 10,
+                  left: 10,
+                  color: '#000000',
+                  textAlign: 'center',
+                }}>
+                {item.col_name}
+              </_Text>
+            </View>
+          )}
 
-          </View>
-          <View style={{ height: hp(20), width: wp(35), backgroundColor: 'blue' }}>
+          {index % 4 == 3 && (
+            <View style={{
+              height: hp(18), width: wp(63),
+              marginRight: hp(1)
+            }}>
+              <Image
+                resizeMode={'cover'}
+                style={{ height: hp(18), width: wp(63) }}
+                defaultSource={IconPack.APP_LOGO}
+                source={{ uri: baseUrl + item.image_name }}
+              />
+              <_Text
+                numberOfLines={2}
+                style={{
+                  ...Theme.ffLatoMedium18,
+                  position: 'absolute',
+                  color: '#000000',
+                  top: 10,
+                  left: 10,
+                }}>
+                {item.col_name}
+              </_Text>
+            </View>
+          )}
 
-          </View>
+          {index % 4 == 0 && (
+            <View
+              style={{
+                marginTop: -hp(18),
+                marginLeft: wp(64),
+                height: hp(18),
+                width: wp(35),
+              }}>
+              <Image
+                resizeMode={'cover'}
+                style={{ height: hp(18), width: wp(35) }}
+                defaultSource={IconPack.APP_LOGO}
+                source={{ uri: baseUrl + item.image_name }}
+              />
+              <_Text
+                numberOfLines={2}
+                style={{
+                  ...Theme.ffLatoMedium18,
+                  position: 'absolute',
+                  top: 10,
+                  left: 10,
+                  color: '#000000',
+                  textAlign: 'center',
+                }}>
+                {item.col_name}
+              </_Text>
+            </View>
+          )}
+
+
+
         </View>
-
       </TouchableOpacity>
     );
   };
@@ -636,7 +706,7 @@ class HomePage extends Component {
     return (
       <TouchableOpacity
         onPress={() => this.props.navigation.navigate('ProductDetails', { productItemDetails: item, fromHome: true })}>
-        <View style={{ height: hp('35') }}>
+        <View style={{ height: hp(35) }}>
           <View style={horizontalLatestDesign}>
             <View style={latestDesign}>
               <TouchableOpacity
@@ -944,21 +1014,20 @@ class HomePage extends Component {
     const categoryData = homePageData && homePageData.collection ? homePageData.collection : []
 
 
-
     return (
       <View style={mainContainer}>
         <ScrollView
           // bounces={false}
           refreshControl={
             <RefreshControl
-              refreshing={false}
+              refreshing={isFetching}
               onRefresh={() => this.onRefresh()}
             />
           }
           showsVerticalScrollIndicator={false}>
 
 
-          {/* {this.carausalView(bannerData)} */}
+          {this.carausalView(bannerData)}
 
           {/* CATEGORY DESIGNS */}
 
@@ -970,7 +1039,7 @@ class HomePage extends Component {
                 showsVerticalScrollIndicator={false}
                 keyExtractor={item => item.position.toString()}
                 renderItem={({ item, index }) => (
-                  this.categoryViewDesign(item, index)
+                  this.categoryViewDesignNew(item, item.position)
                 )}
               />
             </View>

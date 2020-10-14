@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import _Text from '@text/_Text';
-import {color} from '@values/colors';
+import { color } from '@values/colors';
 
 const horizontalMargin = 20;
 const slideWidth = 280;
@@ -64,10 +64,15 @@ export default {
     justifyContent: 'center',
     width: wp(46),
   },
+  gridItemDesignTwo: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
   gridImage: {
     height: hp(18),
     // width: wp(45),
-    width:null,
+    width: null,
     // top: 1,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
@@ -81,11 +86,25 @@ export default {
     marginTop: hp(0.5),
     paddingHorizontal: hp(0.8),
   },
+  latestTextViewTwo: {
+    flexDirection: 'row',
+    width: '100%',
+    marginTop: hp(0.5),
+    paddingHorizontal: hp(0.8),
+    justifyContent: 'space-between',
+  },
   latestTextView2: {
     flexDirection: 'row',
     width: wp(46),
     marginTop: hp(0.5),
     paddingHorizontal: hp(0.8),
+  },
+  latestTextViewThree: {
+    flexDirection: 'row',
+    width: '100%',
+    marginTop: hp(0.5),
+    paddingHorizontal: hp(0.8),
+    justifyContent: 'space-between',
   },
   border: {
     marginTop: hp(0.8),
@@ -93,10 +112,24 @@ export default {
     borderWidth: 0.4,
     width: wp(40),
   },
+  borderTwo: {
+    marginTop: hp(0.8),
+    borderTopColor: '#d7d7d7',
+    borderWidth: 0.4,
+    width: '95%',
+  },
+
   iconView: {
     width: wp(48),
     marginTop: hp(1),
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
+  iconViewTwo: {
+    width: '100%',
+    marginTop: hp(1),
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+
+  }
 };

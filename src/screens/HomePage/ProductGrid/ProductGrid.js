@@ -590,21 +590,12 @@ class ProductGrid extends Component {
                 this.props.navigation.navigate('ProductDetails', { productItemDetails: item, })}
               onLongPress={() => this.showProductImageModal(item)}>
               <Image
-                //resizeMode={'stretch'}
+                // resizeMode={'cover'}
                 style={gridImage}
                 defaultSource={IconPack.APP_LOGO}
                 source={{ uri: url + item.image_name }}
               />
 
-              {/* <FastImage
-                style={gridImage}
-                source={{
-                  uri: url + item.image_name,
-                  // cache: FastImage.cacheControl.cacheOnly,
-                }}
-                resizeMode={FastImage.resizeMode.cover}
-              />
-               */}
             </TouchableOpacity>
             <View style={latestTextView}>
               <View style={{ width: wp(15), marginLeft: 5 }}>
@@ -661,7 +652,6 @@ class ProductGrid extends Component {
                 </_Text>
               </View>
             </View>
-            {/* <View style={border}></View> */}
 
             <View style={latestTextView2}>
               <View style={{ marginLeft: 5 }}>
@@ -774,6 +764,269 @@ class ProductGrid extends Component {
       </TouchableOpacity>
     );
   };
+
+
+
+  gridViewFull = item => {
+    const {
+      gridItemDesignTwo,
+      latestTextViewTwo,
+      latestTextViewThree,
+      gridImage,
+      borderTwo,
+      iconViewTwo,
+    } = ProductGridStyle;
+
+    let url = urls.imageUrl + 'public/backend/product_images/zoom_image/';
+
+    const { isSelectPressed, selectedItem, selectedProducts } = this.state;
+
+    return (
+      <TouchableOpacity
+        onPress={() =>
+          isSelectPressed
+            ? item.quantity > 0
+              ? this.showAlreadyToast()
+              : this.selectProduct(item, item.product_inventory_id)
+            : this.props.navigation.navigate('ProductDetails', {
+              productItemDetails: item,
+            })
+        }>
+        <View
+          style={{
+            backgroundColor: color.white,
+            height: Platform.OS === 'android' ? hp(34) : hp(31),
+            width: '96%',
+            marginHorizontal: hp(1),
+            borderRadius: 15,
+            shadowColor: '#000',
+            shadowOffset: { width: 0.5, height: 0.5 },
+            shadowOpacity: 0.25,
+            shadowRadius: 2,
+            elevation: 2.2,
+          }}
+          activeOpacity={1}>
+          <View style={gridItemDesignTwo}>
+            <TouchableOpacity
+              onPress={() =>
+                isSelectPressed
+                  ? item.quantity > 0
+                    ? this.showAlreadyToast()
+                    : this.selectProduct(item, item.product_inventory_id)
+                  : this.props.navigation.navigate('ProductDetails', {
+                    productItemDetails: item,
+                  })
+              }
+              onLongPress={() => this.showProductImageModal(item)}
+              style={{ width: '100%' }}>
+              <Image
+                resizeMode='contain'
+                style={gridImage}
+                defaultSource={IconPack.APP_LOGO}
+                source={{ uri: url + item.image_name }}
+              />
+
+            </TouchableOpacity>
+            <View style={latestTextViewTwo}>
+              <View style={{ width: wp(15), marginLeft: 5 }}>
+                <_Text
+                  numberOfLines={1}
+                  fsSmall
+                  textColor={'#000000'}
+                  style={{ ...Theme.ffLatoRegular13 }}>
+                  Code :
+                </_Text>
+              </View>
+              <View
+                style={{
+                  //marginRight: 8,
+                  // width: '50%',
+                  justifyContent: 'center',
+                  alignItems: 'flex-end',
+                  //backgroundColor: 'red',
+                  //flex:1
+                  marginRight: 10,
+                }}>
+                <_Text
+                  numberOfLines={1}
+                  fsPrimary
+                  //textColor={color.brandColor}
+                  textColor={'#000000'}
+                  style={{ ...Theme.ffLatoRegular12 }}>
+                  {item.value[0]}
+                </_Text>
+              </View>
+            </View>
+
+            <View style={latestTextViewThree}>
+              <View style={{ marginLeft: 5 }}>
+                <_Text
+                  numberOfLines={1}
+                  fsSmall
+                  textColor={'#000000'}
+                  style={{ ...Theme.ffLatoRegular13 }}>
+                  Gross Wt :
+                </_Text>
+              </View>
+              <View
+                style={{
+                  // marginRight: 8,
+                  // width: wp(24),
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                  marginRight: 10,
+                }}>
+                <_Text
+                  numberOfLines={1}
+                  fsPrimary
+                  //textColor={color.brandColor}
+                  textColor={'#000000'}
+                  style={{ ...Theme.ffLatoRegular12 }}>
+                  {parseInt(item.value[1]).toFixed(2)}
+                </_Text>
+              </View>
+            </View>
+
+            <View style={latestTextViewThree}>
+              <View style={{ marginLeft: 5 }}>
+                <_Text
+                  numberOfLines={1}
+                  fsSmall
+                  textColor={'#000000'}
+                  style={{ ...Theme.ffLatoRegular13 }}>
+                  Name :{' '}
+                </_Text>
+              </View>
+              <View
+                style={{
+                  marginRight: 10,
+                  width: wp(28),
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                }}>
+                <_Text
+                  numberOfLines={1}
+                  fsPrimary
+                  textColor={color.brandColor}
+                  textColor={'#000000'}
+                  style={{ ...Theme.ffLatoRegular12 }}>
+                  {item.value[2]}
+                </_Text>
+              </View>
+            </View>
+            <View style={borderTwo}></View>
+
+            {item.quantity == 0 && (
+              <View style={iconViewTwo}>
+                <TouchableOpacity
+                  onPress={() =>
+                    isSelectPressed
+                      ? this.selectProduct(item, item.product_inventory_id)
+                      : this.addProductToWishlist(item)
+                  }>
+                  <Image
+                    source={require('../../../assets/image/BlueIcons/Green-Heart.png')}
+                    style={{ height: hp(3.1), width: hp(3), marginTop: 2 }}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    isSelectPressed
+                      ? this.selectProduct(item, item.product_inventory_id)
+                      : this.addProductToCart(item)
+                  }>
+                  <Image
+                    source={require('../../../assets/image/BlueIcons/Green-Cart.png')}
+                    style={{ height: hp(3.1), width: hp(3), marginTop: 2 }}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+
+            {item.quantity > 0 && (
+              <View style={iconViewTwo}>
+                <TouchableOpacity
+                  onPress={() =>
+                    isSelectPressed
+                      ? this.showAlreadyToast()
+                      : this.removeProductFromCartByOne(item)
+                  }>
+                  <Image
+                    source={require('../../../assets/image/BlueIcons/Minus.png')}
+                    style={{ height: hp(3), width: hp(3) }}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+                <_Text
+                  numberOfLines={1}
+                  textColor={color.brandColor}
+                  fsMedium
+                  fwHeading>
+                  {item.quantity >= 1 ? item.quantity : item.in_cart}
+                </_Text>
+
+                <TouchableOpacity
+                  onPress={() =>
+                    isSelectPressed
+                      ? this.showAlreadyToast()
+                      : this.addProductToCartPlusOne(item)
+                  }>
+                  <Image
+                    source={require('../../../assets/image/BlueIcons/Plus.png')}
+                    style={{ height: hp(3), width: hp(3) }}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+
+          {isSelectPressed && !item.isSelect && (
+            <View
+              style={{
+                height: 40,
+                width: 40,
+                borderRadius: 40 / 2,
+                borderWidth: 2,
+                borderColor: '#19af81',
+                backgroundColor: '#FFFFFF',
+                position: 'absolute',
+              }}>
+              <TouchableOpacity
+                onPress={() =>
+                  this.selectProduct(item, item.product_inventory_id)
+                }></TouchableOpacity>
+            </View>
+          )}
+
+          {isSelectPressed && item.isSelect && (
+            <View
+              style={{
+                height: 40,
+                width: 40,
+                borderRadius: 40 / 2,
+                backgroundColor: '#FFFFFF',
+                position: 'absolute',
+              }}>
+              <TouchableOpacity
+                onPress={() =>
+                  this.selectProduct(item, item.product_inventory_id)
+                }>
+                <Image
+                  source={require('../../../assets/image/tick.png')}
+                  style={{ height: 40, width: 40, borderRadius: 40 / 2 }}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+
 
 
   selectProduct = (data, id) => {
@@ -1449,23 +1702,42 @@ class ProductGrid extends Component {
 
         </View>
 
-        {gridData && (
+        {gridData && !isSelectPressed && (
           <FlatList
+            key={'_'}
             data={gridData}
             showsHorizontalScrollIndicator={true}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
               <View style={{ marginBottom: hp(1), marginTop: hp(1) }}>
-                {this.gridView(item)}
+                { this.gridView(item)}
               </View>
             )}
             numColumns={2}
-            keyExtractor={(item, index) => item.product_inventory_id.toString()}
+            keyExtractor={item => '_' + item.product_inventory_id.toString()}
             style={{ marginTop: hp(1) }}
             //onEndReachedThreshold={0.3}
             //onEndReached={()=> this.LoadMoreData()}
             ListFooterComponent={this.footer()}
-          // ListEmptyComponent={() => this.showNoDataFound(this.props.errorMsg)}
+          />
+        )}
+        {gridData && isSelectPressed && (
+          <FlatList
+            key={'#'}
+            data={gridData}
+            showsHorizontalScrollIndicator={true}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <View style={{ marginBottom: hp(1), marginTop: hp(1) }}>
+                { this.gridViewFull(item)}
+              </View>
+            )}
+            numColumns={1}
+            keyExtractor={item => '#' + item.product_inventory_id.toString()}
+            style={{ marginTop: hp(1) }}
+            //onEndReachedThreshold={0.3}
+            //onEndReached={()=> this.LoadMoreData()}
+            ListFooterComponent={this.footer()}
           />
         )}
 
