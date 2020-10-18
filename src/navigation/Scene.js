@@ -32,9 +32,11 @@ import { connect } from 'react-redux';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import {allParameters} from '@navigation/SceneAction';
+import { allParameters } from '@navigation/SceneAction';
 
-import {Toast} from 'native-base'
+import { navigationRef } from '../../RootNavigation';
+
+import { Toast } from 'native-base'
 
 const Stack = createStackNavigator();
 
@@ -43,7 +45,7 @@ class Scene extends React.Component {
     super(props);
     this.state = {
       isLoginValue: false,
-      isInside:true,
+      isInside: true,
       successAllParameterVersion: 0,
       errorAllParamaterVersion: 0,
     };
@@ -64,14 +66,14 @@ class Scene extends React.Component {
 
         const data = new FormData();
         data.append('user_id', parsed);
-    
+
         await this.props.allParameters(data)
-    
+
       } else {
-        this.setState({ isLoginValue: false , isInside:false});
+        this.setState({ isLoginValue: false, isInside: false });
       }
     } else {
-      this.setState({ isLoginValue: false , isInside:false});
+      this.setState({ isLoginValue: false, isInside: false });
     }
   }
 
@@ -82,45 +84,45 @@ class Scene extends React.Component {
     let newState = null;
 
     if (successAllParameterVersion > prevState.successAllParameterVersion) {
-        newState = {
-            ...newState,
-            successAllParameterVersion: nextProps.successAllParameterVersion,
-        };
+      newState = {
+        ...newState,
+        successAllParameterVersion: nextProps.successAllParameterVersion,
+      };
     }
     if (errorAllParamaterVersion > prevState.errorAllParamaterVersion) {
-        newState = {
-            ...newState,
-            errorAllParamaterVersion: nextProps.errorAllParamaterVersion,
-        };
+      newState = {
+        ...newState,
+        errorAllParamaterVersion: nextProps.errorAllParamaterVersion,
+      };
     }
 
     return newState;
-}
+  }
 
-async componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     const { allParameterData } = this.props;
     const { isLoginValue } = this.state;
 
 
-  if (this.state.successAllParameterVersion > prevState.successAllParameterVersion) {
-   
-    const stat = allParameterData && allParameterData.user_status
-   
-    if(stat != 'active'){
-      this.setState({
-        isLoginValue:false,
-        isInside:false
-      })
+    if (this.state.successAllParameterVersion > prevState.successAllParameterVersion) {
+
+      const stat = allParameterData && allParameterData.user_status
+
+      if (stat != 'active') {
+        this.setState({
+          isLoginValue: false,
+          isInside: false
+        })
+      }
+    }
+
+    if (this.state.errorAllParamaterVersion > prevState.errorAllParamaterVersion) {
+      Toast.show({
+        text: this.props.errorMsg,
+        duration: 2500,
+      });
     }
   }
-
-  if (this.state.errorAllParamaterVersion > prevState.errorAllParamaterVersion) {
-    Toast.show({
-      text: this.props.errorMsg,
-      duration: 2500,
-    });
-  }
-}
 
 
   getLoginScene() {
@@ -285,40 +287,39 @@ async componentDidUpdate(prevProps, prevState) {
 
 
   goToWhere = () => {
-    const { isLoginValue,isInside } = this.state;
+    const { isLoginValue, isInside } = this.state;
     const { allParameterData } = this.props;
 
     const s = allParameterData && allParameterData.user_status
 
-    if(s == 'active' && isLoginValue == true){
-     return  this.getHomeScene()
+    if (s == 'active' && isLoginValue == true) {
+      return this.getHomeScene()
     }
-    else if(isLoginValue == false && s !='active'){
-    return  this.getLoginScene()
+    else if (isLoginValue == false && s != 'active') {
+      return this.getLoginScene()
     }
-    else if(isLoginValue == false && !isInside){
-      return  this.getLoginScene()
+    else if (isLoginValue == false && !isInside) {
+      return this.getLoginScene()
     }
   }
 
-  
-  showToast = () =>{
+
+  showToast = () => {
     Toast.show({
-      text:'your status is inactive. Kindly contact admin to activate',
-      duration:2500
+      text: 'your status is inactive. Kindly contact admin to activate',
+      duration: 2500
     })
   }
 
 
   render() {
-    const { isLoginValue , status} = this.state;
+    const { isLoginValue, status } = this.state;
     const { allParameterData } = this.props;
-    
-    return (
-      <NavigationContainer>
 
-     {/* {isLoginValue !== '' && status == 'active' ? isLoginValue === true  ? this.getHomeScene() : this.getLoginScene() : this.getLoginScene()} */}
-      {this.goToWhere()}
+    return (
+      <NavigationContainer ref={navigationRef}>
+        {/* {isLoginValue !== '' && status == 'active' ? isLoginValue === true  ? this.getHomeScene() : this.getLoginScene() : this.getLoginScene()} */}
+        {this.goToWhere()}
       </NavigationContainer>
     );
   }
@@ -327,12 +328,12 @@ async componentDidUpdate(prevProps, prevState) {
 
 function mapStateToProps(state) {
   return {
-      isFetching: state.sceneReducer.isFetching,
-      error: state.sceneReducer.error,
-      errorMsg: state.sceneReducer.errorMsg,
-      successAllParameterVersion: state.sceneReducer.successAllParameterVersion,
-      errorAllParamaterVersion: state.sceneReducer.errorAllParamaterVersion,
-      allParameterData: state.sceneReducer.allParameterData,
+    isFetching: state.sceneReducer.isFetching,
+    error: state.sceneReducer.error,
+    errorMsg: state.sceneReducer.errorMsg,
+    successAllParameterVersion: state.sceneReducer.successAllParameterVersion,
+    errorAllParamaterVersion: state.sceneReducer.errorAllParamaterVersion,
+    allParameterData: state.sceneReducer.allParameterData,
   };
 }
 

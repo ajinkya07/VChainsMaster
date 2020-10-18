@@ -38,24 +38,7 @@
                     }
                 },
                 {
-                    "source": "/Users/ajinkya/.gradle/caches/transforms-2/files-2.1/9a4658afade2e57b9a640b6674c28496/core-1.1.0/res/values-ka/values-ka.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "49",
-                        "startColumns": "4",
-                        "startOffsets": "5707",
-                        "endColumns": "100",
-                        "endOffsets": "5803"
-                    }
-                },
-                {
-                    "source": "/Users/ajinkya/.gradle/caches/transforms-2/files-2.1/2f734a90f853921f9c4c260cb18919f9/jetified-firebase-messaging-20.3.0/res/values-ka/values.xml",
+                    "source": "/Users/ajinkya/.gradle/caches/transforms-2/files-2.1/ca0d745c53aac7484f47139567f7b5a0/jetified-firebase-messaging-20.3.0/res/values-ka/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -72,7 +55,7 @@
                     }
                 },
                 {
-                    "source": "/Users/ajinkya/.gradle/caches/transforms-2/files-2.1/441ee60c33d14c93dc3622a557ff46de/jetified-play-services-basement-17.0.0/res/values-ka/values.xml",
+                    "source": "/Users/ajinkya/.gradle/caches/transforms-2/files-2.1/9bb75872ad275c20d4dbf8d63d0ee4eb/jetified-play-services-basement-17.0.0/res/values-ka/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -86,6 +69,23 @@
                         "startOffsets": "3976",
                         "endColumns": "201",
                         "endOffsets": "4173"
+                    }
+                },
+                {
+                    "source": "/Users/ajinkya/.gradle/caches/transforms-2/files-2.1/9a4658afade2e57b9a640b6674c28496/core-1.1.0/res/values-ka/values-ka.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "49",
+                        "startColumns": "4",
+                        "startOffsets": "5707",
+                        "endColumns": "100",
+                        "endOffsets": "5803"
                     }
                 }
             ]

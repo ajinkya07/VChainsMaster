@@ -1,4 +1,4 @@
-import React, {useState, Component, useRef} from 'react';
+import React, { useState, Component, useRef } from 'react';
 import {
   View,
   Text,
@@ -15,14 +15,14 @@ import {
   Keyboard,
   ScrollView,
 } from 'react-native';
-import {Container, Content, Icon, Toast} from 'native-base';
+import { Container, Content, Icon, Toast } from 'native-base';
 import IconPack from '@login/IconPack';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {color} from '@values/colors';
+import { color } from '@values/colors';
 import {
   validateEmail,
   validateMobNum,
@@ -31,9 +31,11 @@ import {
   validateUserName,
 } from '@values/validate';
 
-const {width, height} = Dimensions.get('window');
+import AsyncStorage from '@react-native-community/async-storage';
+import { signInRequest, sendFCM } from '@login/LoginAction';
 
-import {signInRequest} from '@login/LoginAction';
+const { width, height } = Dimensions.get('window');
+
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -45,13 +47,20 @@ class SignIn extends React.Component {
       isMobile: false,
       successLoginVersion: 0,
       errorLoginVersion: 0,
+
+      successFcmVersion: 0,
+      errorFcmVersion: 0,
     };
     this.mobileRef = React.createRef();
     this.passwordRef = React.createRef();
+    userId = global.userId;
+
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const {successLoginVersion, errorLoginVersion} = nextProps;
+    const { successLoginVersion, errorLoginVersion,
+      successFcmVersion, errorFcmVersion
+    } = nextProps;
     let newState = null;
 
     if (successLoginVersion > prevState.successLoginVersion) {
@@ -66,14 +75,29 @@ class SignIn extends React.Component {
         errorLoginVersion: nextProps.errorLoginVersion,
       };
     }
+    if (successFcmVersion > prevState.successFcmVersion) {
+      newState = {
+        ...newState,
+        successFcmVersion: nextProps.successFcmVersion,
+      };
+    }
+    if (errorFcmVersion > prevState.errorFcmVersion) {
+      newState = {
+        ...newState,
+        errorFcmVersion: nextProps.errorFcmVersion,
+      };
+    }
+
     return newState;
   }
 
   async componentDidUpdate(prevProps, prevState) {
     if (this.state.successLoginVersion > prevState.successLoginVersion) {
       if (this.props.loginData.user_status === 'Available') {
-        this.showToast('Login successfull', 'success');
-        this.props.navigation.navigate('Container');
+        // this.showToast('Login successfull', 'success');
+        // this.props.navigation.navigate('Container');
+        this.sendFcmToken()
+
       } else {
         this.showToast('Please contact admin', 'danger');
       }
@@ -82,9 +106,30 @@ class SignIn extends React.Component {
     if (this.state.errorLoginVersion > prevState.errorLoginVersion) {
       this.showToast(this.props.errorMsg, 'danger');
     }
+    if (this.state.successFcmVersion > prevState.successFcmVersion) {
+      this.props.navigation.navigate('Container');
+    }
+
+    if (this.state.errorFcmVersion > prevState.errorFcmVersion) {
+      this.showToast(this.props.errorMsg, 'danger');
+    }
   }
 
-  onInputChanged = ({inputKey, isValid, value}) => {
+  sendFcmToken = async () => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
+
+    const fcmData = new FormData();
+
+    fcmData.append('worker_id', userId);
+    fcmData.append('type', 'client');
+    fcmData.append('gcm_no', fcmToken);
+
+    await this.props.sendFCM(fcmData)
+
+  }
+
+
+  onInputChanged = ({ inputKey, isValid, value }) => {
     let validationKey = '';
     switch (inputKey) {
       case 'mobileNo':
@@ -121,7 +166,7 @@ class SignIn extends React.Component {
   };
 
   loginRequest = () => {
-    const {password, isPassword, mobileNo, isMobile} = this.state;
+    const { password, isPassword, mobileNo, isMobile } = this.state;
 
     let error = '';
     try {
@@ -161,7 +206,7 @@ class SignIn extends React.Component {
   };
 
   render() {
-    const {mobileNo, password} = this.state;
+    const { mobileNo, password } = this.state;
 
     return (
       <Container>
@@ -173,7 +218,7 @@ class SignIn extends React.Component {
                 ios: -150,
                 android: 500,
               })}
-              style={{flex: 1}}>
+              style={{ flex: 1 }}>
               <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <Content
                   contentContainerStyle={{
@@ -184,20 +229,22 @@ class SignIn extends React.Component {
                   <View style={styles.viewContainer}>
                     <View
                       style={{
-                        alignItems:'center',
-                        marginTop:hp(10),
+                        alignItems: 'center',
+                        marginTop: hp(10),
                         height: hp(19),
                       }}>
-                      
-                      
-                      <Text style={{fontFamily: 'Lato-Bold', 
-                      textAlign:'center',letterSpacing: 2,fontSize: 30, color: '#FFFFFF',}}>
+
+
+                      <Text style={{
+                        fontFamily: 'Lato-Bold',
+                        textAlign: 'center', letterSpacing: 2, fontSize: 30, color: '#FFFFFF',
+                      }}>
                         V CHAINS
                       </Text>
                       <Text style={{
-                          fontFamily: 'Lato-Regular',marginTop:hp(0.5),
-                          fontSize: 14, color: '#0d185c',textAlign:'center'
-                        }}>
+                        fontFamily: 'Lato-Regular', marginTop: hp(0.5),
+                        fontSize: 14, color: '#0d185c', textAlign: 'center'
+                      }}>
                         THE CHAIN WIZARDS
                       </Text>
                     </View>
@@ -233,7 +280,7 @@ class SignIn extends React.Component {
                       textInputRef={this.passwordRef}
                     />
 
-                    <View style={{justifyContent: 'flex-end', marginLeft: 110}}>
+                    <View style={{ justifyContent: 'flex-end', marginLeft: 110 }}>
                       <TouchableOpacity
                         onPress={() =>
                           this.props.navigation.navigate('ForgotPassword')
@@ -262,7 +309,7 @@ class SignIn extends React.Component {
 
                     {this.props.isFetching && this.showLoader()}
 
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={{ flexDirection: 'row' }}>
                       <Text
                         style={{
                           paddingTop: 12,
@@ -312,7 +359,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  flex: {flex: 1},
+  flex: { flex: 1 },
   buttonStyle: {
     //marginTop: 60,
   },
@@ -333,13 +380,15 @@ function mapStateToProps(state) {
     successLoginVersion: state.loginReducer.successLoginVersion,
     errorLoginVersion: state.loginReducer.errorLoginVersion,
     loginData: state.loginReducer.loginData,
+
+    successFcmVersion: state.loginReducer.successFcmVersion,
+    errorFcmVersion: state.loginReducer.errorFcmVersion,
+    fcmData: state.loginReducer.fcmData,
+
   };
 }
 
-export default connect(
-  mapStateToProps,
-  {signInRequest},
-)(SignIn);
+export default connect(mapStateToProps, { signInRequest, sendFCM })(SignIn);
 
 class LoginFields extends Component {
   constructor(props) {
@@ -389,8 +438,8 @@ class LoginFields extends Component {
           break;
       }
     }
-    this.setState({isValid, text});
-    onChangeText && onChangeText({inputKey, isValid, value: text, inputId});
+    this.setState({ isValid, text });
+    onChangeText && onChangeText({ inputKey, isValid, value: text, inputId });
   };
 
   setSecureInput = secureInput => {
@@ -416,7 +465,7 @@ class LoginFields extends Component {
       textInputRef,
       onSubmitEditing,
     } = this.props;
-    const {isPasswordField, secureInput} = this.state;
+    const { isPasswordField, secureInput } = this.state;
 
     return (
       <View
@@ -516,7 +565,7 @@ const loginFieldsStyles = StyleSheet.create({
 });
 
 //-------------ActionButtonCommon-----------//
-const ActionButtonRounded = ({title, onButonPress, containerStyle}) => {
+const ActionButtonRounded = ({ title, onButonPress, containerStyle }) => {
   return (
     <TouchableOpacity
       onPress={() => {

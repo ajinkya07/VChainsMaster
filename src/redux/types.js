@@ -28,7 +28,7 @@ export const HOMEPAGE_DATA = "homePageData";
 export const HOMEPAGE_DATA_SUCCESS = "homePageDataSuccess";
 export const HOMEPAGE_DATA_ERROR = "homePageDataError";
 export const HOMEPAGE_DATA_RESET_REDUCER = "homePageDataResetReducer";
-    
+
 export const PRODUCT_GRID_DATA = "productData";
 export const PRODUCT_GRID_DATA_SUCCESS = "productDataSuccess";
 export const PRODUCT_GRID_DATA_ERROR = "productDataError";
@@ -257,3 +257,9 @@ export const CUSTOM_ORDER_DATA = "accountCustomData";
 export const CUSTOM_ORDER_DATA_SUCCESS = "accountCustomDataSuccess";
 export const CUSTOM_ORDER_DATA_ERROR = "accountCustomDataError";
 export const CUSTOM_ORDER_DATA_RESET_REDUCER = "accountCustomDataResetReducer";
+
+
+export const FCM_DATA = "fcmData";
+export const FCM_DATA_SUCCESS = "fcmDataSuccess";
+export const FCM_DATA_ERROR = "fcmDataError";
+export const FCM_DATA_RESET_REDUCER = "fcmDataResetReducer";

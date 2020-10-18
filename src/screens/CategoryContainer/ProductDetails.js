@@ -175,19 +175,14 @@ class ProductDetails extends React.Component {
 
           productDetailsStateData: productDetailsData.data[0],
 
-          length: productDetailsData !== undefined ? productDetailsData.data[0].length : '',
+          length: productDetailsData !== undefined && productDetailsData.data[0].length ?
+            productDetailsData.data[0].length : '',
 
-          // lengthArray: productDetailsData !== undefined ? productDetailsData.data[0].length &&
-          //   productDetailsData.data[0].length.length !== 0
-          //   ? productDetailsData.data[0].length
-          //   : ''
-          //   : '',
-
-          // length: productDetailsData !== undefined ? productDetailsData.data[0].length &&
-          //   productDetailsData.data[0].length.length !== 0
-          //   ? productDetailsData.data[0].length[0]
-          //   : ''
-          //   : '',
+          lengthArray: productDetailsData !== undefined ? productDetailsData.data[0].mul_length &&
+            productDetailsData.data[0].mul_length.length !== 0
+            ? productDetailsData.data[0].mul_length
+            : ''
+            : '',
 
           weightArray: productDetailsData !== undefined ? productDetailsData.data[0].weight &&
             productDetailsData.data[0].weight.length !== 0
@@ -501,8 +496,8 @@ class ProductDetails extends React.Component {
         device_type: Platform.OS === 'ios' ? 'ios' : 'android',
         remarks: remark,
         size: d.key_value[2],
-        weight: parseInt(weight),
-        length: parseInt(length),
+        weight: weight ? parseInt(weight) : '',
+        length: length ? parseInt(length) : '',
       },
     ]);
 
@@ -545,8 +540,6 @@ class ProductDetails extends React.Component {
     });
 
     const { productDetailsStateData, weight, weightArray, lengthArray } = this.state;
-
-    console.log('productDetailsStateData', productDetailsStateData);
 
     let url =
       urls.imageUrl +
@@ -606,7 +599,7 @@ class ProductDetails extends React.Component {
                       <View style={{ width: wp(73) }}>
                         <Text
                           style={{
-                            color: '#8a8a8a',
+                            color: 'white',
                             ...Theme.ffLatoRegular18,
                             letterSpacing: 0.8,
                           }}>
@@ -798,25 +791,27 @@ class ProductDetails extends React.Component {
 
                       {/* LENGTH */}
 
-                      {/* <View
-                        style={{
-                          flexDirection: 'row',
-                          marginLeft: hp(3),
-                          justifyContent: 'space-between',
-                        }}>
-                        <View style={styles.customizableContainer}>
-                          <Text
-                            style={{
-                              ...Theme.ffLatoRegular15,
-                              color: '#000000',
-                            }}>
-                            Length
+                      {this.state.length !== '' &&
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            marginLeft: hp(3),
+                            justifyContent: 'space-between',
+                          }}>
+                          <View style={styles.customizableContainer}>
+                            <Text
+                              style={{
+                                ...Theme.ffLatoRegular15,
+                                color: '#000000',
+                              }}>
+                              Length
                           </Text>
+                          </View>
+                          <View>
+                            {this.PickerLengthDropDown(lengthArray)}
+                          </View>
                         </View>
-                        <View>
-                          {this.PickerLengthDropDown(lengthArray)}
-                        </View>
-                      </View> */}
+                      }
 
 
                       <View style={styles.bottomTextContainer}>
@@ -834,7 +829,7 @@ class ProductDetails extends React.Component {
 
                       <View
                         style={{
-                          backgroundColor: '#11255a',
+                          backgroundColor: '#19af81',
                           height: hp(6),
                           borderTopLeftRadius: 18,
                           borderTopRightRadius: 18,
@@ -847,14 +842,14 @@ class ProductDetails extends React.Component {
                             justifyContent: 'center',
                             flex: 1,
                             borderRightWidth: 2,
-                            borderRightColor: '#fbcb84',
+                            borderRightColor: 'white',
                             margin: 3,
                           }}>
                           <Text
                             style={{
                               textAlign: 'center',
-                              color: '#fbcb84',
-                              fontWeight: '400',
+                              color: 'white',
+                              fontWeight: 'bold',
                             }}
                             onPress={() =>
                               this.addtoCart(productDetailsStateData)
@@ -871,8 +866,8 @@ class ProductDetails extends React.Component {
                           <Text
                             style={{
                               textAlign: 'center',
-                              color: '#fbcb84',
-                              fontWeight: '400',
+                              color: 'white',
+                              fontWeight: 'bold',
                             }}
                             onPress={() =>
                               this.addToWishList(productDetailsStateData)
@@ -934,8 +929,8 @@ const styles = StyleSheet.create({
   },
   mainContainerStyle: {
     backgroundColor: '#19af81',
-    borderTopLeftRadius: 18,
-    borderTopRightRadius: 18,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
   topTitleContainer: {
     marginLeft: 10,

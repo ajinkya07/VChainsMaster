@@ -122,12 +122,15 @@ export const urls = {
     Exclusive: {
         url: url + 'my_Collection'
     },
-    CallEmail:{
+    CallEmail: {
         url: url + 'Call_Email_Us'
     },
-    CustomOrder:{
+    CustomOrder: {
         url: url + 'Customized_Order/order_assign'
-    }
+    },
+    sendFCMToken: {
+        url: url + 'Worker/send_gcm'
+    },
 
 
 }

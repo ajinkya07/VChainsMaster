@@ -13,25 +13,29 @@ class _Container extends Component {
     }
     render() {
         const { showLoading, children, title, showHeader, showSearch,
-            showNotification,showCalling,showLogo,
-            onNotificationPress, showBack, onSearchPress, onCallingPress, profilePic } = this.props
+            showNotification, showCalling, showLogo, headerColor,
+            onNotificationPress, showBack, onSearchPress,
+            onCallingPress, profilePic } = this.props
+
         const { mainContainer } = containerStyle
+
         return (
             <Container style={mainContainer} >
                 {
-                    showHeader && <_Header 
+                    showHeader && <_Header
                         title={title}
-                       // showHeader={showHeader}
+                        headerColor={headerColor}
+                        // showHeader={showHeader}
                         showSearch={showSearch}
                         showNotification={showNotification}
                         showCalling={showCalling}
                         showLogo={showLogo}
                         showBack={showBack}
-                        
+
                         onSearchPress={onSearchPress}
-                        onCallingPress={onCallingPress} 
+                        onCallingPress={onCallingPress}
                         onNotificationPress={onNotificationPress}
-                        >
+                    >
                     </_Header>
                 }
                 {children}

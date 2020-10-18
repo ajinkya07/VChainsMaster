@@ -31,14 +31,14 @@ class App extends React.Component {
   };
 
   onRegister = (token) => {
-    console.warn("[App] Token", token);
+    console.log("[App] Token", token);
 
     AsyncStorage.setItem('fcmToken', token)
   }
 
 
   onNotification = (notify) => {
-    console.warn("[App] onNotification", notify);
+    console.log("[App] onNotification", notify);
     const options = {
       soundName: 'default',
       playSound: true,

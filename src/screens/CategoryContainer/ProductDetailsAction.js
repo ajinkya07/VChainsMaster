@@ -23,7 +23,7 @@ const header = {
   },
 }
 
-export function showLoadingIndicator(type) {  
+export function showLoadingIndicator(type) {
   return {
     type: type
   };
@@ -50,17 +50,17 @@ export function getProductDetails(data) {
     dispatch(showLoadingIndicator(PRODUCT_DETAILS_DATA));
 
     axios.post(urls.ProductDetails.url, data, header).then(response => {
-        if (response.data.ack ==='1') {
-          dispatch(
-            onSuccess(response.data, PRODUCT_DETAILS_DATA_SUCCESS)
-          )
-        }
-        else {
-          dispatch(
-            onFailure(response.data.msg, PRODUCT_DETAILS_DATA_ERROR)
-          )
-        }
-      })
+      if (response.data.ack === '1') {
+        dispatch(
+          onSuccess(response.data, PRODUCT_DETAILS_DATA_SUCCESS)
+        )
+      }
+      else {
+        dispatch(
+          onFailure(response.data.msg, PRODUCT_DETAILS_DATA_ERROR)
+        )
+      }
+    })
       .catch(function (error) {
         dispatch(
           onFailure(strings.serverFailedMsg, PRODUCT_DETAILS_DATA_ERROR)
@@ -70,29 +70,25 @@ export function getProductDetails(data) {
 }
 
 
-  
 
 export function addToCartFromDetails(data) {
-  console.warn("addToCartFromDetails--",data);
 
   return dispatch => {
     dispatch(showLoadingIndicator(ADD_TO_CART_FROM_DETAILS_DATA));
 
     axios.post(urls.AddToCartFromDetails.url, data, header).then(response => {
-      console.warn("response--",response);
-        if (response.data.ack ==='1') {
-          dispatch(
-            onSuccess(response.data, ADD_TO_CART_FROM_DETAILS_DATA_SUCCESS)
-          )
-        }
-        else {
-          dispatch(
-            onFailure(response.data.msg, ADD_TO_CART_FROM_DETAILS_DATA_ERROR)
-          )
-        }
-      })
+      if (response.data.ack === '1') {
+        dispatch(
+          onSuccess(response.data, ADD_TO_CART_FROM_DETAILS_DATA_SUCCESS)
+        )
+      }
+      else {
+        dispatch(
+          onFailure(response.data.msg, ADD_TO_CART_FROM_DETAILS_DATA_ERROR)
+        )
+      }
+    })
       .catch(function (error) {
-        console.warn("error00--",error);
         dispatch(
           onFailure(strings.serverFailedMsg, ADD_TO_CART_FROM_DETAILS_DATA_ERROR)
         );

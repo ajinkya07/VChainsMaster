@@ -331,7 +331,6 @@ class HomePage extends Component {
           // })
         }
         if (dex >= 0) {
-          console.log("here");
           finalCollection[i].product_assign[dex].in_cart =
             this.props.addToCartPlusOneData.data !== null
               ? parseInt(this.props.addToCartPlusOneData.data.quantity)
@@ -557,11 +556,8 @@ class HomePage extends Component {
   };
 
   categoryViewDesignNew = (item, index) => {
-    const { collection } = this.state;
 
     let baseUrl = urls.imageUrl + 'public/backend/collection/';
-
-
     return (
       <TouchableOpacity
         onPress={() => this.getProductGridOrNot(item)}
@@ -573,7 +569,11 @@ class HomePage extends Component {
             justifyContent: 'space-between',
           }}>
           {index % 4 == 1 && (
-            <View style={{ height: hp(18), width: wp(35), marginVertical: hp(1), marginRight: hp(1) }}>
+            <View style={{
+              backgroundColor: 'white',
+              height: hp(18), width: wp(35),
+              marginVertical: hp(1), marginRight: hp(1)
+            }}>
               <Image
                 resizeMode={'cover'}
                 style={{ height: hp(18), width: wp(35) }}
@@ -595,14 +595,14 @@ class HomePage extends Component {
           )}
 
           {index % 4 == 2 && (
-            <View
-              style={{
-                marginTop: -hp(19),
-                marginLeft: wp(36),
-                height: hp(18),
-                width: wp(63),
-                // marginVertical: hp(1),
-              }}>
+            <View style={{
+              backgroundColor: 'white',
+              marginTop: -hp(19),
+              marginLeft: wp(36),
+              height: hp(18),
+              width: wp(63),
+              // marginVertical: hp(1),
+            }}>
               <Image
                 resizeMode={'cover'}
                 style={{ height: hp(18), width: wp(63) }}
@@ -626,6 +626,7 @@ class HomePage extends Component {
 
           {index % 4 == 3 && (
             <View style={{
+              backgroundColor: 'white',
               height: hp(18), width: wp(63),
               marginRight: hp(1)
             }}>
@@ -650,13 +651,13 @@ class HomePage extends Component {
           )}
 
           {index % 4 == 0 && (
-            <View
-              style={{
-                marginTop: -hp(18),
-                marginLeft: wp(64),
-                height: hp(18),
-                width: wp(35),
-              }}>
+            <View style={{
+              backgroundColor: 'white',
+              marginTop: -hp(18),
+              marginLeft: wp(64),
+              height: hp(18),
+              width: wp(35),
+            }}>
               <Image
                 resizeMode={'cover'}
                 style={{ height: hp(18), width: wp(35) }}
@@ -1033,7 +1034,7 @@ class HomePage extends Component {
 
 
           {categoryData &&
-            <View style={{ marginTop: hp(1), backgroundColor: 'black' }}>
+            <View style={{ backgroundColor: 'black' }}>
               <FlatList
                 data={categoryData}
                 showsVerticalScrollIndicator={false}

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -18,18 +18,18 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {connect} from 'react-redux';
-import {urls} from '@api/urls';
+import { connect } from 'react-redux';
+import { urls } from '@api/urls';
 import {
   getOrderHistoryDetails,
   reOrderProduct,
 } from '@orderHistory/OrderHistoryAction';
-import {Toast} from 'native-base';
+import { Toast } from 'native-base';
 import Modal from 'react-native-modal';
 import _Text from '@text/_Text';
-import {color} from '@values/colors';
+import { color } from '@values/colors';
 import CartContainer from '@cartContainer/CartContainer';
-import {getTotalCartCount} from '@homepage/HomePageAction';
+import { getTotalCartCount } from '@homepage/HomePageAction';
 import IconPack from '@login/IconPack';
 import Theme from '../../../values/Theme';
 
@@ -62,7 +62,7 @@ class OrderHistoryDetail extends Component {
   }
 
   componentDidMount = async () => {
-    const {orderItemdata} = this.state;
+    const { orderItemdata } = this.state;
 
     const data = new FormData();
     data.append('order_id', orderItemdata.order_id);
@@ -212,9 +212,9 @@ class OrderHistoryDetail extends Component {
         }}>
         <Image
           source={require('../../../assets/gif/noData.gif')}
-          style={{height: hp(20), width: hp(20)}}
+          style={{ height: hp(20), width: hp(20) }}
         />
-        <Text style={{fontSize: 18, fontWeight: '400', textAlign: 'center'}}>
+        <Text style={{ fontSize: 18, fontWeight: '400', textAlign: 'center' }}>
           {msg}
         </Text>
       </View>
@@ -252,7 +252,7 @@ class OrderHistoryDetail extends Component {
             <TouchableOpacity onLongPress={() => this.showImageModal(data)}>
               <Image
                 style={styles.imageStyle}
-                source={{uri: data.image_zoom}}
+                source={{ uri: data.image_zoom }}
                 defaultSource={IconPack.APP_LOGO}
               />
             </TouchableOpacity>
@@ -294,7 +294,7 @@ class OrderHistoryDetail extends Component {
   };
 
   reOrderProduct = async () => {
-    const {orderItemdata} = this.state;
+    const { orderItemdata } = this.state;
 
     const data = new FormData();
     data.append('order_id', orderItemdata.order_id);
@@ -333,7 +333,7 @@ class OrderHistoryDetail extends Component {
             marginVertical: 5,
           }}
         />
-        <View style={{flex: 2, alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
           <TouchableOpacity onPress={() => this.reOrderProduct()}>
             <Text style={styles.detailText}>RE-ORDER</Text>
           </TouchableOpacity>
@@ -343,21 +343,21 @@ class OrderHistoryDetail extends Component {
   };
 
   render() {
-    const {orderHistoryDetailsData} = this.props;
-    const {imageToBeDisplayed} = this.state;
+    const { orderHistoryDetailsData } = this.props;
+    const { imageToBeDisplayed } = this.state;
 
 
     const summaryData = orderHistoryDetailsData && orderHistoryDetailsData.order_summary
 
     return (
       <>
-        <SafeAreaView style={{flex: 1, backgroundColor: '#f3fcf9'}}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#f3fcf9' }}>
           <_CustomHeader
             Title="Order History Details"
-          //  RightBtnIcon1={require('../../../assets/image/BlueIcons/Search-White.png')}
+            //  RightBtnIcon1={require('../../../assets/image/BlueIcons/Search-White.png')}
             RightBtnIcon2={require('../../../assets/image/BlueIcons/Notification-White.png')}
             LeftBtnPress={() => this.props.navigation.goBack()}
-           // RightBtnPressOne={() =>this.props.navigation.navigate('SearchScreen')}
+            // RightBtnPressOne={() =>this.props.navigation.navigate('SearchScreen')}
             RightBtnPressTwo={() =>
               this.props.navigation.navigate('Notification')
             }
@@ -371,7 +371,7 @@ class OrderHistoryDetail extends Component {
               refreshing={this.props.isFetching}
               // onRefresh={() => this.scrollDownToRefreshWishList()}
               showsVerticalScrollIndicator={false}
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <View style={{}}>{this.OrderHistoryDetailComponent(item)}</View>
               )}
               keyExtractor={(item, index) => index}
@@ -384,16 +384,16 @@ class OrderHistoryDetail extends Component {
           {this.state.isImageModalVisibel && (
             <View>
               <Modal
-                style={{justifyContent: 'center'}}
+                style={{ justifyContent: 'center' }}
                 isVisible={this.state.isImageModalVisibel}
                 onRequestClose={() =>
-                  this.setState({isImageModalVisibel: false})
+                  this.setState({ isImageModalVisibel: false })
                 }
                 onBackdropPress={() =>
-                  this.setState({isImageModalVisibel: false})
+                  this.setState({ isImageModalVisibel: false })
                 }
                 onBackButtonPress={() =>
-                  this.setState({isImageModalVisibel: false})
+                  this.setState({ isImageModalVisibel: false })
                 }>
                 <SafeAreaView>
                   <View
@@ -404,7 +404,7 @@ class OrderHistoryDetail extends Component {
                       justifyContent: 'center',
                       borderRadius: 10,
                     }}>
-                    <_Text fsMedium style={{marginTop: hp(0.5)}}>
+                    <_Text fsMedium style={{ marginTop: hp(0.5) }}>
                       Code: {imageToBeDisplayed.product_id}
                     </_Text>
                     <View
@@ -416,7 +416,7 @@ class OrderHistoryDetail extends Component {
                       }}
                     />
                     <Image
-                      source={{uri: imageToBeDisplayed.image_zoom}}
+                      source={{ uri: imageToBeDisplayed.image_zoom }}
                       defaultSource={require('../../../assets/image/default.png')}
                       style={{
                         height: hp(35),
@@ -435,9 +435,9 @@ class OrderHistoryDetail extends Component {
             <Modal
               isVisible={this.state.detailModal}
               transparent={true}
-              onRequestClose={() => this.setState({detailModal: false})}
-              onBackdropPress={() => this.setState({detailModal: false})}
-              onBackButtonPress={() => this.setState({detailModal: false})}
+              onRequestClose={() => this.setState({ detailModal: false })}
+              onBackdropPress={() => this.setState({ detailModal: false })}
+              onBackButtonPress={() => this.setState({ detailModal: false })}
               style={{
                 justifyContent: 'flex-end',
                 marginBottom: hp(8),
@@ -474,8 +474,8 @@ class OrderHistoryDetail extends Component {
                     </Text>
 
                     <TouchableOpacity
-                      hitSlop={{top: 5, left: 5, bottom: 5, right: 5}}
-                      onPress={() => this.setState({detailModal: false})}>
+                      hitSlop={{ top: 5, left: 5, bottom: 5, right: 5 }}
+                      onPress={() => this.setState({ detailModal: false })}>
                       <Image
                         style={{
                           alignSelf: 'flex-end',
@@ -506,7 +506,7 @@ class OrderHistoryDetail extends Component {
                     }}>
                     <_Text fsPrimary fwSmall>Order No.</_Text>
                     <_Text fsPrimary fwSmall>{summaryData.order_no}</_Text>
-                 
+
                   </View>
 
                   <View
@@ -516,7 +516,7 @@ class OrderHistoryDetail extends Component {
                       flexDirection: 'row',
                     }}>
                     <_Text fsPrimary fwSmall>Total Items</_Text>
-                  <_Text fsPrimary fwSmall>{summaryData.total_items}</_Text>
+                    <_Text fsPrimary fwSmall>{summaryData.total_items}</_Text>
                   </View>
 
                   <View
@@ -526,7 +526,7 @@ class OrderHistoryDetail extends Component {
                       flexDirection: 'row',
                     }}>
                     <_Text fsPrimary fwSmall>Total weight</_Text>
-                  <_Text fsPrimary fwSmall>{summaryData.total_weight}</_Text>
+                    <_Text fsPrimary fwSmall>{summaryData.total_weight}</_Text>
                   </View>
 
                   <View
@@ -537,7 +537,7 @@ class OrderHistoryDetail extends Component {
                       flexDirection: 'row',
                     }}>
                     <_Text fsPrimary fwSmall>Order Date</_Text>
-                  <_Text fsPrimary fwSmall>{summaryData.order_date}</_Text>
+                    <_Text fsPrimary fwSmall>{summaryData.order_date}</_Text>
                   </View>
                 </View>
               </SafeAreaView>
@@ -596,15 +596,15 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     width: '100%',
-    borderTopLeftRadius: 18,
-    borderTopRightRadius: 18,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     justifyContent: 'space-between',
-    backgroundColor: '#11255a',
+    backgroundColor: '#19af81',
     height: 48,
     flexDirection: 'row',
   },
   detailText: {
-    color: '#fbcb84',
+    color: 'white',
   },
   container: {
     marginHorizontal: 16,
@@ -665,5 +665,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  {getOrderHistoryDetails, reOrderProduct, getTotalCartCount},
+  { getOrderHistoryDetails, reOrderProduct, getTotalCartCount },
 )(OrderHistoryDetail);

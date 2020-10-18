@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Image,
@@ -12,9 +12,9 @@ import {
   Platform,
   Linking,
 } from 'react-native';
-import {Icon, Header, Item, Input, Card, Body, Toast} from 'native-base';
+import { Icon, Header, Item, Input, Card, Body, Toast } from 'native-base';
 import _Container from '@container/_Container';
-import {color} from '@values/colors';
+import { color } from '@values/colors';
 import _Tabs from '@tabs/_Tabs';
 import HomePageStyle from '@homepage/HomePageStyle';
 import {
@@ -22,16 +22,16 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import _Text from '@text/_Text';
-import {strings} from '@values/strings';
-import {getTotalCartCount} from '@homepage/HomePageAction';
-import {connect} from 'react-redux';
+import { strings } from '@values/strings';
+import { getTotalCartCount } from '@homepage/HomePageAction';
+import { connect } from 'react-redux';
 import Modal from 'react-native-modal';
 import IconPack from '../OnBoarding/Login/IconPack';
 import Theme from '../../values/Theme';
 
 var userId = '';
 
-const CallComponent = ({title, onPress}) => {
+const CallComponent = ({ title, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View
@@ -40,7 +40,7 @@ const CallComponent = ({title, onPress}) => {
           borderBottomWidth: 0.8,
           borderColor: '#D3D3D3',
           marginBottom: 10,
-          top:10
+          top: 10
         }}>
         <Text
           style={{
@@ -69,11 +69,11 @@ class Container extends Component {
   }
 
   showCallPopup = () => {
-    this.setState({isCallModalVisible: true});
+    this.setState({ isCallModalVisible: true });
   };
 
   hideCallPopup = () => {
-    this.setState({isCallModalVisible: false});
+    this.setState({ isCallModalVisible: false });
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -123,17 +123,21 @@ class Container extends Component {
   };
 
   render() {
-    const {safeAreaView} = HomePageStyle;
+    const { safeAreaView } = HomePageStyle;
 
-    const {allParameterData} = this.props
+    const { allParameterData } = this.props
 
     const whatsApp = allParameterData.whatsapp
     const emailID = allParameterData.email
     const call = allParameterData.call
+    const headerColor = allParameterData.theme_color ? allParameterData.theme_color : ''
+
+    global.headerTheme = allParameterData.theme_color ? allParameterData.theme_color : ''
 
     return (
       <SafeAreaView style={safeAreaView}>
         <_Container
+          headerColor={headerColor}
           showHeader
           showSearch
           showNotification
@@ -146,33 +150,35 @@ class Container extends Component {
           onNotificationPress={() => this.onNotificationPress()}>
           <_Tabs count={global.totalCartCount} />
         </_Container>
-        
+
         <Modal
           isVisible={this.state.isCallModalVisible}
           transparent={true}
           onRequestClose={() => this.hideCallPopup()}
           onBackdropPress={() => this.hideCallPopup()}
           onBackButtonPress={() => this.hideCallPopup()}
-          style={{margin: 0}}>
-          <TouchableWithoutFeedback style={{flex: 1}}>
+          style={{ margin: 0 }}>
+          <TouchableWithoutFeedback style={{ flex: 1 }}>
             <View
               style={{
                 marginHorizontal: 16,
                 borderRadius: 14,
-                backgroundColor:'#FFFFFF'
+                backgroundColor: '#FFFFFF'
               }}>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   backgroundColor: color.green,
-                  borderTopLeftRadius:10,borderTopRightRadius:10
+                  borderTopLeftRadius: 10, borderTopRightRadius: 10
 
                 }}>
-                <Text style={{ fontSize: 20, marginLeft: 20,
-                    color: '#FFFFFF',
-                    ...Theme.ffLatoMedium18,               
-                    marginVertical: Platform.OS === 'android' ? 10 : 12,}}>
+                <Text style={{
+                  fontSize: 20, marginLeft: 20,
+                  color: '#FFFFFF',
+                  ...Theme.ffLatoMedium18,
+                  marginVertical: Platform.OS === 'android' ? 10 : 12,
+                }}>
                   Get In Touch
                 </Text>
 
@@ -183,42 +189,43 @@ class Container extends Component {
                     })
                   }>
                   <Image
-                    style={{width: hp(2.5), height: hp(2.5), margin: 15}}
+                    style={{ width: hp(2.5), height: hp(2.5), margin: 15 }}
                     source={IconPack.WHITE_CLOSE}
                   />
                 </TouchableOpacity>
               </View>
 
-              <CallComponent title="Phone Call" onPress={()=>this._pressCall(call)} />
+              <CallComponent title="Phone Call" onPress={() => this._pressCall(call)} />
 
               <CallComponent
                 title="WhatsApp"
-                onPress={() => { Linking.openURL(`whatsapp://send?phone=91${whatsApp}&text=${''}`);
+                onPress={() => {
+                  Linking.openURL(`whatsapp://send?phone=91${whatsApp}&text=${''}`);
                 }}
               />
               <CallComponent
                 title="Email"
-                onPress={() => { Linking.openURL(`mailto:${emailID}?subject=write a subject`)}}
+                onPress={() => { Linking.openURL(`mailto:${emailID}?subject=write a subject`) }}
               />
 
-              <View style={{flexDirection: 'row',justifyContent: 'space-around', }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-around', }}>
                 <ActionButtonRounded
                   title="CANCEL"
-                  onButonPress={() => this.setState({isCallModalVisible: false})}
-                  containerStyle={{marginBottom: 10,marginTop:10}}
+                  onButonPress={() => this.setState({ isCallModalVisible: false })}
+                  containerStyle={{ marginBottom: 10, marginTop: 10 }}
                 />
               </View>
             </View>
           </TouchableWithoutFeedback>
         </Modal>
-   
-   
+
+
       </SafeAreaView>
     );
   }
 }
 
-const ActionButtonRounded = ({title, onButonPress, containerStyle}) => {
+const ActionButtonRounded = ({ title, onButonPress, containerStyle }) => {
   return (
     <TouchableOpacity
       onPress={() => {
@@ -276,5 +283,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  {getTotalCartCount},
+  { getTotalCartCount },
 )(Container);

@@ -924,7 +924,8 @@ class CartContainer extends Component {
   };
 
   editCartProduct = editData => {
-    console.warn("editData", editData.weight[0]);
+    console.log("editData", editData);
+
     this.setState({
       isModalVisible: true,
       productcode: editData.collection_sku_code,
@@ -933,6 +934,7 @@ class CartContainer extends Component {
       comments: editData.values[3] !== null ? editData.values[3] : '',
       length: editData.values[4],
       weightArr: editData.weight,
+      lengthArray: editData.mul_length ? editData.mul_length : [],
       editStateData: editData,
       weight: editData.weight[0].toString()
     });
@@ -1001,6 +1003,11 @@ class CartContainer extends Component {
     });
   };
 
+  setSelectedLength = l => {
+    this.setState({
+      length: l,
+    });
+  };
   // cart view
 
   cartView = item => {
@@ -1329,7 +1336,7 @@ class CartContainer extends Component {
     const totalQuantity = cartWeightData && cartWeightData.data && cartWeightData.data.total_quantity;
 
     let url = urls.imageUrl + 'public/backend/product_images/zoom_image/';
-
+    console.log("this.state.length", this.state.length);
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#f3fcf9' }}>
 
@@ -1591,7 +1598,7 @@ class CartContainer extends Component {
                       <Text
                         style={{ marginLeft: 58, fontSize: 16, color: '#a3a3a3' }}>
                         Select Weight
-                  </Text>
+                      </Text>
                       <Picker
                         iosIcon={<Icon type='Feather' name='arrow-down' style={{ fontSize: 25 }} />}
                         mode="dropdown"
@@ -1607,8 +1614,30 @@ class CartContainer extends Component {
                       </Picker>
                     </View>
 
+                    {/* LENGTH DROPDOWN */}
+                    {this.state.length != '' &&
+                      <View>
+                        <Text
+                          style={{ marginLeft: 58, fontSize: 16, color: '#a3a3a3' }}>
+                          Select Length (Inches)
+                       </Text>
+                        <Picker
+                          iosIcon={<Icon type='Feather' name='arrow-down' style={{ fontSize: 25 }} />}
+                          mode="dropdown"
+                          style={{ height: 45, marginLeft: 60, width: '70%' }}
+                          selectedValue={this.state.length}
+                          onValueChange={(length) => this.setSelectedLength(length)
+                          }>
+                          {this.state.lengthArray != null && this.state.lengthArray.map(lt => (
+                            <Picker.Item label={lt.toString()} value={parseInt(lt)} />
+                          ))}
+
+                        </Picker>
+                      </View>
+                    }
+
                     <View style={{ marginHorizontal: 20, marginTop: 10 }}>
-                      <FloatingLabelTextInput
+                      {/* <FloatingLabelTextInput
                         label="Length (inches)"
                         value={this.state.length}
                         onChangeText={l => this.handleLengthChange(l)}
@@ -1618,8 +1647,8 @@ class CartContainer extends Component {
                         width="95%"
                         marginLeft={8}
                         returnKeyType='done'
+                      /> */}
 
-                      />
                       <FloatingLabelTextInput
                         label="Comments"
                         value={this.state.comments}

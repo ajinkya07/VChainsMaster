@@ -86,6 +86,9 @@ class Customizable extends Component {
   componentDidMount = async () => {
     const { allParameterData } = this.props
 
+    console.log("allParameterData", allParameterData);
+
+
     if (allParameterData && allParameterData.melting) {
       this.setState({
         karatValue: allParameterData.melting[0].id
@@ -572,7 +575,6 @@ class Customizable extends Component {
                       </Text>
                     </View>
                     {this.PickerDropDown()}
-                    {/* <PickerDropDown /> */}
                   </View>
                   <View
                     style={{
@@ -649,11 +651,11 @@ class Customizable extends Component {
               height: 44,
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: '#11255a',
+              backgroundColor: '#19af81',
               borderTopLeftRadius: 16,
               borderTopRightRadius: 16,
             }}>
-            <Text style={{ fontSize: 16, color: '#fbcb84' }}>SUBMIT ORDER</Text>
+            <Text style={{ fontSize: 16, color: 'white' }}>SUBMIT ORDER</Text>
           </View>
         </TouchableOpacity>
 

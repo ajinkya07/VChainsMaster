@@ -46,6 +46,8 @@ import _, { fromPairs } from 'lodash';
 import Theme from '../../../values/Theme';
 import IconPack from '@login/IconPack';
 
+import { navigate } from '../../../../RootNavigation';
+
 var userId = '';
 var selectedProductIds = []
 
@@ -128,7 +130,7 @@ class ProductGrid extends Component {
       this.props.getProductSubCategoryData(data);
     }
     let data2 = new FormData();
-    data2.append('collection_id', categoryData.id);
+    data2.append('collection_id', 83);
     data2.append('table', 'product_master');
     data2.append('user_id', userId);
     data2.append('mode_type', 'all_filter');
@@ -345,10 +347,9 @@ class ProductGrid extends Component {
       if (filteredProductData.products && filteredProductData.products.length > 0) {
         let array = [];
         let array2 = [];
-        array =
-          this.state.page === 0
-            ? filteredProductData.products
-            : [...this.state.gridData, ...filteredProductData.products];
+        array = this.state.page === 0 ? filteredProductData.products
+          : [...this.state.gridData, ...filteredProductData.products];
+
         array2.push(...array);
 
         this.setState({
@@ -370,6 +371,7 @@ class ProductGrid extends Component {
     }
 
     if (this.state.successFilterParamsVersion > prevState.successFilterParamsVersion) {
+
       if (filterParamsData && filterParamsData.length === undefined) {
         if (filterParamsData.gross_weight) {
           this.setState({
@@ -377,10 +379,10 @@ class ProductGrid extends Component {
             toValue: filterParamsData.gross_weight[0].max_gross_weight,
           });
         }
-        if (filterParamsData.net_weight) {
+        if (filterParamsData.max_length) {
           this.setState({
-            fromValue1: filterParamsData.net_weight[0].min_net_weight,
-            toValue1: filterParamsData.net_weight[0].max_net_weight,
+            fromValue1: filterParamsData.max_length[0].min_length,
+            toValue1: filterParamsData.max_length[0].max_length,
           });
         }
       }
@@ -1425,6 +1427,7 @@ class ProductGrid extends Component {
   };
 
   setFromToSliderValues = values => {
+    console.log("values net", values);
     if (values && values.length > 0) {
       this.setState({
         fromValue: values[0],
@@ -1433,7 +1436,8 @@ class ProductGrid extends Component {
     }
   };
 
-  setFromToSliderValuesNet = values => {
+  setFromToSliderValuesLength = values => {
+    console.log("values Length", values);
     if (values && values.length > 0) {
       this.setState({
         fromValue1: values[0],
@@ -1441,6 +1445,32 @@ class ProductGrid extends Component {
       });
     }
   };
+
+  resetFilter = () => {
+    const { filterParamsData } = this.props
+    const { isGrossWtSelected } = this.state
+
+
+    if (filterParamsData && filterParamsData.length === undefined) {
+
+      if (isGrossWtSelected && filterParamsData.gross_weight) {
+        this.setState({
+          fromValue: filterParamsData.gross_weight[0].min_gross_weight,
+          toValue: filterParamsData.gross_weight[0].max_gross_weight,
+        });
+      }
+
+      if (!isGrossWtSelected && filterParamsData.max_length) {
+        this.setState({
+          fromValue1: filterParamsData.max_length[0].min_length,
+          toValue1: filterParamsData.max_length[0].max_length,
+        });
+      }
+    }
+
+  }
+
+
 
   applyFilter = () => {
     const {
@@ -1464,14 +1494,12 @@ class ProductGrid extends Component {
     filterData.append('record', 10);
     filterData.append('page_no', 0);
     filterData.append('sort_by', '2');
-    filterData.append(
-      isGrossWtSelected ? 'min_gross_weight' : 'min_net_weight',
-      isGrossWtSelected ? fromValue : fromValue1,
-    );
-    filterData.append(
-      isGrossWtSelected ? 'max_gross_weight' : 'max_net_weight',
-      isGrossWtSelected ? toValue : toValue1,
-    );
+    filterData.append('min_gross_weight', fromValue);
+    filterData.append('max_gross_weight', toValue);
+
+    filterData.append('min_length', fromValue1);
+    filterData.append('max_length', toValue1)
+
 
     this.props.applyFilterProducts(filterData);
 
@@ -1484,10 +1512,10 @@ class ProductGrid extends Component {
           toValue: filterParamsData.gross_weight[0].max_gross_weight,
         });
       }
-      if (filterParamsData.net_weight) {
+      if (filterParamsData.max_length) {
         this.setState({
-          fromValue1: filterParamsData.net_weight[0].min_net_weight,
-          toValue1: filterParamsData.net_weight[0].max_net_weight,
+          fromValue1: filterParamsData.max_length[0].min_length,
+          toValue1: filterParamsData.max_length[0].max_length,
         });
       }
     }
@@ -1495,12 +1523,13 @@ class ProductGrid extends Component {
 
   showNetWeightOrNot = () => {
     const { sortByParamsData, filterParamsData } = this.props;
+
     if (filterParamsData && filterParamsData.length === undefined) {
-      if (filterParamsData.net_weight) {
+      if (filterParamsData.max_length) {
         this.setState({ isGrossWtSelected: false });
       } else {
         Toast.show({
-          text: 'No Data found to show',
+          text: 'No Data found',
           duration: 2500,
         });
       }
@@ -1538,6 +1567,7 @@ class ProductGrid extends Component {
 
     let imageUrl = urls.imageUrl + 'public/backend/product_images/zoom_image/'
 
+
     return (
 
       <SafeAreaView style={{ flex: 1, backgroundColor: '#f3fcf9' }}>
@@ -1551,7 +1581,8 @@ class ProductGrid extends Component {
           RightBtnPressOne={() => this.props.navigation.navigate('SearchScreen')}
           RightBtnPressTwo={() => this.props.navigation.navigate('CartContainer', { fromProductGrid: true })}
           rightIconHeight2={hp(3.5)}
-          LeftBtnPress={() => this.props.navigation.goBack()}
+          // LeftBtnPress={() => this.props.navigation.goBack()}
+          LeftBtnPress={() => navigate('Container')}
           backgroundColor="#19af81"
         />
 
@@ -1898,6 +1929,12 @@ class ProductGrid extends Component {
                           <Text style={{ fontSize: 20 }}>Filter</Text>
                         </View>
                         <View>
+                          <TouchableOpacity onPress={() => this.resetFilter()}>
+                            <Text style={{ fontSize: 20 }}>Reset</Text>
+                          </TouchableOpacity>
+                        </View>
+
+                        <View>
                           <TouchableOpacity onPress={() => this.applyFilter()}>
                             <Text style={{ fontSize: 20 }}>Apply</Text>
                           </TouchableOpacity>
@@ -1905,37 +1942,40 @@ class ProductGrid extends Component {
                       </View>
 
                       {/* <View style={styles.filterTabContainer}>
-                                                <View>
-                                                    <TouchableOpacity
-                                                        onPress={() =>
-                                                            this.setState({ isGrossWtSelected: true })
-                                                        }>
-                                                        <Text
-                                                            style={{
-                                                                fontSize: 16,
-                                                                color: this.state.isGrossWtSelected
-                                                                    ? '#fbcb84'
-                                                                    : '#000',
-                                                            }}>
-                                                            Gross weight
-                                                        </Text>
-                                                    </TouchableOpacity>
-                                                </View>
-                                                <View style={styles.grosswt}></View>
+                        <View>
+                          <TouchableOpacity
+                            onPress={() =>
+                              this.setState({ isGrossWtSelected: true })
+                            }>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                color: this.state.isGrossWtSelected
+                                  ? '#fbcb84'
+                                  : '#000',
+                              }}>
+                              Length
+                             </Text>
+                          </TouchableOpacity>
+                        </View>
+                        <View style={styles.grosswt}></View>
 
-                                                <TouchableOpacity
-                                                    onPress={() =>
-                                                        this.setState({ isGrossWtSelected: false })}>
-                                                    <Text style={{
-                                                        fontSize: 16,
-                                                        color: this.state.isGrossWtSelected ? '#000' : '#fbcb84',
-                                                    }}>
-                                                        Net weight
-                                                    </Text>
-                                                </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() =>
+                            this.setState({ isGrossWtSelected: false })}>
+                          <Text style={{
+                            fontSize: 16,
+                            color: this.state.isGrossWtSelected ? '#000' : '#fbcb84',
+                          }}>
+                            Net weight
+                          </Text>
+                        </TouchableOpacity>
 
-                                            </View> */}
+                      </View>
+
+                    */}
                       <View style={styles.border} />
+
                       <View style={styles.grossWeightContainer}>
                         <View style={styles.leftGrossWeight}>
                           <View
@@ -1943,34 +1983,33 @@ class ProductGrid extends Component {
                               backgroundColor: this.state.isGrossWtSelected
                                 ? '#D3D3D3'
                                 : '#ffffff',
-                              flex: 1,
+                              // flex: 1,
+                              height: 50,
                               alignItems: 'center',
                               justifyContent: 'center',
                               width: '100%',
                             }}>
-                            <TouchableOpacity
-                              onPress={() =>
-                                this.setState({ isGrossWtSelected: true })
-                              }>
-                              <Text style={styles.toText}>Net weight</Text>
+                            <TouchableOpacity onPress={() => this.setState({ isGrossWtSelected: true })}>
+                              <Text style={styles.toText}>Net Weight</Text>
                             </TouchableOpacity>
                           </View>
+
                           {filterParamsData &&
                             filterParamsData.length === undefined &&
-                            filterParamsData.net_weight && (
+                            filterParamsData.max_length && (
                               <View
                                 style={{
                                   backgroundColor: this.state.isGrossWtSelected
                                     ? '#ffffff'
                                     : '#D3D3D3',
-                                  flex: 1,
+                                  // flex: 1,
+                                  height: 50,
                                   alignItems: 'center',
                                   justifyContent: 'center',
                                   width: '100%',
                                 }}>
-                                <TouchableOpacity
-                                  onPress={() => this.showNetWeightOrNot()}>
-                                  <Text style={styles.toText}>Net weight</Text>
+                                <TouchableOpacity onPress={() => this.showNetWeightOrNot()}>
+                                  <Text style={styles.toText}>Length</Text>
                                 </TouchableOpacity>
                               </View>
                             )}
@@ -1980,8 +2019,8 @@ class ProductGrid extends Component {
                             <Text style={styles.toText}>
                               {' '}
                               {this.state.isGrossWtSelected
-                                ? 'Net weight'
-                                : 'Net weight'}
+                                ? 'Net Weight'
+                                : 'Length'}
                             </Text>
                           </View>
                         </View>
@@ -1990,28 +2029,28 @@ class ProductGrid extends Component {
                       {this.state.isGrossWtSelected ? (
                         <>
                           {/* <View style={styles.grossWeightContainer}>
-                                                        <View style={styles.leftGrossWeight}>
-                                                        <View style={{backgroundColor:'red',flex:1,alignItems:'center',justifyContent:'center',width:'100%'}}>
-                                                        <TouchableOpacity onPress={() =>
-                                                            this.setState({ isGrossWtSelected: true })
-                                                        }>
-                                                                <Text style={styles.toText}>Gross weight</Text>
-                                                            </TouchableOpacity>  
-                                                        </View>
-                                                            
-                                                            <View style={{backgroundColor:'yellow',flex:1,alignItems:'center',justifyContent:'center',width:'100%'}}>
-                                                            <TouchableOpacity onPress={() =>
-                                                        this.setState({ isGrossWtSelected: false })} >
-                                                                <Text style={styles.toText}>net weight</Text>
-                                                            </TouchableOpacity>
-                                                            </View>          
-                                                        </View>
-                                                        <View style={styles.rightGrossWeight}>
-                                                            <View>
-                                                                <Text style={styles.toText}>Gross weight</Text>
-                                                            </View>
-                                                        </View>
-                                                    </View> */}
+                            <View style={styles.leftGrossWeight}>
+                              <View style={{ backgroundColor: 'red', flex: 1, alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+                                <TouchableOpacity onPress={() =>
+                                  this.setState({ isGrossWtSelected: true })
+                                }>
+                                  <Text style={styles.toText}>Gross weight</Text>
+                                </TouchableOpacity>
+                              </View>
+                              
+                              <View style={{ backgroundColor: 'yellow', flex: 1, alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+                                <TouchableOpacity onPress={() =>
+                                  this.setState({ isGrossWtSelected: false })} >
+                                  <Text style={styles.toText}>net weight</Text>
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+                            <View style={styles.rightGrossWeight}>
+                              <View>
+                                <Text style={styles.toText}>Gross weight</Text>
+                              </View>
+                            </View>
+                          </View> */}
 
                           <View style={styles.sliderContainer}>
                             <View style={{ flex: 1 }}></View>
@@ -2021,6 +2060,8 @@ class ProductGrid extends Component {
                                   <RangeSlider
                                     data={filterParamsData}
                                     setsliderValues={this.setFromToSliderValues}
+                                    value1={fromValue}
+                                    value2={toValue}
                                   />
                                 </View>
                               )}
@@ -2051,27 +2092,27 @@ class ProductGrid extends Component {
                       ) : (
                           <>
                             {/* <View style={styles.grossWeightContainer}>
-                                                            <View style={styles.leftGrossWeight}>
-                                                                <TouchableOpacity>
-                                                                    <Text style={styles.toText}>Net weight</Text>
-                                                                </TouchableOpacity>
-                                                            </View>
-                                                            <View style={styles.rightGrossWeight}>
-                                                                <View>
-                                                                    <Text style={styles.toText}>Net weight</Text>
-                                                                </View>
-                                                            </View>
-                                                        </View> */}
+                              <View style={styles.leftGrossWeight}>
+                                <TouchableOpacity>
+                                  <Text style={styles.toText}>Net weight</Text>
+                                </TouchableOpacity>
+                              </View>
+                              <View style={styles.rightGrossWeight}>
+                                <View>
+                                  <Text style={styles.toText}>Net weight</Text>
+                                </View>
+                              </View>
+                            </View> */}
                             <View style={styles.sliderContainer}>
                               <View style={{ flex: 1 }}></View>
                               <View style={{ flex: 2 }}>
                                 {filterParamsData && (
                                   <View>
-                                    <NetWeightRangeSlider
+                                    <LengthSlider
                                       data={filterParamsData}
-                                      setsliderValuesNet={
-                                        this.setFromToSliderValuesNet
-                                      }
+                                      setsliderValuesLength={this.setFromToSliderValuesLength}
+                                      value3={fromValue1}
+                                      value4={toValue1}
                                     />
                                   </View>
                                 )}
@@ -2220,7 +2261,7 @@ const styles = StyleSheet.create({
   },
   grossWeightContainer: {
     flexDirection: 'row',
-    height: 70,
+    height: 100,
     alignItems: 'center',
   },
   leftGrossWeight: {
@@ -2321,28 +2362,51 @@ export default connect(
   },
 )(withNavigationFocus(ProductGrid));
 
+
+
+
+// For net weight
 class RangeSlider extends React.Component {
   constructor(props) {
     super(props);
     let filter = this.props.data ? this.props.data : undefined;
     this.state = {
-      values: [
-        filter.gross_weight[0].min_gross_weight,
-        filter.gross_weight[0].max_gross_weight,
+      values: [this.props.value1 != '' ? this.props.value1 : filter.gross_weight[0].min_gross_weight,
+      this.props.value2 != '' ? this.props.value2 : filter.gross_weight[0].max_gross_weight,
       ],
+
     };
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+
+    let newState = null;
+
+    if (nextProps.value1 !== prevState.values[0]) {
+      newState = {
+        ...newState,
+        values: [nextProps.value1, nextProps.value2]
+      };
+    }
+    if (nextProps.value2 !== prevState.values[1]) {
+      newState = {
+        ...newState,
+        values: [nextProps.value1, nextProps.value2]
+      };
+    }
+
+    return newState
+  }
+
   multiSliderValuesChange = values => {
-    this.setState({
-      values,
-    });
+    this.setState({ values });
     this.props.setsliderValues(values);
   };
 
   render() {
-    const { data } = this.props;
-    const { values } = this.state;
+    const { data, value1, value2 } = this.props;
+    const { values, } = this.state;
+
     if (data) {
       var min = data.gross_weight[0].min_gross_weight;
       var max = data.gross_weight[0].max_gross_weight;
@@ -2356,20 +2420,14 @@ class RangeSlider extends React.Component {
               values={[values[0], values[1]]}
               sliderLength={wp(60)}
               onValuesChange={this.multiSliderValuesChange}
-              min={parseFloat(min)}
-              max={parseFloat(max)}
+              min={parseFloat(values[0])}
+              max={parseFloat(values[1])}
               step={1}
-              selectedStyle={{
-                backgroundColor: '#11255a',
-              }}
-              unselectedStyle={{
-                backgroundColor: 'silver',
-              }}
-              trackStyle={{
-                height: 4,
-              }}
+              selectedStyle={{ backgroundColor: '#19af81' }}
+              unselectedStyle={{ backgroundColor: 'silver', }}
+              trackStyle={{ height: 4, }}
               markerStyle={{
-                backgroundColor: '#11255a',
+                backgroundColor: '#19af81',
                 width: 26,
                 height: 26,
                 borderRadius: 13,
@@ -2395,31 +2453,51 @@ class RangeSlider extends React.Component {
   }
 }
 
-class NetWeightRangeSlider extends React.Component {
+
+// For length filer
+class LengthSlider extends React.Component {
   constructor(props) {
     super(props);
     let filter = this.props.data ? this.props.data : undefined;
     this.state = {
-      values: [
-        filter.net_weight[0].min_net_weight,
-        filter.net_weight[0].max_net_weight,
+      values: [this.props.value3 != '' ? this.props.value3 : filter.max_length[0].min_length,
+      this.props.value4 != '' ? this.props.value4 : filter.max_length[0].max_length,
       ],
     };
   }
 
-  multiSliderValuesChange = values => {
-    this.setState({
-      values,
-    });
-    this.props.setsliderValuesNet(values);
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+
+    let newState = null;
+
+    if (nextProps.value3 !== prevState.values[0]) {
+      newState = {
+        ...newState,
+        values: [nextProps.value3, nextProps.value4]
+      };
+    }
+    if (nextProps.value4 !== prevState.values[1]) {
+      newState = {
+        ...newState,
+        values: [nextProps.value3, nextProps.value4]
+      };
+    }
+
+    return newState
+  }
+
+  multiSliderValuesChangeTwo = values => {
+    this.setState({ values });
+    this.props.setsliderValuesLength(values);
   };
 
   render() {
     const { data } = this.props;
     const { values } = this.state;
     if (data) {
-      var min = data.net_weight[0].min_net_weight;
-      var max = data.net_weight[0].max_net_weight;
+      var min = data.max_length[0].min_length;
+      var max = data.max_length[0].max_length;
     }
 
     return (
@@ -2429,21 +2507,15 @@ class NetWeightRangeSlider extends React.Component {
             <MultiSlider
               values={[values[0], values[1]]}
               sliderLength={wp(60)}
-              onValuesChange={this.multiSliderValuesChange}
-              min={parseFloat(min)}
-              max={parseFloat(max)}
+              onValuesChange={this.multiSliderValuesChangeTwo}
+              min={parseFloat(values[0])}
+              max={parseFloat(values[1])}
               step={1}
-              selectedStyle={{
-                backgroundColor: '#11255a',
-              }}
-              unselectedStyle={{
-                backgroundColor: 'silver',
-              }}
-              trackStyle={{
-                height: 4,
-              }}
+              selectedStyle={{ backgroundColor: '#19af81' }}
+              unselectedStyle={{ backgroundColor: 'silver' }}
+              trackStyle={{ height: 4 }}
               markerStyle={{
-                backgroundColor: '#11255a',
+                backgroundColor: '#19af81',
                 width: 26,
                 height: 26,
                 borderRadius: 13,
