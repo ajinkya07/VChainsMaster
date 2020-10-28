@@ -1437,7 +1437,6 @@ class ProductGrid extends Component {
   };
 
   setFromToSliderValuesLength = values => {
-    console.log("values Length", values);
     if (values && values.length > 0) {
       this.setState({
         fromValue1: values[0],
