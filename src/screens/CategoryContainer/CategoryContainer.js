@@ -204,7 +204,7 @@ class CategoryContainer extends Component {
                     <View style={{ alignContent: 'center', justifyContent: 'center', flex: 0.70 }}>
                       <_Text numberOfLines={2} fwSmall
                         //textColor={color.white}
-                        fsHeading style={{ marginRight: hp(3), marginLeft: Platform.OS === 'ios' ? hp(1) : 0 }}>
+                        fsMedium style={{ marginRight: hp(3), marginLeft: Platform.OS === 'ios' ? hp(1) : 0 }}>
                         {capitalizeFirstLetter(item.col_name)}
                       </_Text>
                     </View>

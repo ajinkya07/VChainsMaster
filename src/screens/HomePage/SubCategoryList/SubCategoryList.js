@@ -50,7 +50,7 @@ export default class SubCategoryList extends Component {
                         <View style={{ alignContent: 'center', justifyContent: 'center', flex: 0.70 }}>
                             <_Text numberOfLines={2} fwSmall
                                 //textColor={color.white}
-                                fsHeading style={{ left: 5, marginRight: hp(3) }}>
+                                fsMedium style={{ left: 5, marginRight: hp(3) }}>
                                 {item.col_name && capitalizeFirstLetter(item.col_name)}
                             </_Text>
                         </View>

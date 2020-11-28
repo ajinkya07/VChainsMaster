@@ -56,7 +56,7 @@ export default class _CustomHeader extends Component {
               <Title
                 style={{
                   color: '#ffffff',
-                  fontSize: hp(2.2),
+                  fontSize: hp(2.6),
                   fontFamily: 'Lato-Bold',
                   letterSpacing: 1,
                 }}>

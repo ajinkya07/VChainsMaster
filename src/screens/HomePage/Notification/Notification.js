@@ -114,7 +114,7 @@ class Notification extends Component {
 
                         <View style={{ alignContent: 'center', justifyContent: 'center', flex: 0.75 }}>
                             <_Text numberOfLines={2} fwSmall
-                                fsHeading style={{ marginRight: hp(3) }}>
+                                fsMedium style={{ marginRight: hp(3) }}>
                                 Title: {item.title}
                             </_Text>
                             <_Text numberOfLines={2} fsPrimary
