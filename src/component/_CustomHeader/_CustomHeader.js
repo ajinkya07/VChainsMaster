@@ -31,7 +31,11 @@ export default class _CustomHeader extends Component {
           }}>
 
           <Left style={{ flex: 0.25 }}>
-            <Button transparent onPress={() => this.props.LeftBtnPress()}>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.LeftBtnPress();
+              }}
+              hitSlop={{ top: 15, left: 15, right: 120, bottom: 15 }}>
               <Image
                 source={
                   this.props.LeftBtnIcon
@@ -40,11 +44,11 @@ export default class _CustomHeader extends Component {
                 }
                 style={{
                   top: 2,
-                  height: this.props.height ? this.props.height : hp(2.2),
-                  width: this.props.width ? this.props.width : hp(2.2),
+                  height: this.props.height ? this.props.height : hp(2.6),
+                  width: this.props.width ? this.props.width : hp(2.5),
                 }}
               />
-            </Button>
+            </TouchableOpacity>
           </Left>
 
           {this.props.Title && (
@@ -52,14 +56,14 @@ export default class _CustomHeader extends Component {
               <Title
                 style={{
                   color: '#ffffff',
-                  fontSize: hp(2.6),
+                  fontSize: hp(2.2),
                   fontFamily: 'Lato-Bold',
                   letterSpacing: 1,
                 }}>
                 {this.props.Title ? this.props.Title : ''}
               </Title>
               {this.props.Subtitle && (
-                <Subtitle style={{ color: color.black, fontSize: hp(2) }}>
+                <Subtitle style={{ color: color.black, fontSize: hp(1.5) }}>
                   {this.props.Subtitle ? this.props.Subtitle : ''}
                 </Subtitle>
               )}

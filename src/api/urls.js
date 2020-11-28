@@ -29,6 +29,10 @@ export const urls = {
         url: url + "Products_Grid"
     },
 
+    ProductGridCount: {
+        url: url + "Products_Count"
+    },
+
     AddToCartFromDetails: {
         url: url + 'Product_Cart/add_to_cart'
     },

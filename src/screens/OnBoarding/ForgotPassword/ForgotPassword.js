@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, Component, useRef } from 'react';
 import {
   View,
   Text,
@@ -24,15 +24,21 @@ import {
   Toast,
 } from 'native-base';
 import IconPack from '@login/IconPack';
-const {width, height} = Dimensions.get('window');
-import {sendOtpRequest} from '@forgotPassword/ForgotAction';
-import {connect} from 'react-redux';
+const { width, height } = Dimensions.get('window');
+import { sendOtpRequest } from '@forgotPassword/ForgotAction';
+import { connect } from 'react-redux';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import LoginFields from '@login/LoginFields';
-import {color} from '@values/colors';
+import { color } from '@values/colors';
+import {
+  validateEmail,
+  validateMobNum,
+  validateName,
+  validatePassword,
+  validateUserName,
+} from '@values/validate';
 
 class ForgotPassword extends React.Component {
   constructor(props) {
@@ -50,7 +56,7 @@ class ForgotPassword extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const {successForgotVersion, errorForgotVersion} = nextProps;
+    const { successForgotVersion, errorForgotVersion } = nextProps;
     let newState = null;
 
     if (successForgotVersion > prevState.successForgotVersion) {
@@ -69,7 +75,7 @@ class ForgotPassword extends React.Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    const {forgotData} = this.props;
+    const { forgotData } = this.props;
 
     if (this.state.successForgotVersion > prevState.successForgotVersion) {
       if (forgotData.otp != '') {
@@ -88,7 +94,7 @@ class ForgotPassword extends React.Component {
     }
   }
 
-  onInputChanged = ({inputKey, isValid, value}) => {
+  onInputChanged = ({ inputKey, isValid, value }) => {
     let validationKey = '';
     switch (inputKey) {
       case 'mobileNo':
@@ -109,7 +115,7 @@ class ForgotPassword extends React.Component {
   };
 
   sendOtp = () => {
-    const {password, isPassword, mobileNo, isMobile} = this.state;
+    const { password, isPassword, mobileNo, isMobile } = this.state;
 
     let error = '';
     try {
@@ -157,7 +163,7 @@ class ForgotPassword extends React.Component {
   };
 
   render() {
-    const {mobileNo, password} = this.state;
+    const { mobileNo, password } = this.state;
 
     return (
       <Container>
@@ -169,7 +175,7 @@ class ForgotPassword extends React.Component {
                 ios: -90,
                 android: 0,
               })}
-              style={{flex: 1}}>
+              style={{ flex: 1 }}>
               <Header style={styles.headerStyle}>
                 <Left>
                   <TouchableOpacity
@@ -187,21 +193,23 @@ class ForgotPassword extends React.Component {
                 <View style={styles.viewContainer}>
                   <View
                     style={{
-                      alignItems:'center',
-                      marginTop:hp(3),
+                      alignItems: 'center',
+                      marginTop: hp(3),
                       height: hp(19),
                     }}>
-                    
-                    <View style={{marginBottom: hp(5)}}>
-                    <Text style={{fontFamily: 'Lato-Bold',textAlign:'center',
-                     letterSpacing: 2,fontSize: 30, color: '#FFFFFF',}}>
+
+                    <View style={{ marginBottom: hp(5) }}>
+                      <Text style={{
+                        fontFamily: 'Lato-Bold', textAlign: 'center',
+                        letterSpacing: 2, fontSize: 30, color: '#FFFFFF',
+                      }}>
                         V CHAINS
                       </Text>
                       <Text style={{
-                          fontFamily: 'Lato-Regular', marginTop:hp(0.5),
-                          fontSize: 14, color: '#0d185c',textAlign:'center'
-                        }}>
-                          THE CHAIN WIZARDS
+                        fontFamily: 'Lato-Regular', marginTop: hp(0.5),
+                        fontSize: 14, color: '#0d185c', textAlign: 'center'
+                      }}>
+                        THE CHAIN WIZARDS
                       </Text>
 
                     </View>
@@ -209,14 +217,14 @@ class ForgotPassword extends React.Component {
                     <Text
                       style={{
                         fontSize: hp(2.2),
-                        color: '#ffffff',marginHorizontal:20,
+                        color: '#ffffff', marginHorizontal: 20,
                         textAlign: 'center',
                         fontFamily: 'Lato-Regular',
                       }}>
                       Enter the Mobile No. associated with your Account
                     </Text>
                   </View>
-            
+
 
                   <View style={{ marginTop: hp(3) }}>
                     <LoginFields
@@ -240,7 +248,7 @@ class ForgotPassword extends React.Component {
                       maxLength={10}
                       minLength={10}
                       onChangeText={this.onInputChanged}
-                      placeholder=" New Password"
+                      placeholder="New Password"
                       returnKeyType="done"
                       secureTextEntry
                       placeholderTextColor="#ffffff"
@@ -277,7 +285,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  flex: {flex: 1},
+  flex: { flex: 1 },
   buttonStyle: {
     marginTop: 65,
     marginBottom: 22,
@@ -312,13 +320,188 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  {sendOtpRequest},
-)(ForgotPassword);
+export default connect(mapStateToProps, { sendOtpRequest })(ForgotPassword);
+
+
+
+class LoginFields extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: undefined,
+      isValid: undefined,
+      showPassword: false,
+      secureInput: false,
+    };
+  }
+
+  onChangeText = text => {
+    const {
+      type,
+      inputKey,
+      onChangeText,
+      minLength,
+      maxLength,
+      inputId,
+    } = this.props;
+    let isValid = false;
+
+    if (text && text.length > 0) {
+      switch (type) {
+        case 'mobileNo':
+          isValid = validateMobNum(text);
+          break;
+
+        case 'emailId':
+          isValid = validateEmail(text);
+          break;
+
+        case 'password':
+          isValid = validatePassword(text);
+          break;
+
+        case 'firstName':
+          isValid = validateName(text);
+          break;
+
+        case 'lastName':
+          isValid = validateName(text);
+          break;
+
+        default:
+          break;
+      }
+    }
+    this.setState({ isValid, text });
+    onChangeText && onChangeText({ inputKey, isValid, value: text, inputId });
+  };
+
+  setSecureInput = secureInput => {
+    if (this.props.isSecure) {
+      this.setState({
+        secureInput: !this.state.secureInput,
+      });
+    }
+  };
+
+  render() {
+    const {
+      containerStyle,
+      isSecure,
+      placeholder,
+      maxLength,
+      minLength,
+      placeholderTextColor,
+      Icon,
+      keyboardType,
+      ref,
+      returnKeyType,
+      textInputRef,
+      onSubmitEditing,
+    } = this.props;
+    const { isPasswordField, secureInput } = this.state;
+
+    return (
+      <View
+        style={[loginFieldsStyles.mainContainerStyle, containerStyle || null]}>
+        <TextInput
+          maxLength={maxLength}
+          minLength={minLength}
+          style={loginFieldsStyles.textInput}
+          placeholderTextColor={'#FFFFFF'}
+          underlineColorAndroid="transparent"
+          autoCorrect={false}
+          selectionColor={'#FFFFFF'}
+          autoCapitalize="none"
+          placeholder={placeholder}
+          placeholderTextColor={placeholderTextColor}
+          onChangeText={this.onChangeText}
+          secureTextEntry={isSecure && !secureInput}
+          keyboardType={keyboardType ? keyboardType : 'default'}
+          ref={textInputRef}
+          returnKeyType={returnKeyType}
+          onSubmitEditing={onSubmitEditing}
+        />
+        <Image style={loginFieldsStyles.imageloginIconStyle} source={Icon} />
+        {isSecure && (
+          <View style={loginFieldsStyles.buttonStyle}>
+            <TouchableOpacity onPress={() => this.setSecureInput(secureInput)}>
+              <Image
+                style={loginFieldsStyles.userTextInputButtonRight}
+                source={!secureInput ? IconPack.UNHIDE : IconPack.HIDE}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    );
+  }
+}
+
+const loginFieldsStyles = StyleSheet.create({
+  textInput: {
+    height: 50,
+    fontSize: 18,
+    color: '#FFFFFF',
+    textAlign: 'left',
+    marginTop: 20,
+    backgroundColor: '#FFFFFF25',
+    borderRadius: 40,
+    paddingLeft: 42,
+    fontFamily: 'Lato-Regular',
+    letterSpacing: 0.9,
+  },
+  whiteColor: {
+    color: '#FFFFFF',
+  },
+  mainContainerStyle: {
+    height: 70,
+    width: width - 36,
+    //width: Appstore.wWidth -30,
+  },
+  userTextInputButtonRight: {
+    resizeMode: 'contain',
+    width: 30,
+    height: 30,
+  },
+  userTextInputButtonLeft: {
+    resizeMode: 'contain',
+    width: 25,
+    height: 25,
+  },
+  buttonStyle: {
+    position: 'absolute',
+    right: 12,
+    top: 20,
+    bottom: 0,
+    justifyContent: 'center',
+  },
+  loginIconStyle: {
+    position: 'absolute',
+    right: 0,
+    top: 20,
+    bottom: 0,
+    left: 12,
+    justifyContent: 'center',
+  },
+  imageloginIconStyle: {
+    position: 'absolute',
+    right: 0,
+    top: 34,
+    bottom: 0,
+    left: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    resizeMode: 'contain',
+    width: 22,
+    height: 22,
+  },
+});
+
+
 
 //-------------ActionButtonCommon-----------//
-const ActionButtonRounded = ({title, onButonPress, containerStyle}) => {
+const ActionButtonRounded = ({ title, onButonPress, containerStyle }) => {
   return (
     <TouchableOpacity
       onPress={() => {

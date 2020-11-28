@@ -35,6 +35,11 @@ import {
   ADD_PRODUCT_TO_CART_PLUS_ONE_DATA_ERROR,
   ADD_PRODUCT_TO_CART_PLUS_ONE_DATA_RESET_REDUCER,
 
+  PRODUCT_TOTAL_COUNT,
+  PRODUCT_TOTAL_COUNT_ERROR,
+  PRODUCT_TOTAL_COUNT_SUCCESS,
+
+
 } from "@redux/types";
 
 
@@ -69,6 +74,11 @@ const initialState = {
   successProductAddToCartPlusOneVersion: 0,
   errorProductAddToCartPlusOneVersion: 0,
   productAddToCartPlusOneData: [],
+
+  productTotalcount: '',
+  productTotalcountSuccessVersion: 0,
+  productTotalcountErrorVersion: 0
+
 
 };
 
@@ -222,62 +232,81 @@ export default function dataReducer(state = initialState, action) {
 
 
 
-      case ADD_PRODUCT_TO_CART_DATA:
-        return {
-          ...state,
-          isFetching: true
-        };
-  
-      case ADD_PRODUCT_TO_CART_DATA_SUCCESS:
-        return {
-          ...state,
-          errorMsg: "",
-          isFetching: false,
-          addProductToCartData: action.data,
-          successAddProductToCartVersion: ++state.successAddProductToCartVersion,
-          error: false
-        };
-  
-      case ADD_PRODUCT_TO_CART_DATA_ERROR:
-        return {
-          ...state,
-          isFetching: false,
-          error: true,
-          errorMsg: action.error,
-          errorAddProductToCartVersion: ++state.errorAddProductToCartVersion
-        };
-  
-      case ADD_PRODUCT_TO_CART_DATA_RESET_REDUCER:
-        return initialState;
+    case ADD_PRODUCT_TO_CART_DATA:
+      return {
+        ...state,
+        isFetching: true
+      };
+
+    case ADD_PRODUCT_TO_CART_DATA_SUCCESS:
+      return {
+        ...state,
+        errorMsg: "",
+        isFetching: false,
+        addProductToCartData: action.data,
+        successAddProductToCartVersion: ++state.successAddProductToCartVersion,
+        error: false
+      };
+
+    case ADD_PRODUCT_TO_CART_DATA_ERROR:
+      return {
+        ...state,
+        isFetching: false,
+        error: true,
+        errorMsg: action.error,
+        errorAddProductToCartVersion: ++state.errorAddProductToCartVersion
+      };
+
+    case ADD_PRODUCT_TO_CART_DATA_RESET_REDUCER:
+      return initialState;
 
 
-      case ADD_PRODUCT_TO_CART_PLUS_ONE_DATA:
-        return {
-          ...state,
-          isFetching: true
-        };
-  
-      case ADD_PRODUCT_TO_CART_PLUS_ONE_DATA_SUCCESS:
-        return {
-          ...state,
-          errorMsg: "",
-          isFetching: false,
-          productAddToCartPlusOneData: action.data,
-          successProductAddToCartPlusOneVersion: ++state.successProductAddToCartPlusOneVersion,
-          error: false
-        };
-  
-      case ADD_PRODUCT_TO_CART_PLUS_ONE_DATA_ERROR:
-        return {
-          ...state,
-          isFetching: false,
-          error: true,
-          errorMsg: action.error,
-          errorProductAddToCartPlusOneVersion: ++state.errorProductAddToCartPlusOneVersion
-        };
-  
-      case ADD_PRODUCT_TO_CART_PLUS_ONE_DATA_RESET_REDUCER:
-        return initialState;
+    case ADD_PRODUCT_TO_CART_PLUS_ONE_DATA:
+      return {
+        ...state,
+        isFetching: true
+      };
+
+    case ADD_PRODUCT_TO_CART_PLUS_ONE_DATA_SUCCESS:
+      return {
+        ...state,
+        errorMsg: "",
+        isFetching: false,
+        productAddToCartPlusOneData: action.data,
+        successProductAddToCartPlusOneVersion: ++state.successProductAddToCartPlusOneVersion,
+        error: false
+      };
+
+    case ADD_PRODUCT_TO_CART_PLUS_ONE_DATA_ERROR:
+      return {
+        ...state,
+        isFetching: false,
+        error: true,
+        errorMsg: action.error,
+        errorProductAddToCartPlusOneVersion: ++state.errorProductAddToCartPlusOneVersion
+      };
+
+    case ADD_PRODUCT_TO_CART_PLUS_ONE_DATA_RESET_REDUCER:
+      return initialState;
+
+    case PRODUCT_TOTAL_COUNT_SUCCESS:
+      return {
+        ...state,
+        errorMsg: "",
+        isFetching: false,
+        productTotalcount: action.data,
+        productTotalcountSuccessVersion: ++state.productTotalcountSuccessVersion,
+        error: false
+      };
+
+    case PRODUCT_TOTAL_COUNT_ERROR:
+      return {
+        ...state,
+        isFetching: false,
+        error: true,
+        errorMsg: action.error,
+        productTotalcountErrorVersion: ++state.productTotalcountErrorVersion
+      };
 
 
 

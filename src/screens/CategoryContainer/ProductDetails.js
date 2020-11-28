@@ -586,11 +586,6 @@ class ProductDetails extends React.Component {
               <SafeAreaView style={styles.safeAreaViewStyle}>
                 <View style={{ flex: 1 }}>
                   <View>
-                    {/* <Image
-                      source={{ uri: url + productDetailsStateData.image_name[0] }}
-                      style={{ width: '100%', height: hp(38) }}
-                      resizeMode='cover'
-                    /> */}
                     {this.carausalView(productDetailsStateData)}
                   </View>
 
@@ -613,13 +608,13 @@ class ProductDetails extends React.Component {
                         }}>
                         {productDetailsStateData.in_wishlist > 0 && (
                           <Image
-                            source={require('../../assets/image/GreyHeart.png')}
+                            source={require('../../assets/Hertfill.png')}
                             style={styles.ImageStyle}
                           />
                         )}
                         {productDetailsStateData.in_cart > 0 && (
                           <Image
-                            source={require('../../assets/image/GreyCart.png')}
+                            source={require('../../assets/Cart1.png')}
                             style={styles.ImageStyle}
                           />
                         )}
@@ -829,7 +824,7 @@ class ProductDetails extends React.Component {
 
                       <View
                         style={{
-                          backgroundColor: '#19af81',
+                          backgroundColor: color.green,
                           height: hp(6),
                           borderTopLeftRadius: 18,
                           borderTopRightRadius: 18,
@@ -906,7 +901,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   headerStyle: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: color.white,
     elevation: 0,
     borderBottomWidth: 0,
     alignItems: 'center',
@@ -1004,7 +999,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#19af81',
   },
   descriptionContainer: {
-    backgroundColor: '#f3fcf9',
+    backgroundColor: color.white,
     borderTopLeftRadius: 18,
     borderTopRightRadius: 18,
     marginTop: hp(1),

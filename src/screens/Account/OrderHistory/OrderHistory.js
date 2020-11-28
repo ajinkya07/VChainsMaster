@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -11,17 +11,17 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import _CustomHeader from '@customHeader/_CustomHeader';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {connect} from 'react-redux';
-import {urls} from '@api/urls';
-import {getOrderHistoryList} from '@orderHistory/OrderHistoryAction';
-import {Toast} from 'native-base';
+import { connect } from 'react-redux';
+import { urls } from '@api/urls';
+import { getOrderHistoryList } from '@orderHistory/OrderHistoryAction';
+import { Toast } from 'native-base';
 import _Text from '@text/_Text';
-import {color} from '@values/colors';
+import { color } from '@values/colors';
 import Theme from '../../../values/Theme';
 
 var userId = '';
@@ -44,7 +44,7 @@ class OrderHistory extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const {successOrderHistoryVersion, errorOrderHistoryVersion} = nextProps;
+    const { successOrderHistoryVersion, errorOrderHistoryVersion } = nextProps;
 
     let newState = null;
 
@@ -65,7 +65,7 @@ class OrderHistory extends Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    const {orderHistoryData} = this.props;
+    const { orderHistoryData } = this.props;
 
     if (
       this.state.successOrderHistoryVersion >
@@ -95,9 +95,9 @@ class OrderHistory extends Component {
         }}>
         <Image
           source={require('../../../assets/gif/noData.gif')}
-          style={{height: hp(20), width: hp(20)}}
+          style={{ height: hp(20), width: hp(20) }}
         />
-        <Text style={{fontSize: 18, fontWeight: '400', textAlign: 'center'}}>
+        <Text style={{ fontSize: 18, fontWeight: '400', textAlign: 'center' }}>
           {msg}
         </Text>
       </View>
@@ -108,41 +108,41 @@ class OrderHistory extends Component {
     return (
       <TouchableOpacity
         onPress={() =>
-          this.props.navigation.navigate('OrderHistoryDetail', {data: item})
+          this.props.navigation.navigate('OrderHistoryDetail', { data: item })
         }>
-        <View style={{backgroundColor: '#f3fcf9'}}>
-          <Text style={{...Theme.ffLatoBold13, color: '#000'}}>
+        <View style={{ backgroundColor: color.white }}>
+          <Text style={{ ...Theme.ffLatoBold13, color: '#000' }}>
             Order Number:{item.order_id}
           </Text>
           <View style={styles.rowTextStyle}>
-            <Text style={{...Theme.ffLatoRegular13, color: '#000'}}>
+            <Text style={{ ...Theme.ffLatoRegular13, color: '#000' }}>
               Order Date
             </Text>
-            <Text style={{...Theme.ffLatoRegular13, color: '#000'}}>
+            <Text style={{ ...Theme.ffLatoRegular13, color: '#000' }}>
               {item.order_date}
             </Text>
           </View>
           <View style={styles.rowTextStyle}>
-            <Text style={{...Theme.ffLatoRegular13, color: '#000'}}>
+            <Text style={{ ...Theme.ffLatoRegular13, color: '#000' }}>
               Delivery Date
             </Text>
-            <Text style={{...Theme.ffLatoRegular13, color: '#000'}}>
+            <Text style={{ ...Theme.ffLatoRegular13, color: '#000' }}>
               {item.delivery_date}
             </Text>
           </View>
           <View style={styles.rowTextStyle}>
-            <Text style={{...Theme.ffLatoRegular13, color: '#000'}}>
+            <Text style={{ ...Theme.ffLatoRegular13, color: '#000' }}>
               Total Weight
             </Text>
-            <Text style={{...Theme.ffLatoRegular13, color: '#000'}}>
+            <Text style={{ ...Theme.ffLatoRegular13, color: '#000' }}>
               {parseInt(item.total_weight).toFixed(2)}
             </Text>
           </View>
           <View style={styles.rowTextStyle}>
-            <Text style={{...Theme.ffLatoRegular13, color: '#000'}}>
+            <Text style={{ ...Theme.ffLatoRegular13, color: '#000' }}>
               Remarks
             </Text>
-            <Text style={{...Theme.ffLatoRegular13, color: '#000'}}>
+            <Text style={{ ...Theme.ffLatoRegular13, color: '#000' }}>
               {item.remarks}
             </Text>
           </View>
@@ -168,18 +168,18 @@ class OrderHistory extends Component {
   };
 
   render() {
-    const {orderHistoryData} = this.props;
+    const { orderHistoryData } = this.props;
 
 
     return (
-      <SafeAreaView style={{flex: 1, backgroundColor: '#f3fcf9'}}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: color.white }}>
         <_CustomHeader
           Title="Order History"
-         // RightBtnIcon1={require('../../../assets/image/BlueIcons/Search-White.png')}
+          // RightBtnIcon1={require('../../../assets/image/BlueIcons/Search-White.png')}
           RightBtnIcon2={require('../../../assets/image/BlueIcons/Notification-White.png')}
           LeftBtnPress={() => this.props.navigation.goBack()}
-         // RightBtnPressOne={() =>this.props.navigation.navigate('SearchScreen')}
-          RightBtnPressTwo={() =>this.props.navigation.navigate('Notification')}
+          // RightBtnPressOne={() =>this.props.navigation.navigate('SearchScreen')}
+          RightBtnPressTwo={() => this.props.navigation.navigate('Notification')}
           rightIconHeight2={hp(3.5)}
           backgroundColor="#19af81"
         />
@@ -189,9 +189,8 @@ class OrderHistory extends Component {
             <FlatList
               data={orderHistoryData}
               refreshing={this.props.isFetching}
-              // onRefresh={() => this.scrollDownToRefreshWishList()}
               showsVerticalScrollIndicator={false}
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <View style={{}}>{this.orderHistoryView(item)}</View>
               )}
               keyExtractor={(item, index) => index.toString()}
@@ -211,7 +210,7 @@ const styles = StyleSheet.create({
   viewContainer: {
     marginTop: Platform.OS === 'ios' ? 12 : 10,
     marginHorizontal: 16,
-    backgroundColor: '#f3fcf9',
+    backgroundColor: color.white,
     flex: 1,
   },
   rowTextStyle: {
@@ -241,6 +240,6 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  {getOrderHistoryList},
+  { getOrderHistoryList },
 )(OrderHistory);
 

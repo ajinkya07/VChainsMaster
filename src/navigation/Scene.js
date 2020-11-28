@@ -107,12 +107,16 @@ class Scene extends React.Component {
     if (this.state.successAllParameterVersion > prevState.successAllParameterVersion) {
 
       const stat = allParameterData && allParameterData.user_status
+      console.log("stat", stat);
 
       if (stat != 'active') {
         this.setState({
           isLoginValue: false,
           isInside: false
         })
+        global.userId = '';
+        AsyncStorage.setItem('userId', '');
+
       }
     }
 

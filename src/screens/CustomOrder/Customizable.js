@@ -431,7 +431,7 @@ class Customizable extends Component {
                 alignItems: 'center',
                 justifyContent: 'center',
                 flex: 1,
-                backgroundColor: '#f3fcf9',
+                backgroundColor: color.white,
               }}>
               {this.state.imageUrl == '' && (
                 <Image
@@ -619,31 +619,15 @@ class Customizable extends Component {
             <TouchableOpacity onPress={() => this.showActionSheet()}>
               <Image
                 style={{
-                  //position: 'absolute',
                   resizeMode: 'cover',
                   width: 50,
                   height: 50,
                 }}
-                source={IconPack.PLUS_ICON}
+                source={require('../../assets/Plus1.png')}
               />
             </TouchableOpacity>
           </View>
 
-          {/* <TouchableOpacity onPress={() => this.submitCustomOrder()}>
-            <View
-              style={{
-                height: 44,
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: '#11255a',
-                borderTopLeftRadius: 16,
-                borderTopRightRadius: 16,
-              }}>
-              <Text style={{fontSize: 16, color: '#fbcb84'}}>SUBMIT ORDER</Text>
-            </View>
-          </TouchableOpacity>
-
-          {this.props.isFetching && this.renderLoader()} */}
         </Container>
         <TouchableOpacity onPress={() => this.submitCustomOrder()}>
           <View
@@ -651,7 +635,7 @@ class Customizable extends Component {
               height: 44,
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: '#19af81',
+              backgroundColor: color.green,
               borderTopLeftRadius: 16,
               borderTopRightRadius: 16,
             }}>

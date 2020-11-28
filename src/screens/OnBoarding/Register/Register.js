@@ -1,4 +1,4 @@
-import React, {useState, Component} from 'react';
+import React, { useState, Component } from 'react';
 import {
   View,
   Text,
@@ -24,16 +24,25 @@ import {
   Toast,
 } from 'native-base';
 import IconPack from '@login/IconPack';
-import LoginFields from '@login/LoginFields';
-import {color} from '@values/colors';
-import {OTPregisterRequest} from '@register/RegisterAction';
-import {connect} from 'react-redux';
+import { color } from '@values/colors';
+import { OTPregisterRequest } from '@register/RegisterAction';
+import { connect } from 'react-redux';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const {width, height} = Dimensions.get('window');
+
+import {
+  validateEmail,
+  validateMobNum,
+  validateName,
+  validatePassword,
+  validateUserName,
+} from '@values/validate';
+
+
+const { width, height } = Dimensions.get('window');
 
 class Register extends React.Component {
   constructor(props) {
@@ -60,7 +69,7 @@ class Register extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const {successRegisterVersion, errorRegisterVersion} = nextProps;
+    const { successRegisterVersion, errorRegisterVersion } = nextProps;
     let newState = null;
 
     if (successRegisterVersion > prevState.successRegisterVersion) {
@@ -79,7 +88,7 @@ class Register extends React.Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    const {OTPregisterData} = this.props;
+    const { OTPregisterData } = this.props;
 
     if (this.state.successRegisterVersion > prevState.successRegisterVersion) {
       if (OTPregisterData.otp != '') {
@@ -101,7 +110,7 @@ class Register extends React.Component {
     }
   }
 
-  onInputChanged = ({inputKey, isValid, value}) => {
+  onInputChanged = ({ inputKey, isValid, value }) => {
     let validationKey = '';
     switch (inputKey) {
       case 'fullName':
@@ -150,7 +159,7 @@ class Register extends React.Component {
 
     let error = '';
     try {
-      if (!isFullName) {
+      if (fullName === '') {
         error = 'Please enter full name';
         throw new Error();
       }
@@ -170,7 +179,7 @@ class Register extends React.Component {
         error = 'Please enter valid email address';
         throw new Error();
       }
-      if (!isOrganisation) {
+      if (organisation === '') {
         error = 'Please enter organisation name';
         throw new Error();
       }
@@ -188,7 +197,6 @@ class Register extends React.Component {
         this.props.OTPregisterRequest(data);
       }
     } catch (err) {
-      console.log('err', err.toString());
       this.showToast(error, 'danger');
     }
   };
@@ -211,7 +219,7 @@ class Register extends React.Component {
 
   render() {
 
-    const {fullName, emailId, organisation, mobileNo, password} = this.state;
+    const { fullName, emailId, organisation, mobileNo, password } = this.state;
 
     return (
       <Container>
@@ -223,7 +231,7 @@ class Register extends React.Component {
                 ios: -100,
                 android: 500,
               })}
-              style={{flex: 1}}>
+              style={{ flex: 1 }}>
               <Header style={styles.headerStyle}>
                 <Left>
                   <TouchableOpacity
@@ -241,19 +249,21 @@ class Register extends React.Component {
                 <View style={styles.viewContainer}>
                   <View
                     style={{
-                      alignItems:'center',
-                      marginTop:hp(4),
+                      alignItems: 'center',
+                      marginTop: hp(4),
                       height: hp(15),
                     }}>
-                     <Text style={{fontFamily: 'Lato-Bold',textAlign:'center', 
-                     letterSpacing: 2,fontSize: 30, color: '#FFFFFF',}}>
-                        V CHAINS
+                    <Text style={{
+                      fontFamily: 'Lato-Bold', textAlign: 'center',
+                      letterSpacing: 2, fontSize: 30, color: '#FFFFFF',
+                    }}>
+                      V CHAINS
                       </Text>
-                      <Text style={{
-                          fontFamily: 'Lato-Regular', marginTop:hp(0.5),
-                          fontSize: 14, color: '#0d185c',textAlign:'center'
-                        }}>
-                          THE CHAIN WIZARDS
+                    <Text style={{
+                      fontFamily: 'Lato-Regular', marginTop: hp(0.5),
+                      fontSize: 14, color: '#0d185c', textAlign: 'center'
+                    }}>
+                      THE CHAIN WIZARDS
                       </Text>
                   </View>
                   <LoginFields
@@ -322,7 +332,6 @@ class Register extends React.Component {
                     placeholder="Password"
                     returnKeyType="done"
                     secureTextEntry
-                    placeholderTextColor=""
                     placeholderTextColor="#ffffff"
                     isSecure={true}
                     Icon={IconPack.KEY_LOGO}
@@ -354,7 +363,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  flex: {flex: 1},
+  flex: { flex: 1 },
   buttonStyle: {
     marginTop: 30,
     marginBottom: 50,
@@ -389,13 +398,188 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  {OTPregisterRequest},
-)(Register);
+export default connect(mapStateToProps, { OTPregisterRequest })(Register);
+
+
+class LoginFields extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: undefined,
+      isValid: undefined,
+      showPassword: false,
+      secureInput: false,
+    };
+  }
+
+  onChangeText = text => {
+    const {
+      type,
+      inputKey,
+      onChangeText,
+      minLength,
+      maxLength,
+      inputId,
+    } = this.props;
+    let isValid = false;
+
+    if (text && text.length > 0) {
+      switch (type) {
+        case 'mobileNo':
+          isValid = validateMobNum(text);
+          break;
+
+        case 'emailId':
+          isValid = validateEmail(text);
+          break;
+
+        case 'password':
+          isValid = validatePassword(text);
+          break;
+
+        case 'firstName':
+          isValid = validateName(text);
+          break;
+
+        case 'lastName':
+          isValid = validateName(text);
+          break;
+
+        default:
+          break;
+      }
+    }
+    this.setState({ isValid, text });
+    onChangeText && onChangeText({ inputKey, isValid, value: text, inputId });
+  };
+
+  setSecureInput = secureInput => {
+    if (this.props.isSecure) {
+      this.setState({
+        secureInput: !this.state.secureInput,
+      });
+    }
+  };
+
+  render() {
+    const {
+      containerStyle,
+      isSecure,
+      placeholder,
+      maxLength,
+      minLength,
+      placeholderTextColor,
+      Icon,
+      keyboardType,
+      ref,
+      returnKeyType,
+      textInputRef,
+      onSubmitEditing,
+    } = this.props;
+    const { isPasswordField, secureInput } = this.state;
+
+    return (
+      <View
+        style={[loginFieldsStyles.mainContainerStyle, containerStyle || null]}>
+        <TextInput
+          maxLength={maxLength}
+          minLength={minLength}
+          style={loginFieldsStyles.textInput}
+          placeholderTextColor={'#FFFFFF'}
+          underlineColorAndroid="transparent"
+          autoCorrect={false}
+          selectionColor={'#FFFFFF'}
+          autoCapitalize="none"
+          placeholder={placeholder}
+          placeholderTextColor={placeholderTextColor}
+          onChangeText={this.onChangeText}
+          secureTextEntry={isSecure && !secureInput}
+          keyboardType={keyboardType ? keyboardType : 'default'}
+          ref={textInputRef}
+          returnKeyType={returnKeyType}
+          onSubmitEditing={onSubmitEditing}
+        />
+        <Image style={loginFieldsStyles.imageloginIconStyle} source={Icon} />
+        {isSecure && (
+          <View style={loginFieldsStyles.buttonStyle}>
+            <TouchableOpacity onPress={() => this.setSecureInput(secureInput)}>
+              <Image
+                style={loginFieldsStyles.userTextInputButtonRight}
+                source={!secureInput ? IconPack.UNHIDE : IconPack.HIDE}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    );
+  }
+}
+
+const loginFieldsStyles = StyleSheet.create({
+  textInput: {
+    height: 50,
+    fontSize: 18,
+    color: '#FFFFFF',
+    textAlign: 'left',
+    marginTop: 20,
+    backgroundColor: '#FFFFFF25',
+    borderRadius: 40,
+    paddingLeft: 42,
+    fontFamily: 'Lato-Regular',
+    letterSpacing: 0.9,
+  },
+  whiteColor: {
+    color: '#FFFFFF',
+  },
+  mainContainerStyle: {
+    height: 70,
+    width: width - 36,
+    //width: Appstore.wWidth -30,
+  },
+  userTextInputButtonRight: {
+    resizeMode: 'contain',
+    width: 30,
+    height: 30,
+  },
+  userTextInputButtonLeft: {
+    resizeMode: 'contain',
+    width: 25,
+    height: 25,
+  },
+  buttonStyle: {
+    position: 'absolute',
+    right: 12,
+    top: 20,
+    bottom: 0,
+    justifyContent: 'center',
+  },
+  loginIconStyle: {
+    position: 'absolute',
+    right: 0,
+    top: 20,
+    bottom: 0,
+    left: 12,
+    justifyContent: 'center',
+  },
+  imageloginIconStyle: {
+    position: 'absolute',
+    right: 0,
+    top: 34,
+    bottom: 0,
+    left: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    resizeMode: 'contain',
+    width: 22,
+    height: 22,
+  },
+});
+
+
+
 
 //-------------ActionButtonCommon-----------//
-const ActionButtonRounded = ({title, onButonPress, containerStyle}) => {
+const ActionButtonRounded = ({ title, onButonPress, containerStyle }) => {
   return (
     <TouchableOpacity
       onPress={() => {

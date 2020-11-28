@@ -24,7 +24,7 @@ import { color } from '@values/colors';
 import Modal from 'react-native-modal';
 import IconPack from '@login/IconPack';
 import CheckBox from '@react-native-community/checkbox';
-import { Toast, Picker, Icon } from 'native-base'
+import { Toast, Picker } from 'native-base'
 import { strings } from '@values/strings'
 
 import { searchProducts, searchByCode } from '@search/SearchAction'
@@ -32,6 +32,9 @@ import FromDatePicker from './FromDatePicker'
 import ToDatePicker from './ToDatePicker'
 import FloatingLabelTextInput from '@floatingInputBox/FloatingLabelTextInput';
 import Theme from '../../../values/Theme';
+import Icon2 from 'react-native-vector-icons/MaterialIcons'
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import { Icon } from 'native-base'
 
 const { width } = Dimensions.get('window');
 
@@ -74,6 +77,11 @@ class SearchScreen extends Component {
             karatData: [],
             isOkKaratClicked: false,
             selectedStatus: '1',
+            selectedItems: [],
+            selectedItems2: [],
+            items2: [],
+            items3: [],
+            items: []
 
 
         };
@@ -85,9 +93,9 @@ class SearchScreen extends Component {
     componentDidMount = () => {
         const { homePageData } = this.props
 
-        if (homePageData && homePageData.collection) {
+        if (homePageData && homePageData.search_collection) {
             this.setState({
-                collection: homePageData && homePageData.collection ? homePageData.collection : [],
+                collection: homePageData.search_collection,
             });
         }
     }
@@ -488,16 +496,12 @@ class SearchScreen extends Component {
 
 
     searchProducts = () => {
-        const { gwFrom, gwTo, nwFrom, nwTo, fromDate, toDate, selectedCategories,
+        const { gwFrom, gwTo, nwFrom, nwTo, fromDate, toDate, selectedCategories, selectedItems2,
             selectedKarat, selectedStatus } = this.state
 
-        if (selectedCategories.length > 0) {
-            // var timeStamp = new Date().getTime() + 1 * 24 * 60 * 60 * 1000;
-            // var timeStampDate = moment(new Date(timeStamp).toISOString().slice(0, 10),).format('DD-MM-YYYY');
+        console.log("categoryIds", categoryIds);
 
-            // if (toDate != '' && timeStampDate > toDate) {
-            //     alert('Date must be greater than from date');
-            // }
+        if (selectedItems2.length > 0) {
 
             const s = new FormData()
 
@@ -596,38 +600,8 @@ class SearchScreen extends Component {
 
         this.setState({ karat: val });
 
-        // this.setState({
-        //   toggleCheckBox: val,
-        // });
     };
 
-    // setToggleCheckBoxAll = () =>{
-    //     const { selectedKarat, toggleCheckBox } = this.state
-    //     const { allParameterData} = this.props
-
-    //     const arr = allParameterData && allParameterData.melting
-
-    //     const val = { ...this.state.karat };
-
-    //     for(let k = 0; k<arr.length; k++){
-
-    //         val[arr[k].id] = true;
-
-    //         let array = [];
-    //         let array2 = []
-
-    //         let id = arr[k].id
-    //         let  value = arr[k].melting_name
-    //         array = [{ id, value }]
-    //         array2.push(...selectedKarat, ...array);
-    //         console.warn("array2--==",array2);
-    //         this.setState({ selectedKarat: array2 });
-
-    //     }
-
-    //     this.setState({ karat: val });
-    //     console.warn("selectedKarat==",selectedKarat);
-    // }
 
 
     closeKaratModal = () => {
@@ -646,13 +620,36 @@ class SearchScreen extends Component {
         });
     };
 
+    onSelectedItemsChange = (selectedItems) => {
+        this.setState({ selectedItems });
+    };
+
+
+    onSelectedItemsChange2 = (selectedItems2) => {
+        this.setState({ selectedItems2 });
+
+    };
+
+    onConfirmCategory = () => {
+        const { selectedItems2 } = this.state
+
+        categoryIds = selectedItems2.map(x => { return x.id })
+
+        console.log("selectedItems2", selectedItems2);
+
+    }
+
+    onCancelCategory = () => {
+        this.setState({ selectedItems2: [], selectedItems: [] })
+    }
+
 
 
     render() {
 
         const { collection, isModalVisible, isSearchCodeVisible, isKaratModalVisible,
             selectedKarat, karatData, selectedStatus,
-            selectedCategories, isContinueClicked
+            selectedItems2, selectedCategories, isContinueClicked
         } = this.state
         const { allParameterData } = this.props
 
@@ -719,21 +716,30 @@ class SearchScreen extends Component {
                         {this.selectKarat()}
                     </View>
 
-                    <View style={{ paddingVertical: hp(0.5), }}>
-                        {this.selectCategories()}
+                    <View style={{ paddingHorizontal: wp(2), }}>
+                        <SectionedMultiSelect
+                            items={collection}
+                            IconRenderer={Icon2}
+                            uniqueKey="id"
+                            subKey="children"
+                            selectText="Select categories"
+                            showDropDowns={true}
+                            readOnlyHeadings={true}
+                            onSelectedItemsChange={this.onSelectedItemsChange}
+                            onSelectedItemObjectsChange={this.onSelectedItemsChange2}
+                            selectedItems={this.state.selectedItems}
+                            modalWithSafeAreaView={true}
+                            subItemFontFamily={'Roboto'}
+                            onConfirm={this.onConfirmCategory}
+                            onCancel={this.onCancelCategory}
+                            showCancelButton={true}
+                            showRemoveAll={true}
+                        />
                     </View>
-
-
-                    {/* <View style={{ paddingVertical: hp(0.5), }}>
-                        {this.searchButton()}
-                    </View> */}
 
 
                 </ScrollView>
 
-                {/* <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    {this.selectCategories()}
-                </View> */}
 
                 <View style={{
                     alignItems: 'center',

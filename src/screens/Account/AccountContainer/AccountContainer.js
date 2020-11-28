@@ -209,7 +209,6 @@ class AccountContainer extends Component {
 
     let androidLink1 = allParameterData.android_app_link
     let iosLink1 = allParameterData.ios_app_link
-
     let link = type1 == 'ios' ? iosLink1 : androidLink1
 
     Linking.openURL(link)
@@ -323,11 +322,11 @@ class AccountContainer extends Component {
               icon={IconPack.EXCLUSIVE}
               onPress={() => this.props.navigation.navigate('Exclusive')}
             />
-            <AccountRow
+            {/* <AccountRow
               title="Catalog"
               icon={IconPack.EXCLUSIVE}
               onPress={() => this.props.navigation.navigate('CustomWebview', { link: catalog, title: 'Catalog' })}
-            />
+            /> */}
             <AccountRow
               title="About Us"
               icon={IconPack.ABOUT}

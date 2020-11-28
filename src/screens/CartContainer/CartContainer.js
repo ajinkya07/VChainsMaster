@@ -83,7 +83,7 @@ const ActionButtonRounded = ({ title, onButonPress, containerStyle }) => {
 
 const actionButtonRoundedStyle = StyleSheet.create({
   mainContainerStyle: {
-    backgroundColor: color.green,
+    backgroundColor: '#303030',
     height: 42,
     width: width - 36,
     justifyContent: 'center',
@@ -126,7 +126,7 @@ const ActionButtonRounded2 = ({ title, onButonPress, containerStyle }) => {
 
 const actionButtonRoundedStyle2 = StyleSheet.create({
   mainContainerStyle2: {
-    backgroundColor: '#11255a',
+    backgroundColor: '#303030',
     height: 44,
     width: width - 60,
     justifyContent: 'center',
@@ -801,7 +801,7 @@ class CartContainer extends Component {
           </View>
           <View style={styles.chainTitleView}>
             <Text style={styles.chainTitleText}>
-              {data.collection_sku_code}
+              {data.design_number}
             </Text>
             <Text style={styles.textColor}>{data.collection_name}</Text>
           </View>
@@ -1032,7 +1032,7 @@ class CartContainer extends Component {
           </View>
           <View style={styles.chainTitleView}>
             <Text style={styles.chainTitleText}>
-              {item.collection_sku_code}
+              {item.design_number}
             </Text>
             <Text style={styles.textColor}>{item.collection_name}</Text>
           </View>
@@ -1336,7 +1336,7 @@ class CartContainer extends Component {
     const totalQuantity = cartWeightData && cartWeightData.data && cartWeightData.data.total_quantity;
 
     let url = urls.imageUrl + 'public/backend/product_images/zoom_image/';
-    console.log("this.state.length", this.state.length);
+
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#f3fcf9' }}>
 
@@ -1350,18 +1350,18 @@ class CartContainer extends Component {
             />
           }
           <Tabs
-            tabBarUnderlineStyle={{ backgroundColor: '#19af81' }}
+            tabBarUnderlineStyle={{ backgroundColor: '#303030' }}
             onChangeTab={({ i }) => this.setState({ currentPage: i })}>
             <Tab
               heading={
-                <TabHeading style={{ backgroundColor: '#f3fcf9' }}>
+                <TabHeading style={{ backgroundColor: color.white }}>
                   <Image
                     resizeMode="contain"
                     style={{ width: 22, height: 22 }}
                     source={
                       this.state.currentPage
                         ? require('../../assets/image/GreyCart.png')
-                        : require('../../assets/image/BlueIcons/Green-Cart.png')
+                        : require('../../assets/Cart1.png')
                     }
                   />
                 </TabHeading>
@@ -1371,13 +1371,13 @@ class CartContainer extends Component {
 
             <Tab
               heading={
-                <TabHeading style={{ backgroundColor: '#f3fcf9' }}>
+                <TabHeading style={{ backgroundColor: color.white }}>
                   <Image
                     resizeMode="contain"
                     style={{ width: 22, height: 22 }}
                     source={
                       this.state.currentPage
-                        ? require('../../assets/image/BlueIcons/Green-Heart.png')
+                        ? require('../../assets/Hertfill.png')
                         : require('../../assets/image/GreyHeart.png')
                     }
                   />
@@ -1449,7 +1449,7 @@ class CartContainer extends Component {
                       borderRadius: 10,
                     }}>
                     <_Text fsMedium style={{ marginTop: hp(0.5) }}>
-                      Code: {imageToBeDisplayed.collection_sku_code}
+                      Code: {imageToBeDisplayed.design_number}
                     </_Text>
                     <View
                       style={{

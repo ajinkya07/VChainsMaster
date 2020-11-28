@@ -76,8 +76,8 @@ export default class FloatingLabelInput extends Component {
             <Image
               source={
                 !isFocused
-                  ? require('../../assets/image/BlueIcons/Account.png')
-                  : require('../../assets/image/BlueIcons/Account.png')
+                  ? require('../../assets/USer.png')
+                  : require('../../assets/USer.png')
               }
               style={{ width: 25, height: 25, resizeMode: 'cover' }}
             />

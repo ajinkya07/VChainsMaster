@@ -174,6 +174,7 @@ class OrderHistoryDetail extends Component {
 
       this.props.navigation.navigate('CartContainer', {
         navigation: this.props.navigation,
+        fromProductGrid: true
       });
 
       // return (
@@ -302,9 +303,6 @@ class OrderHistoryDetail extends Component {
 
     await this.props.reOrderProduct(data);
 
-    //this.props.navigation.navigate('CartContainer',{navigation:this.props.navigation})
-
-    // return <CartContainer navigation={this.props.navigation} />
   };
 
   openDetailModal = () => {
@@ -351,7 +349,7 @@ class OrderHistoryDetail extends Component {
 
     return (
       <>
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#f3fcf9' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: color.white }}>
           <_CustomHeader
             Title="Order History Details"
             //  RightBtnIcon1={require('../../../assets/image/BlueIcons/Search-White.png')}
@@ -599,7 +597,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     justifyContent: 'space-between',
-    backgroundColor: '#19af81',
+    backgroundColor: color.green,
     height: 48,
     flexDirection: 'row',
   },
@@ -610,7 +608,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginTop: 6,
     marginBottom: Platform.OS === 'ios' ? 10 : 15,
-    backgroundColor: '#f3fcf9',
+    backgroundColor: color.white,
   },
   productIdText: {
     textAlign: 'center',

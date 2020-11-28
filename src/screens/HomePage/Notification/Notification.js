@@ -86,8 +86,6 @@ class Notification extends Component {
         return (
             <TouchableOpacity
                 disabled={true}
-            //onPress={() =>  this.props.navigation.navigate('BannerImage', {
-            //    bannerDataImagePath: item.image_name,baseUrl: url2,})}
             >
                 <View style={{ paddingTop: hp(0.5), paddingBottom: hp(0.5) }}>
                     <View style={{ flexDirection: 'row', flex: 1, marginLeft: hp(1.5), marginRight: hp(0.5) }}>
@@ -115,8 +113,8 @@ class Notification extends Component {
                         </View>
 
                         <View style={{ alignContent: 'center', justifyContent: 'center', flex: 0.75 }}>
-                            <_Text numberOfLines={2} fwPrimary
-                                fsMedium style={{ marginRight: hp(3) }}>
+                            <_Text numberOfLines={2} fwSmall
+                                fsHeading style={{ marginRight: hp(3) }}>
                                 Title: {item.title}
                             </_Text>
                             <_Text numberOfLines={2} fsPrimary
