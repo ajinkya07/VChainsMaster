@@ -5,7 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 import {
     View,
-    Text, Image,Dimensions,
+    Text, Image, Dimensions,
     Button, ActivityIndicator,
     FlatList, SafeAreaView, Alert,
     TouchableOpacity,
@@ -19,6 +19,7 @@ import Swiper from 'react-native-swiper'
 import { urls } from '@api/urls'
 import ImageZoom from 'react-native-image-pan-zoom';
 import IconPack from '@login/IconPack';
+import Carousel, { Pagination, ParallaxImage, SliderEntry } from 'react-native-snap-carousel';
 
 
 
@@ -32,7 +33,9 @@ export default class BannerImage extends Component {
         this.state = {
             bannerDataImagePath: data,
             baseUrl: url,
-            currentPage:0
+            currentPage: 0,
+            slider1ActiveSlide: 0
+
         };
     }
 
@@ -55,37 +58,39 @@ export default class BannerImage extends Component {
 
     renderScreen = (data, k) => {
         const { bannerDataImagePath } = this.state
+        let item = data.item
+        let index = data.index
 
         let url2 = urls.imageUrl + (bannerDataImagePath !== undefined && bannerDataImagePath.zoom_image)
 
-
         return (
-                <View key={k}>
-                <ImageZoom 
+            <View key={index}>
+                <ImageZoom
                     cropWidth={wp(100)}
-                       cropHeight={hp(95)}
-                       imageWidth={wp(100)}
-                       imageHeight={hp(95)}>
-                    {/* <FastImage
+                    cropHeight={hp(95)}
+                    imageWidth={wp(100)}
+                    imageHeight={hp(95)}>
+                    <FastImage
                         style={{ height: hp(80), width: wp(100) }}
                         source={{
-                            uri: url2 + data,
+                            uri: url2 + item,
+                            priority: FastImage.priority.high,
                         }}
-                        defaultSource={require('../../assets/image/default.png')}
                         resizeMode={FastImage.resizeMode.contain}
-                    /> */}
 
-                    <Image
-                        source={{ uri: url2 + data }}
+                    />
+                    {/* <Image
+                        source={{ uri: url2 + item }}
                         resizeMode='contain'
                         style={{ height: hp(80), width: wp(100) }}
                         defaultSource={IconPack.APP_LOGO}
-                    />
+                    /> */}
                 </ImageZoom>
 
-                </View>
+            </View>
         )
     }
+
 
     carausalView = (item) => {
         return (
@@ -123,9 +128,63 @@ export default class BannerImage extends Component {
     }
 
 
+    // 7738368891 9819
+
+    carausalView2 = (bannerData) => {
+        let { width, height } = Dimensions.get('window')
+        let sliderWidth = width;
+        let itemHeight = hp(80);
+
+        return (
+            <View style={{ marginBottom: -10 }}>
+                <Carousel
+                    ref={c => this._slider1Ref = c}
+                    hasParallaxImages={true}
+                    loop={true}
+                    loopClonesPerSide={2}
+                    autoplay={false}
+                    autoplayDelay={1400}
+                    autoplayInterval={8000}
+                    sliderWidth={sliderWidth}
+                    sliderHeight={itemHeight}
+                    itemWidth={sliderWidth}
+                    itemHeight={itemHeight}
+                    data={bannerData}
+                    renderItem={(item, index) => this.renderScreen(item, index)}
+                    hasParallaxImages={true}
+                    enableMomentum={true}
+                    activeSlideOffset={2}
+                    onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index })}
+
+                />
+                <Pagination
+                    dotsLength={bannerData.length}
+                    activeDotIndex={this.state.slider1ActiveSlide}
+                    containerStyle={{ marginTop: -120 }}
+                    dotColor={'#303030'}
+                    dotStyle={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 5,
+                        marginHorizontal: 0
+                    }}
+                    inactiveDotColor={'gray'}
+                    inactiveDotOpacity={0.4}
+                    inactiveDotScale={0.6}
+                    carouselRef={this._slider1Ref}
+                    tappableDots={this._slider1Ref}
+
+                />
+
+            </View>
+
+        )
+    }
+
+
     render() {
         const { bannerDataImagePath, baseUrl } = this.state
-
+        console.log("bannerDataImagePath", bannerDataImagePath);
         return (
             <SafeAreaView style={{ height: hp(100), backgroundColor: color.white }}>
 
@@ -149,15 +208,7 @@ export default class BannerImage extends Component {
 
 
                 <View style={{ marginTop: hp(1), }}>
-                    {/* <FastImage
-                        style={{ height: hp(50), width: wp(100) }}
-                        source={{ uri: baseUrl + bannerDataImagePath,
-                            // cache: FastImage.cacheControl.cacheOnly,
-                        }}
-                        resizeMode={FastImage.resizeMode.stretch}
-                    /> */}
-
-                    {this.carausalView(bannerDataImagePath)}
+                    {this.carausalView2(bannerDataImagePath.image_name)}
                 </View>
 
             </SafeAreaView>

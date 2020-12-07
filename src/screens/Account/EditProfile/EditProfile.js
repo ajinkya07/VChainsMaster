@@ -546,6 +546,8 @@ class EditProfile extends Component {
       enteredCity, enteredCountry, enteredState, stateData, cityData
     } = this.state
 
+    let headerTheme = allParameterData.theme_color ? allParameterData.theme_color : ''
+
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <>
@@ -557,26 +559,7 @@ class EditProfile extends Component {
           />
 
           <View style={styles.container}>
-            {/* <View
-              style={{
-                backgroundColor: '#fbcb84',
-                width: '100%',
-                height: hp('8%'),
-                width: wp('100%'),
-                borderBottomRightRadius: 24,
-                borderBottomLeftRadius: 24,
-              }}></View> */}
-            {/* <Image
-              source={require('../../../assets/image/ProfilePic.png')}
-              style={{
-                width: 42,
-                height: 42,
-                resizeMode: 'cover',
-                position: 'absolute',
-                top: Platform.OS === 'ios' ? hp(4.8) : 35,
-                bottom: 0,
-              }}
-            /> */}
+
             <View
               style={{
                 flex: 1,
@@ -781,7 +764,8 @@ class EditProfile extends Component {
                   <ActionButtonRounded
                     title="UPDATE PROFILE"
                     onButonPress={() => this.updateProfile()}
-                    containerStyle={styles.buttonStyle}
+                    // containerStyle={styles.buttonStyle}
+                    color={headerTheme}
                   />
                 </View>
               </ScrollView>
@@ -1108,7 +1092,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-
+    marginVertical: 20
   },
 });
 
@@ -1152,17 +1136,20 @@ export default connect(mapStateToProps, {
 
 
 ///--------------------------------ActionButton------------------
-const ActionButtonRounded = ({ title, onButonPress, containerStyle }) => {
+const ActionButtonRounded = ({ title, onButonPress, containerStyle, color }) => {
   return (
     <TouchableOpacity
       onPress={() => {
         onButonPress();
       }}>
-      <View
-        style={[
-          actionButtonRoundedStyle.mainContainerStyle,
-          containerStyle || null,
-        ]}>
+      <View style={{
+        backgroundColor: color ? '#' + color : '#303030',
+        height: 44,
+        width: width - 170,
+        justifyContent: 'center',
+        borderRadius: 40,
+      }}>
+
         <View style={actionButtonRoundedStyle.innerContainer}>
           <Text style={actionButtonRoundedStyle.titleStyle}>{title}</Text>
         </View>

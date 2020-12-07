@@ -169,7 +169,7 @@ class Container extends Component {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-                  backgroundColor: color.green,
+                  backgroundColor: headerColor ? '#' + headerColor : '#303030',
                   borderTopLeftRadius: 10, borderTopRightRadius: 10
 
                 }}>
@@ -212,7 +212,8 @@ class Container extends Component {
                 <ActionButtonRounded
                   title="CANCEL"
                   onButonPress={() => this.setState({ isCallModalVisible: false })}
-                  containerStyle={{ marginBottom: 10, marginTop: 10 }}
+                  // containerStyle={{ marginBottom: 10, marginTop: 10 }}
+                  color={headerColor}
                 />
               </View>
             </View>
@@ -225,17 +226,21 @@ class Container extends Component {
   }
 }
 
-const ActionButtonRounded = ({ title, onButonPress, containerStyle }) => {
+const ActionButtonRounded = ({ title, onButonPress, containerStyle, color }) => {
   return (
     <TouchableOpacity
       onPress={() => {
         onButonPress();
       }}>
       <View
-        style={[
-          actionButtonRoundedStyle.mainContainerStyle,
-          containerStyle || null,
-        ]}>
+        style={{
+          backgroundColor: color ? '#' + color : '#303030',
+          height: hp(6),
+          width: wp(40),
+          justifyContent: 'center',
+          borderRadius: 45,
+          marginVertical: 10
+        }}>
         <View style={actionButtonRoundedStyle.innerContainer}>
           <Text style={actionButtonRoundedStyle.titleStyle}>{title}</Text>
         </View>

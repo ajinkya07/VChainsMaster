@@ -312,8 +312,12 @@ class OrderHistoryDetail extends Component {
   };
 
   OrderDetailBottomTab = d => {
+    const { allParameterData } = this.props;
+
+    let headerTheme = allParameterData.theme_color ? allParameterData.theme_color : ''
+
     return (
-      <View style={styles.cardContainer}>
+      <View style={[styles.cardContainer, { backgroundColor: headerTheme ? '#' + headerTheme : '#303030', }]}>
         <View
           style={{
             flex: 1.8,
@@ -327,7 +331,8 @@ class OrderHistoryDetail extends Component {
         <View
           style={{
             borderLeftWidth: 1,
-            borderLeftColor: '#fbcb84',
+            // borderLeftColor: '#fbcb84',
+            borderLeftColor: '#fff',
             marginVertical: 5,
           }}
         />
@@ -341,8 +346,11 @@ class OrderHistoryDetail extends Component {
   };
 
   render() {
-    const { orderHistoryDetailsData } = this.props;
+    const { orderHistoryDetailsData, allParameterData } = this.props;
     const { imageToBeDisplayed } = this.state;
+
+
+    let headerTheme = allParameterData.theme_color ? allParameterData.theme_color : ''
 
 
     const summaryData = orderHistoryDetailsData && orderHistoryDetailsData.order_summary
@@ -597,7 +605,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     justifyContent: 'space-between',
-    backgroundColor: color.green,
     height: 48,
     flexDirection: 'row',
   },
@@ -658,6 +665,11 @@ function mapStateToProps(state) {
     errorTotalCartCountVersion:
       state.homePageReducer.errorTotalCartCountVersion,
     totalCartCountData: state.homePageReducer.totalCartCountData,
+
+    allParameterData: state.homePageReducer.allParameterData,
+    successAllParameterVersion: state.homePageReducer.successAllParameterVersion,
+    errorAllParamaterVersion: state.homePageReducer.errorAllParamaterVersion,
+
   };
 }
 

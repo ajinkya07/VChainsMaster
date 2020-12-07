@@ -62,17 +62,21 @@ var userId = '';
 
 const { width } = Dimensions.get('window');
 
-const ActionButtonRounded = ({ title, onButonPress, containerStyle }) => {
+const ActionButtonRounded = ({ title, onButonPress, containerStyle, color }) => {
   return (
     <TouchableOpacity
       onPress={() => {
         onButonPress();
       }}>
       <View
-        style={[
-          actionButtonRoundedStyle.mainContainerStyle,
-          containerStyle || null,
-        ]}>
+        style={{
+          backgroundColor: color ? '#' + color : '#303030',
+          height: 42,
+          width: 140,
+          justifyContent: 'center',
+          borderRadius: 40,
+          marginVertical: 5,
+        }}>
         <View style={actionButtonRoundedStyle.innerContainer}>
           <Text style={actionButtonRoundedStyle.titleStyle}>{title}</Text>
         </View>
@@ -105,17 +109,21 @@ const actionButtonRoundedStyle = StyleSheet.create({
   },
 });
 
-const ActionButtonRounded2 = ({ title, onButonPress, containerStyle }) => {
+const ActionButtonRounded2 = ({ title, onButonPress, containerStyle, color }) => {
   return (
     <TouchableOpacity
       onPress={() => {
         onButonPress();
       }}>
       <View
-        style={[
-          actionButtonRoundedStyle2.mainContainerStyle2,
-          containerStyle || null,
-        ]}>
+        style={{
+          backgroundColor: color ? '#' + color : '#303030',
+          height: 42,
+          width: 140,
+          justifyContent: 'center',
+          borderRadius: 40,
+          marginVertical: 5,
+        }}>
         <View style={actionButtonRoundedStyle2.innerContainer2}>
           <Text style={actionButtonRoundedStyle2.titleStyle2}>{title}</Text>
         </View>
@@ -1316,7 +1324,7 @@ class CartContainer extends Component {
   };
 
   render() {
-    const { cartData, wishlistData, isFetching, cartSummaryData, cartWeightData } = this.props;
+    const { cartData, wishlistData, isFetching, allParameterData, cartSummaryData, cartWeightData } = this.props;
     const {
       wishStateData,
       cartStateData,
@@ -1336,11 +1344,12 @@ class CartContainer extends Component {
     const totalQuantity = cartWeightData && cartWeightData.data && cartWeightData.data.total_quantity;
 
     let url = urls.imageUrl + 'public/backend/product_images/zoom_image/';
+    let headerTheme = allParameterData.theme_color ? allParameterData.theme_color : ''
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#f3fcf9' }}>
 
-        <Container style={{}}>
+        <Container >
 
           {fromProductGrid &&
             <_CustomHeader
@@ -1399,15 +1408,16 @@ class CartContainer extends Component {
               }}>
               <ActionButtonRounded
                 title="CART WEIGHT"
-                onButonPress={() =>
-                  this.setState({ isCartWeightSummeryVisible: true })
-                }
-                containerStyle={styles.buttonStyle}
+                onButonPress={() => this.setState({ isCartWeightSummeryVisible: true })}
+                // containerStyle={styles.buttonStyle}
+                color={headerTheme}
               />
               <ActionButtonRounded
                 title="PLACE ORDER"
                 onButonPress={() => this.placeOrderContinue()}
-                containerStyle={styles.buttonStyle}
+                // containerStyle={styles.buttonStyle}
+                color={headerTheme}
+
               />
             </View>
           ) : null}
@@ -1541,7 +1551,7 @@ class CartContainer extends Component {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        backgroundColor: color.green
+                        backgroundColor: headerTheme ? '#' + headerTheme : '#303030',
                       }}>
                       <Text style={{ fontSize: 18, color: '#FFFFFF', marginLeft: 15 }}>
                         Edit Product
@@ -1667,6 +1677,7 @@ class CartContainer extends Component {
                           title="UPDATE"
                           onButonPress={() => this.updateCartProduct()}
                           containerStyle={styles.buttonStyle}
+                          color={headerTheme}
                         />
                       ) : (
                           <ActivityIndicator size="small" color={color.brandColor} />
@@ -1828,7 +1839,9 @@ class CartContainer extends Component {
                             <ActionButtonRounded
                               title="PLACE ORDER"
                               onButonPress={() => this.placeOrderFromCart()}
-                              containerStyle={styles.buttonStyle}
+                              // containerStyle={styles.buttonStyle}
+                              color={headerTheme}
+
                             />
                           ) : (
                             <ActivityIndicator size="small" color={color.brandColor} />
@@ -1858,7 +1871,7 @@ class CartContainer extends Component {
                 <View style={styles.mainContainer}>
                   <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => null}>
                     <View>
-                      <View style={styles.alertContainer}>
+                      <View style={[styles.alertContainer, { backgroundColor: headerTheme ? '#' + headerTheme : '#303030', }]}>
                         <Image source={IconPack.RATE} style={styles.alertIcon} />
                         <Text style={styles.alertText}>Alert !</Text>
                       </View>
@@ -1890,7 +1903,9 @@ class CartContainer extends Component {
                           <ActionButtonRounded
                             title="CONTINUE"
                             onButonPress={() => this.placeOrderView()}
-                            containerStyle={styles.buttonStyle}
+                            // containerStyle={styles.buttonStyle}
+                            color={headerTheme}
+
                           />
                         </View>
                       </View>
@@ -1917,8 +1932,9 @@ class CartContainer extends Component {
               <View style={styles.mainContainer}>
                 <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => null}>
                   <View>
-                    <View style={styles.alertContainer}>
-                      <Image source={IconPack.RATE} style={styles.alertIcon} />
+                    <View style={[styles.alertContainer, { backgroundColor: headerTheme ? '#' + headerTheme : '#303030', }]}>
+                      <Image source={IconPack.RATE}
+                        style={styles.alertIcon} />
                       <Text style={styles.alertText}>Alert !</Text>
                     </View>
                     <TouchableOpacity
@@ -1937,7 +1953,9 @@ class CartContainer extends Component {
                         <ActionButtonRounded
                           title="CONTINUE"
                           onButonPress={() => this.deleteAllProduct()}
-                          containerStyle={styles.buttonStyle}
+                          // containerStyle={styles.buttonStyle}
+                          color={headerTheme}
+
                         />
                       </View>
                     </View>
@@ -1968,7 +1986,7 @@ class CartContainer extends Component {
             }}>
             <>
               <View style={styles.flex}>
-                <View style={styles.cartSummaryContainer}>
+                <View style={[styles.cartSummaryContainer, { backgroundColor: headerTheme ? '#' + headerTheme : '#303030', }]}>
                   <Text style={[styles.alertText, { marginLeft: 20 }]}>
                     Cart Summary
                 </Text>
@@ -2038,7 +2056,9 @@ class CartContainer extends Component {
                     <ActionButtonRounded
                       title="OK"
                       onButonPress={() => this.closeSummeryModal()}
-                      containerStyle={styles.buttonStyle}
+                      // containerStyle={styles.buttonStyle}
+                      color={headerTheme}
+
                     />
                   </View>
                 </View>
@@ -2057,7 +2077,6 @@ class CartContainer extends Component {
 const styles = StyleSheet.create({
   cartSummaryContainer: {
     height: 50,
-    backgroundColor: color.green,
     borderTopLeftRadius: 14,
     borderTopRightRadius: 14,
     alignItems: 'flex-start',
@@ -2090,13 +2109,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  buttonStyle: {
-    marginTop: 20,
-    marginBottom: 10,
-  },
+
   alertContainer: {
     height: 80,
-    backgroundColor: color.green,
     alignItems: 'center',
     justifyContent: 'space-around',
     borderTopLeftRadius: 16,
@@ -2253,7 +2268,6 @@ const styles = StyleSheet.create({
     color: '#757575',
   },
   buttonStyle: {
-    backgroundColor: color.green,
     height: 42,
     width: 140,
     justifyContent: 'center',
@@ -2318,6 +2332,10 @@ function mapStateToProps(state) {
     successCartWeightVersion: state.cartContainerReducer.successCartWeightVersion,
     errorCartWeightVersion: state.cartContainerReducer.errorCartWeightVersion,
     cartWeightData: state.cartContainerReducer.cartWeightData,
+
+    allParameterData: state.homePageReducer.allParameterData,
+    successAllParameterVersion: state.homePageReducer.successAllParameterVersion,
+    errorAllParamaterVersion: state.homePageReducer.errorAllParamaterVersion,
 
   };
 }

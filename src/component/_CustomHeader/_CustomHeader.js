@@ -40,12 +40,12 @@ export default class _CustomHeader extends Component {
                 source={
                   this.props.LeftBtnIcon
                     ? this.props.LeftBtnIcon
-                    : require('../../assets/image/back.png')
+                    : require('../../assets/left-arrow.png')
                 }
                 style={{
                   top: 2,
-                  height: this.props.height ? this.props.height : hp(2.6),
-                  width: this.props.width ? this.props.width : hp(2.5),
+                  height: this.props.height ? this.props.height : hp(3.5),
+                  width: this.props.width ? this.props.width : hp(3),
                 }}
               />
             </TouchableOpacity>
@@ -91,7 +91,7 @@ export default class _CustomHeader extends Component {
             )}
             {this.props.RightBtnIcon2 && (
               <Button
-                style={{ marginTop: 8 }}
+                style={{ top: 1 }}
                 transparent
                 onPress={() => this.props.RightBtnPressTwo()}>
                 <Image

@@ -35,7 +35,7 @@ class _Header extends Component {
           width: wp(100),
           height: hp(7.5),
           paddingVertical: Platform.OS === 'ios' ? hp(2) : 2,
-          backgroundColor: headerColor ? '#' + headerColor : '#19af81',
+          backgroundColor: headerColor ? '#' + headerColor : '#fff',
         }}>
         <Left style={{ marginLeft: hp(1), width: wp(30) }}>
           <Button transparent>

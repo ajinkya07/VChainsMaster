@@ -38,12 +38,12 @@ export function onFailure(error, type) {
 }
 
 export function submitCustomOrder(data) {
-  console.warn("submitCustomOrder",data);
+  console.warn("submitCustomOrder", data);
   return dispatch => {
     dispatch(showLoadingIndicator(CUSTOMIZE_ORDER_DATA));
 
     axios.post(urls.CustomizeOrder.url, data, header).then(response => {
-      console.warn("response",response);
+      console.warn("response submitCustomOrder", response);
       if (response.data.ack === '1') {
         dispatch(
           onSuccess(response.data, CUSTOMIZE_ORDER_DATA_SUCCESS)
@@ -56,7 +56,7 @@ export function submitCustomOrder(data) {
       }
     })
       .catch(function (error) {
-        console.log("AFTER OTP ERROR", error);
+        console.log("AFTER submitCustomOrder ERROR", error);
 
         dispatch(
           onFailure(strings.serverFailedMsg, CUSTOMIZE_ORDER_DATA_ERROR)

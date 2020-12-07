@@ -412,58 +412,9 @@ class SearchScreen extends Component {
         )
     }
 
-    selectCategories = () => {
-        const { selectedCategories, isContinueClicked } = this.state
 
-        return (
-            <View style={{ marginHorizontal: wp(3) }}>
-                <_Text fsHeading>Select Categories:</_Text>
 
-                {selectedCategories.length > 0 && isContinueClicked &&
-                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', top: 3, }}>
-                        {selectedCategories.length > 0 && <_Text fsPrimary>Selected: </_Text>}
-                        {selectedCategories.map(s => {
-                            return <_Text fsPrimary> {s.name},</_Text>
-                        })}
-                    </View>
-                }
 
-                {/* <TouchableOpacity onPress={() => this.toggleModal()}>
-                    <View style={{ marginHorizontal: wp(3), justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={styles.roundedButton}>
-                            <View style={styles.buttonText}>
-                                <_Text fsHeading bold>SELECT CATEGORIES</_Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableOpacity> */}
-                <View style={{ marginHorizontal: wp(3), justifyContent: 'center', alignItems: 'center' }}>
-                    <ActionButtonRounded2
-                        title="SELECT CATEGORIES"
-                        onButonPress={() => this.toggleModal()}
-                        containerStyle={styles.roundedButton}
-                        textStyle={styles.buttonText}
-                    />
-                </View>
-
-            </View>
-        )
-    }
-
-    searchButton = () => {
-        return (
-            <TouchableWithoutFeedback onPress={() => this.searchProducts()}>
-                <View style={{ marginBottom: hp(4), marginHorizontal: wp(3), justifyContent: 'center', alignItems: 'center' }}>
-                    <View style={styles.roundedButtonSearch}>
-                        <View style={styles.buttonText}>
-                            <_Text fsHeading bold textColor={'#FFFFFF'}>SEARCH</_Text>
-                        </View>
-                    </View>
-                </View>
-            </TouchableWithoutFeedback>
-
-        )
-    }
 
     continuecategoryModal = () => {
         const { selectedCategories } = this.state
@@ -499,7 +450,6 @@ class SearchScreen extends Component {
         const { gwFrom, gwTo, nwFrom, nwTo, fromDate, toDate, selectedCategories, selectedItems2,
             selectedKarat, selectedStatus } = this.state
 
-        console.log("categoryIds", categoryIds);
 
         if (selectedItems2.length > 0) {
 
@@ -635,7 +585,6 @@ class SearchScreen extends Component {
 
         categoryIds = selectedItems2.map(x => { return x.id })
 
-        console.log("selectedItems2", selectedItems2);
 
     }
 
@@ -656,6 +605,8 @@ class SearchScreen extends Component {
         const list = allParameterData && allParameterData.melting
 
         let statusArray = [{ 'id': '1', 'status': 'Available' }, { 'id': '2', 'status': 'Sold' }]
+
+        let headerTheme = allParameterData.theme_color ? allParameterData.theme_color : ''
 
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#f3fcf9' }}>
@@ -745,15 +696,30 @@ class SearchScreen extends Component {
                     alignItems: 'center',
                     justifyContent: 'center', marginBottom: 10, marginTop: 10,
                 }}>
-                    <ActionButtonRounded
-                        title="SEARCH"
-                        onButonPress={() => this.searchProducts()}
-                        containerStyle={styles.roundedButtonSearch}
-                        textStyle={{
-                            color: '#FFFFFF',
-                            fontSize: 16, fontFamily: 'Lato-Bold',
-                        }}
-                    />
+
+                    <TouchableOpacity onPress={() => this.searchProducts()}>
+                        <View
+                            style={{
+                                backgroundColor: headerTheme ? '#' + headerTheme : '#303030',
+                                height: 50,
+                                width: wp(85),
+                                justifyContent: 'center',
+                                borderRadius: 40,
+                                marginVertical: 5,
+                            }}>
+                            <View style={{
+                                width: '100%',
+                                height: '100%',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}>
+                                <Text style={{
+                                    color: '#FFFFFF',
+                                    fontSize: 16, fontFamily: 'Lato-Bold',
+                                }}>SEARCH</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
                 {isModalVisible &&
@@ -815,7 +781,9 @@ class SearchScreen extends Component {
                                 <ActionButtonRounded
                                     title="CONTINUE"
                                     onButonPress={() => this.continuecategoryModal()}
-                                    containerStyle={styles.buttonStyle}
+                                    // containerStyle={styles.buttonStyle}
+                                    color={headerTheme}
+
                                 />
                             </View>
                         </SafeAreaView>
@@ -832,7 +800,7 @@ class SearchScreen extends Component {
 
                             style={{ margin: 30 }}>
                             <View style={styles.container}>
-                                <View style={styles.topContainer}>
+                                <View style={[styles.topContainer, { backgroundColor: headerTheme ? '#' + headerTheme : '#303030', }]}>
                                     <Text style={styles.title}>Search By Code</Text>
                                 </View>
                                 <View style={styles.bottomConatiner}>
@@ -859,7 +827,8 @@ class SearchScreen extends Component {
                                     <ActionButtonRounded
                                         title="CONTINUE"
                                         onButonPress={() => this.searchByCode()}
-                                        containerStyle={styles.buttonStyle}
+                                        // containerStyle={styles.buttonStyle}
+                                        color={headerTheme}
                                     />
                                 </View>
 
@@ -886,7 +855,7 @@ class SearchScreen extends Component {
                         style={{ margin: 0 }}>
                         <TouchableWithoutFeedback >
                             <View style={styles.container1}>
-                                <View style={styles.titleContainer}>
+                                <View style={{ backgroundColor: headerTheme ? '#' + headerTheme : "#303030", }}>
                                     <Text style={styles.titleText}>Select Melting</Text>
                                     <View style={styles.closeIconView}>
                                         <TouchableOpacity
@@ -941,11 +910,13 @@ class SearchScreen extends Component {
                                     )}
 
 
-                                <View style={[styles.buttonContainer, { marginBottom: hp(1) }]}>
+                                <View style={[styles.buttonContainer, { marginVertical: hp(1) }]}>
                                     <ActionButtonRounded
                                         title="CONTINUE"
                                         onButonPress={() => this.onOKkaratSelected()}
-                                        containerStyle={styles.buttonStyle}
+                                        // containerStyle={styles.buttonStyle}
+                                        color={headerTheme}
+
                                     />
                                 </View>
                             </View>
@@ -1006,7 +977,7 @@ const styles = StyleSheet.create({
     },
     roundedButton: {
         marginTop: hp(1.5),
-        backgroundColor: 'white', height: 50, alignItems: 'center',
+        backgroundColor: '#fff', height: 50, alignItems: 'center',
         width: wp(85), justifyContent: 'center', borderRadius: 40,
         borderColor: '#fbcb84', borderWidth: 2,
     },
@@ -1058,7 +1029,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 14,
         alignItems: 'center',
         justifyContent: 'center',
-        // marginBottom:hp(2)
+        marginVertical: hp(2)
 
     },
     closeIconView: {
@@ -1095,7 +1066,6 @@ const styles = StyleSheet.create({
     },
     topContainer: {
         flex: 1,
-        backgroundColor: '#19af81',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
@@ -1223,16 +1193,21 @@ const styles = StyleSheet.create({
 
 });
 
+
 ///--------------------------------ActionButton------------------
-const ActionButtonRounded = ({ title, onButonPress, containerStyle, }) => {
+const ActionButtonRounded = ({ title, onButonPress, containerStyle, color }) => {
     return (
         <TouchableOpacity
             onPress={() => { onButonPress() }}>
             <View
-                style={[
-                    actionButtonRoundedStyle.mainContainerStyle,
-                    containerStyle || null,
-                ]}>
+                style={{
+                    backgroundColor: color ? '#' + color : '#303030',
+                    height: 42,
+                    width: 140,
+                    justifyContent: 'center',
+                    borderRadius: 40,
+                    marginTop: 10,
+                }}>
                 <View style={actionButtonRoundedStyle.innerContainer}>
                     <Text style={actionButtonRoundedStyle.titleStyle}>{title}</Text>
                 </View>
@@ -1241,22 +1216,6 @@ const ActionButtonRounded = ({ title, onButonPress, containerStyle, }) => {
     );
 };
 
-const ActionButtonRounded2 = ({ title, onButonPress, containerStyle, }) => {
-    return (
-        <TouchableOpacity
-            onPress={() => { onButonPress() }}>
-            <View
-                style={[
-                    actionButtonRoundedStyle.mainContainerStyle,
-                    containerStyle || null,
-                ]}>
-                <View style={actionButtonRoundedStyle.innerContainer}>
-                    <Text style={actionButtonRoundedStyle.titleStyle2}>{title}</Text>
-                </View>
-            </View>
-        </TouchableOpacity>
-    );
-};
 
 const actionButtonRoundedStyle = StyleSheet.create({
     mainContainerStyle: {

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
   Animated,
-  ScrollView,
+  ScrollView, Dimensions,
   Platform,
   StyleSheet,
   TextInput,
@@ -36,7 +36,7 @@ import _CustomHeader from '@customHeader/_CustomHeader';
 import { parseInt } from 'lodash';
 import { getTotalCartCount } from '@homepage/HomePageAction';
 import Theme from '../../values/Theme';
-const qs = require('query-string');
+import Carousel, { Pagination, ParallaxImage, SliderEntry } from 'react-native-snap-carousel';
 
 var userId = '';
 
@@ -78,6 +78,7 @@ class ProductDetails extends React.Component {
       successAllParameterVersion: 0,
       errorAllParamaterVersion: 0,
       karatData: [],
+      slider1ActiveSlide: 0
 
     };
     userId = global.userId;
@@ -270,20 +271,18 @@ class ProductDetails extends React.Component {
           })
         }>
         <View key={k}>
-          {/* <FastImage
-            style={{height: hp(30), width: wp(100)}}
-            source={{
-              uri: url2 + data,
-            }}
-            resizeMode={FastImage.resizeMode.cover}
-          /> */}
+          <FastImage
+            style={{ height: hp(33), width: wp(100), backgroundColor: '#d7d7d7' }}
+            source={{ uri: url2 + data }}
+            resizeMode={FastImage.resizeMode.stretch}
+          />
 
-          <Image
+          {/* <Image
             source={{ uri: url2 + data }}
             resizeMode='stretch'
             style={{ height: hp(33), width: wp(100) }}
             defaultSource={IconPack.APP_LOGO}
-          />
+          /> */}
 
         </View>
       </TouchableOpacity>
@@ -314,8 +313,8 @@ class ProductDetails extends React.Component {
               <View
                 style={{
                   backgroundColor: 'gray',
-                  width: 8,
-                  height: 8,
+                  width: 7,
+                  height: 7,
                   borderRadius: 4,
                   marginLeft: 3,
                   marginRight: 3,
@@ -326,7 +325,7 @@ class ProductDetails extends React.Component {
             activeDot={
               <View
                 style={{
-                  backgroundColor: '#19af81',
+                  backgroundColor: '#303030',
                   width: 10,
                   height: 10,
                   borderRadius: 5,
@@ -347,6 +346,88 @@ class ProductDetails extends React.Component {
       </View>
     );
   };
+
+
+  _renderItem = (data, k) => {
+    const { productDetailsStateData } = this.state;
+    let url2 =
+      urls.imageUrl +
+      (productDetailsStateData !== undefined &&
+        productDetailsStateData.zoom_image);
+
+    let item = data.item
+    let index = data.index
+
+    return (
+      <TouchableOpacity
+        onPress={() =>
+          this.props.navigation.navigate('BannerImage', {
+            bannerDataImagePath: productDetailsStateData,
+            baseUrl: url2,
+          })
+        }>
+        <View key={index}>
+          <FastImage
+            style={{ height: hp(38), width: wp(100), backgroundColor: '#d7d7d7' }}
+            source={{ uri: url2 + item }}
+            resizeMode={FastImage.resizeMode.stretch}
+          />
+        </View >
+      </TouchableOpacity>
+    );
+  }
+  // 7738368891 9819
+
+  carausalView2 = (bannerData) => {
+    let { width, height } = Dimensions.get('window')
+    let sliderWidth = width;
+    let itemHeight = hp(33);
+
+    return (
+      <View style={{ marginBottom: -10 }}>
+        <Carousel
+          ref={c => this._slider1Ref = c}
+          hasParallaxImages={true}
+          loop={true}
+          loopClonesPerSide={2}
+          autoplay={true}
+          autoplayDelay={1400}
+          autoplayInterval={8000}
+          sliderWidth={sliderWidth}
+          sliderHeight={itemHeight}
+          itemWidth={sliderWidth}
+          itemHeight={itemHeight}
+          data={bannerData}
+          renderItem={(item, index) => this._renderItem(item, index)}
+          hasParallaxImages={true}
+          enableMomentum={true}
+          activeSlideOffset={2}
+          onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index })}
+
+        />
+        <Pagination
+          dotsLength={bannerData.length}
+          activeDotIndex={this.state.slider1ActiveSlide}
+          containerStyle={{ marginTop: -50 }}
+          dotColor={'#303030'}
+          dotStyle={{
+            width: 10,
+            height: 10,
+            borderRadius: 5,
+          }}
+          inactiveDotColor={'gray'}
+          inactiveDotOpacity={0.4}
+          inactiveDotScale={0.6}
+          carouselRef={this._slider1Ref}
+          tappableDots={this._slider1Ref}
+
+        />
+
+      </View>
+
+    )
+  }
+
 
   noDataFound = () => {
     return (
@@ -540,12 +621,14 @@ class ProductDetails extends React.Component {
     });
 
     const { productDetailsStateData, weight, weightArray, lengthArray } = this.state;
+    const { allParameterData } = this.props
 
     let url =
       urls.imageUrl +
       (productDetailsStateData !== undefined &&
         productDetailsStateData.zoom_image);
 
+    let headerTheme = allParameterData.theme_color ? allParameterData.theme_color : ''
 
     return (
       <SafeAreaView style={styles.flex}>
@@ -557,18 +640,19 @@ class ProductDetails extends React.Component {
               androidStatusBarColor="default">
               <View style={styles.textViewStyle}>
                 <TouchableOpacity
+                  hitSlop={{ top: 15, left: 15, right: 20, bottom: 15 }}
                   onPress={() => this.props.navigation.goBack()}>
                   <Image
                     source={require('../../assets/image/Account/back_button.png')}
                     style={{
                       marginLeft: 10,
-                      height: hp(2.2),
+                      height: hp(3),
                       width: hp(2.2),
                     }}
                   />
                 </TouchableOpacity>
                 <Animated.Text
-                  style={[styles.headerTextStyle, { opacity: headerOpacity }]}>
+                  style={[styles.headerTextStyle, { color: '#303030', opacity: headerOpacity }]}>
                   {productDetailsStateData.product_name}
                 </Animated.Text>
               </View>
@@ -586,10 +670,14 @@ class ProductDetails extends React.Component {
               <SafeAreaView style={styles.safeAreaViewStyle}>
                 <View style={{ flex: 1 }}>
                   <View>
-                    {this.carausalView(productDetailsStateData)}
+                    {this.carausalView2(productDetailsStateData.image_name)}
                   </View>
 
-                  <View style={styles.mainContainerStyle}>
+                  <View style={{
+                    backgroundColor: headerTheme ? '#' + headerTheme : '#D7D7D7',
+                    borderTopLeftRadius: 30,
+                    borderTopRightRadius: 30,
+                  }}>
                     <View style={styles.topTitleContainer}>
                       <View style={{ width: wp(73) }}>
                         <Text
@@ -608,20 +696,21 @@ class ProductDetails extends React.Component {
                         }}>
                         {productDetailsStateData.in_wishlist > 0 && (
                           <Image
-                            source={require('../../assets/Hertfill.png')}
+                            source={require('../../assets/like.png')}
                             style={styles.ImageStyle}
                           />
                         )}
                         {productDetailsStateData.in_cart > 0 && (
                           <Image
-                            source={require('../../assets/Cart1.png')}
-                            style={styles.ImageStyle}
+                            source={require('../../assets/shopping-cart.png')}
+                            style={[styles.ImageStyle, { top: 2, width: hp(3.2) }]}
                           />
                         )}
                       </View>
                     </View>
 
-                    <View style={styles.topBorderStyle}></View>
+                    <View style={styles.topBorderStyle} />
+
                     <View style={styles.quantityContainer}>
                       <View>
                         <Text
@@ -824,7 +913,7 @@ class ProductDetails extends React.Component {
 
                       <View
                         style={{
-                          backgroundColor: color.green,
+                          backgroundColor: headerTheme ? '#' + headerTheme : '#303030',
                           height: hp(6),
                           borderTopLeftRadius: 18,
                           borderTopRightRadius: 18,
@@ -913,13 +1002,9 @@ const styles = StyleSheet.create({
   },
 
   headerTextStyle: {
-    //color: color.brandColor,
-    //fontSize: 21,
-    color: '#19af81',
     fontSize: hp(2.6),
     fontFamily: 'Lato-Bold',
     letterSpacing: 1,
-    //top: 3,
     marginLeft: 12,
   },
   mainContainerStyle: {
@@ -943,7 +1028,7 @@ const styles = StyleSheet.create({
   },
   topBorderStyle: {
     borderBottomColor: '#d7d7d7',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0.8,
     marginHorizontal: 10,
   },
   quantityContainer: {
@@ -959,8 +1044,8 @@ const styles = StyleSheet.create({
     marginTop: hp(0.5),
   },
   decrementCount: {
-    width: hp(5),
-    height: hp(5),
+    width: hp(4),
+    height: hp(4),
     resizeMode: 'contain',
   },
   countTextInput: {
@@ -973,8 +1058,8 @@ const styles = StyleSheet.create({
     color: color.brandColor,
   },
   incrementCountIcon: {
-    width: hp(5),
-    height: hp(5),
+    width: hp(4),
+    height: hp(4),
     resizeMode: 'contain',
   },
   remarkContainer: {
@@ -990,13 +1075,13 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   remarksInput: {
-    borderBottomWidth: 1.3,
+    borderBottomWidth: 0.8,
     height: 50,
     marginHorizontal: 15,
     width: wp(78),
     ...Theme.ffLatoRegular16,
     color: '#000000',
-    borderBottomColor: '#19af81',
+    borderBottomColor: '#d7d7d7',
   },
   descriptionContainer: {
     backgroundColor: color.white,

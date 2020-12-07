@@ -508,6 +508,7 @@ class HomePage extends Component {
         />
 
       </View>
+
     )
   }
 
@@ -542,7 +543,7 @@ class HomePage extends Component {
                 defaultSource={IconPack.APP_LOGO}
                 source={{ uri: baseUrl + item.image_name }}
               />
-              <_Text
+              {/* <_Text
                 numberOfLines={2}
                 style={{
                   ...Theme.ffLatoMedium18,
@@ -552,7 +553,7 @@ class HomePage extends Component {
                   left: 10,
                 }}>
                 {item.col_name}
-              </_Text>
+              </_Text> */}
             </TouchableOpacity>
           </View>
         )}
@@ -573,7 +574,7 @@ class HomePage extends Component {
                 defaultSource={IconPack.APP_LOGO}
                 source={{ uri: baseUrl + item.image_name }}
               />
-              <_Text
+              {/* <_Text
                 numberOfLines={2}
                 style={{
                   ...Theme.ffLatoMedium18,
@@ -584,7 +585,7 @@ class HomePage extends Component {
                   textAlign: 'center',
                 }}>
                 {item.col_name}
-              </_Text>
+              </_Text> */}
             </TouchableOpacity>
           </View>
         )}
@@ -604,7 +605,7 @@ class HomePage extends Component {
                 defaultSource={IconPack.APP_LOGO}
                 source={{ uri: baseUrl + item.image_name }}
               />
-              <_Text
+              {/* <_Text
                 numberOfLines={2}
                 style={{
                   ...Theme.ffLatoMedium18,
@@ -614,7 +615,7 @@ class HomePage extends Component {
                   left: 10,
                 }}>
                 {item.col_name}
-              </_Text>
+              </_Text> */}
             </TouchableOpacity>
           </View>
         )}
@@ -635,7 +636,7 @@ class HomePage extends Component {
                 defaultSource={IconPack.APP_LOGO}
                 source={{ uri: baseUrl + item.image_name }}
               />
-              <_Text
+              {/* <_Text
                 numberOfLines={2}
                 style={{
                   ...Theme.ffLatoMedium18,
@@ -646,7 +647,7 @@ class HomePage extends Component {
                   textAlign: 'center',
                 }}>
                 {item.col_name}
-              </_Text>
+              </_Text> */}
             </TouchableOpacity>
           </View>
         )}

@@ -4,7 +4,7 @@ import {
   Text,
   SafeAreaView,
   Image,
-  StyleSheet,
+  StyleSheet, Platform,
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
@@ -47,7 +47,6 @@ import _, { fromPairs } from 'lodash';
 import Theme from '../../../values/Theme';
 import IconPack from '@login/IconPack';
 
-import { navigate } from '../../../../RootNavigation';
 
 var userId = '';
 var selectedProductIds = []
@@ -147,7 +146,7 @@ class ProductGrid extends Component {
       this.props.getProductTotalCount(productCountData)
     }
     let data2 = new FormData();
-    data2.append('collection_id', 83);
+    data2.append('collection_id', categoryData.id);
     data2.append('table', 'product_master');
     data2.append('user_id', userId);
     data2.append('mode_type', 'all_filter');
@@ -366,10 +365,7 @@ class ProductGrid extends Component {
 
     const { categoryData, page, selectedSortById, gridData, fromExclusive } = this.state;
 
-    // if (prevProps.isFocused !== this.props.isFocused) {
-    //   console.warn("isFocused");
-    //   await this.getData()
-    // }
+
 
     if (this.state.successProductGridVersion > prevState.successProductGridVersion) {
       if (productGridData.products && productGridData.products.length > 0) {
@@ -1233,7 +1229,7 @@ class ProductGrid extends Component {
           style={{ height: hp(20), width: hp(20) }}
           resizeMode="cover"
         />
-        <_Text style={{ paddingTop: 5 }}>{message}</_Text>
+        <_Text style={{ top: 10, fontSize: 16, texAlign: 'center' }}>{message}</_Text>
       </View>
     );
   };
@@ -1289,7 +1285,6 @@ class ProductGrid extends Component {
 
     let count = productTotalcount.count
 
-    console.log("count ppp", count);
 
     if (gridData.length !== count && gridData.length < count) {
       this.setState({
@@ -1407,7 +1402,6 @@ class ProductGrid extends Component {
   };
 
   setFromToSliderValues = values => {
-    console.log("values net", values);
     if (values && values.length > 0) {
       this.setState({
         fromValue: values[0],
@@ -1559,18 +1553,17 @@ class ProductGrid extends Component {
 
     return (
 
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#f3fcf9' }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
         <_CustomHeader
           Title={
             `(${gridData.length.toString()})` + ' ' + `${categoryData.col_name != undefined ? categoryData.col_name : collectionName}`
           }
           RightBtnIcon1={require('../../../assets/image/BlueIcons/Search-White.png')}
-          RightBtnIcon2={require('../../../assets/image/GreyCart.png')}
+          RightBtnIcon2={require('../../../assets/shopping-cart.png')}
           RightBtnPressOne={() => this.props.navigation.navigate('SearchScreen')}
           RightBtnPressTwo={() => this.props.navigation.navigate('CartContainer', { fromProductGrid: true })}
           rightIconHeight2={hp(3.5)}
           LeftBtnPress={() => this.props.navigation.goBack()}
-          // LeftBtnPress={() => navigate('Container')}
           backgroundColor="#19af81"
         />
 
@@ -1734,7 +1727,7 @@ class ProductGrid extends Component {
               }}>
               <Image
                 style={{ height: hp(2.8), width: hp(2.8), marginRight: hp(2) }}
-                source={require('../../../assets/Selection.png')}
+                source={require('../../../assets/grid-2.png')}
               />
               <_Text
                 fsHeading
@@ -2381,11 +2374,11 @@ class RangeSlider extends React.Component {
               min={parseFloat(values[0])}
               max={parseFloat(values[1])}
               step={1}
-              selectedStyle={{ backgroundColor: '#19af81' }}
+              selectedStyle={{ backgroundColor: '#303030' }}
               unselectedStyle={{ backgroundColor: 'silver', }}
               trackStyle={{ height: 4, }}
               markerStyle={{
-                backgroundColor: '#19af81',
+                backgroundColor: '#303030',
                 width: 26,
                 height: 26,
                 borderRadius: 13,
@@ -2469,11 +2462,11 @@ class LengthSlider extends React.Component {
               min={parseFloat(values[0])}
               max={parseFloat(values[1])}
               step={1}
-              selectedStyle={{ backgroundColor: '#19af81' }}
+              selectedStyle={{ backgroundColor: '#303030' }}
               unselectedStyle={{ backgroundColor: 'silver' }}
               trackStyle={{ height: 4 }}
               markerStyle={{
-                backgroundColor: '#19af81',
+                backgroundColor: '#303030',
                 width: 26,
                 height: 26,
                 borderRadius: 13,

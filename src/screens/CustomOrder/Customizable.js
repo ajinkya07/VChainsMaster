@@ -8,7 +8,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  Platform,
+  Platform, KeyboardAvoidingView
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -85,8 +85,6 @@ class Customizable extends Component {
 
   componentDidMount = async () => {
     const { allParameterData } = this.props
-
-    console.log("allParameterData", allParameterData);
 
 
     if (allParameterData && allParameterData.melting) {
@@ -318,9 +316,8 @@ class Customizable extends Component {
       name: imageData.modificationDate + '.jpg',
     };
 
-    if (!grossWeight) {
-      this.showToast('Please enter gross weight', 'danger');
-    } else if (!netWeight) {
+
+    if (!netWeight) {
       this.showToast('Please enter net weight', 'danger');
     } else if (!length) {
       this.showToast('Please enter length', 'danger');
@@ -338,7 +335,7 @@ class Customizable extends Component {
       const data = new FormData();
 
       data.append('user_id', userId);
-      data.append('gross_wt', grossWeight);
+      // data.append('gross_wt', grossWeight);
       data.append('net_wt', netWeight);
       data.append('length', length);
       data.append('delivery_date', date);
@@ -379,9 +376,9 @@ class Customizable extends Component {
     return (
       <View>
         <Picker
-          iosIcon={<Icon type='Feather' name='arrow-down' style={{ fontSize: 25 }} />}
+          iosIcon={<Icon type='FontAwesome' name='chevron-circle-down' style={{ fontSize: 20, }} />}
           mode="dropdown"
-          style={{ height: 40, width: wp(55) }}
+          style={{ height: 40, width: wp(55), top: 3 }}
           selectedValue={karatValue}
           onValueChange={(itemValue, itemIndex) => this.setSelectedValue(itemValue)
           }>
@@ -389,7 +386,6 @@ class Customizable extends Component {
             list.map((listItem, index) => (
               <Picker.Item label={(listItem.melting_name).toString()} value={parseInt(`${listItem.id}`)} />
             )))
-
             : null
           }
         </Picker>
@@ -417,21 +413,27 @@ class Customizable extends Component {
 
   render() {
     const { isDateTimePickerVisible } = this.state;
+    const { allParameterData } = this.props
+
+    let headerTheme = allParameterData.theme_color ? allParameterData.theme_color : ''
 
     return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <Container
-          style={{
-            flex: 1,
-            backgroundColor: '#FFFFFF',
-          }}>
-          <ScrollView showsVerticalScrollIndicator={true}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF', }}>
+
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={Platform.select({ ios: 110, android: -140 })}
+          style={{ flex: 1 }}
+        >
+
+          <ScrollView showsVerticalScrollIndicator={true}
+          >
             <View
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',
-                flex: 1,
                 backgroundColor: color.white,
+                flex: 1
               }}>
               {this.state.imageUrl == '' && (
                 <Image
@@ -455,19 +457,16 @@ class Customizable extends Component {
               )}
             </View>
 
-            <View
-              style={{
-                backgroundColor: '#f3fcf9',
-                flex: 2,
-              }}>
+            <View style={{ backgroundColor: '#f3fcf9' }}>
               <View
                 style={{
                   borderTopLeftRadius: 20,
                   borderTopRightRadius: 20,
                   backgroundColor: '#ffffff',
+                  flex: 2
                 }}>
                 <View style={{ marginHorizontal: 16, marginTop: 20 }}>
-                  <FloatingLabelTextInput
+                  {/* <FloatingLabelTextInput
                     label="Gross Weight (gm)"
                     value={this.state.grossWeight}
                     onChangeText={this.handleGrossWeightChange}
@@ -476,8 +475,8 @@ class Customizable extends Component {
                     keyboardType="numeric"
                     onSubmitEditing={() => this.netWeightRef.current.focus()}
                     returnKeyType='done'
+                  /> */}
 
-                  />
                   <FloatingLabelTextInput
                     label="Net Weight (gm)"
                     value={this.state.netWeight}
@@ -615,27 +614,28 @@ class Customizable extends Component {
             </View>
           </ScrollView>
 
-          <View style={{ position: 'absolute', top: height / 3.8, right: wp(6) }}>
-            <TouchableOpacity onPress={() => this.showActionSheet()}>
-              <Image
-                style={{
-                  resizeMode: 'cover',
-                  width: 50,
-                  height: 50,
-                }}
-                source={require('../../assets/Plus1.png')}
-              />
-            </TouchableOpacity>
-          </View>
+        </KeyboardAvoidingView>
 
-        </Container>
+        <View style={{ position: 'absolute', top: height / 3.8, right: wp(6) }}>
+          <TouchableOpacity onPress={() => this.showActionSheet()}>
+            <Image
+              style={{
+                resizeMode: 'cover',
+                width: 50,
+                height: 50,
+              }}
+              source={require('../../assets/Plus1.png')}
+            />
+          </TouchableOpacity>
+        </View>
+
         <TouchableOpacity onPress={() => this.submitCustomOrder()}>
           <View
             style={{
               height: 44,
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: color.green,
+              backgroundColor: headerTheme ? '#' + headerTheme : '#303030',
               borderTopLeftRadius: 16,
               borderTopRightRadius: 16,
             }}>

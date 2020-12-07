@@ -86,7 +86,7 @@ export default class SubCategoryList extends Component {
             <SafeAreaView style={{ flex: 1, backgroundColor: '#f3fcf9' }}>
                 <_CustomHeader
                     Title={'Sub Category'}
-                    RightBtnIcon2={require('../../../assets/image/GreyCart.png')}
+                    RightBtnIcon2={require('../../../assets/shopping-cart.png')}
                     RightBtnIcon1={require('../../../assets/image/BlueIcons/Notification-White.png')}
                     LeftBtnPress={() => this.props.navigation.goBack()}
                     RightBtnPressTwo={() => this.props.navigation.navigate('CartContainer', { fromProductGrid: true })}
