@@ -76,6 +76,7 @@ export default class ToDatePicker extends Component {
             isVisible={isDateTimePickerVisible}
             onConfirm={date => this.handleDatePicked(date)}
             onCancel={() => this.hideDateTimePicker()}
+            minimumDate={new Date()}
           />
         )}
 

@@ -1828,6 +1828,7 @@ class CartContainer extends Component {
                             isVisible={isDateTimePickerVisible}
                             onConfirm={date => this.handleDatePicked(date)}
                             onCancel={() => this.hideDateTimePicker()}
+                            minimumDate={new Date()}
                           />
                         )}
                       </View>
@@ -2158,9 +2159,9 @@ const styles = StyleSheet.create({
     marginVertical: hp(1),
   },
   textDatePickerStyle: {
-    color: '#a3a3a3',
+    color: '#303030',
     //textAlign: 'left',
-    marginTop: 5,
+    marginTop: 3,
     fontSize: 18,
   },
   bottomView: {

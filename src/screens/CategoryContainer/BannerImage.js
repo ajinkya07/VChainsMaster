@@ -53,7 +53,6 @@ export default class BannerImage extends Component {
 
 
     setCurrentPage = (position) => {
-        console.log("position", position);
         this.setState({ currentPage: position });
     }
 
@@ -103,12 +102,11 @@ export default class BannerImage extends Component {
                     <Swiper
                         removeClippedSubviews={false}
                         style={{ flexGrow: 1, }}
-                        showsButtons={true}
+                        showsButtons={item.image_name.length > 1 ? true : false}
                         ref={(swiper) => { this.swiper = swiper; }}
                         index={this.state.currentPage}
                         autoplay={false}
                         showsPagination={true}
-                        showsButtons={true}
                         // loadMinimal={true}
                         // loadMinimalLoader={<ActivityIndicator size="small" color='gray' />}
                         dot={<View style={{
@@ -129,7 +127,7 @@ export default class BannerImage extends Component {
                             paddingHorizontal: 20, flex: 1,
                             paddingVertical: 10, justifyContent: 'space-between', alignItems: 'center'
                         }}
-                        nextButton={<_Text bold style={{ textAlign: 'center', }} fsSmall>NEXT</_Text>}
+                        nextButton={<_Text bold fsPrimary style={{ textAlign: 'center', }}>SWIPE</_Text>}
                         prevButton={<_Text bold style={{ textAlign: 'center', }} fsSmall ></_Text>}
 
                     >

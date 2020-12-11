@@ -445,6 +445,7 @@ class HomePage extends Component {
   _renderItem = ({ item, index }, parallaxProps) => {
     const { homePageData } = this.props;
     let baseUrl = homePageData && homePageData.base_path;
+    let { width, height } = Dimensions.get('window')
 
     return (
       <TouchableOpacity
@@ -455,7 +456,7 @@ class HomePage extends Component {
           })
         }>
         <View key={index}>
-          <Image style={{ height: hp(28), width: wp(100), }}
+          <Image style={{ height: height / 3 - 15, width: wp(100), }}
             source={{ uri: baseUrl + item.brand_image }}
             defaultSource={IconPack.APP_LOGO}
             resizeMode='cover'
@@ -469,7 +470,7 @@ class HomePage extends Component {
   carausalView2 = (bannerData) => {
     let { width, height } = Dimensions.get('window')
     let sliderWidth = width;
-    let itemHeight = hp(28);
+    let itemHeight = height / 3;
 
     return (
       <View style={{ marginBottom: -10 }}>
