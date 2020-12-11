@@ -932,7 +932,6 @@ class CartContainer extends Component {
   };
 
   editCartProduct = editData => {
-    console.log("editData", editData);
 
     this.setState({
       isModalVisible: true,

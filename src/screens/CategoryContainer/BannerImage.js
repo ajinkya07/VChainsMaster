@@ -53,31 +53,31 @@ export default class BannerImage extends Component {
 
 
     setCurrentPage = (position) => {
+        console.log("position", position);
         this.setState({ currentPage: position });
     }
 
-    renderScreen = (data, k) => {
+    renderScreen = (item, k) => {
         const { bannerDataImagePath } = this.state
-        let item = data.item
-        let index = data.index
 
+        // let item = data.item
+        // let index = data.index
         let url2 = urls.imageUrl + (bannerDataImagePath !== undefined && bannerDataImagePath.zoom_image)
 
         return (
-            <View key={index}>
+            <View key={k}>
                 <ImageZoom
                     cropWidth={wp(100)}
                     cropHeight={hp(95)}
                     imageWidth={wp(100)}
                     imageHeight={hp(95)}>
                     <FastImage
-                        style={{ height: hp(80), width: wp(100) }}
+                        style={{ height: hp(80), width: wp(100), }}
                         source={{
                             uri: url2 + item,
                             priority: FastImage.priority.high,
                         }}
                         resizeMode={FastImage.resizeMode.contain}
-
                     />
                     {/* <Image
                         source={{ uri: url2 + item }}
@@ -85,7 +85,9 @@ export default class BannerImage extends Component {
                         style={{ height: hp(80), width: wp(100) }}
                         defaultSource={IconPack.APP_LOGO}
                     /> */}
+
                 </ImageZoom>
+
 
             </View>
         )
@@ -101,13 +103,14 @@ export default class BannerImage extends Component {
                     <Swiper
                         removeClippedSubviews={false}
                         style={{ flexGrow: 1, }}
-                        autoplayTimeout={10}
+                        showsButtons={true}
                         ref={(swiper) => { this.swiper = swiper; }}
                         index={this.state.currentPage}
                         autoplay={false}
                         showsPagination={true}
-                        loadMinimal={true}
-                        loadMinimalLoader={<ActivityIndicator size="small" color='gray' />}
+                        showsButtons={true}
+                        // loadMinimal={true}
+                        // loadMinimalLoader={<ActivityIndicator size="small" color='gray' />}
                         dot={<View style={{
                             backgroundColor: 'gray', width: 8, height: 8,
                             borderRadius: 4, marginLeft: 3,
@@ -118,6 +121,17 @@ export default class BannerImage extends Component {
                             marginLeft: 3, marginRight: 3, top: 10
                         }} />}
                         onIndexChanged={(page) => this.setCurrentPage(page)}
+                        buttonWrapperStyle={{
+                            //backgroundColor: '#d7d7d7',
+                            flexDirection: 'row', height: hp(7),
+                            top: hp(100) - hp(26),
+                            position: 'absolute',
+                            paddingHorizontal: 20, flex: 1,
+                            paddingVertical: 10, justifyContent: 'space-between', alignItems: 'center'
+                        }}
+                        nextButton={<_Text bold style={{ textAlign: 'center', }} fsSmall>NEXT</_Text>}
+                        prevButton={<_Text bold style={{ textAlign: 'center', }} fsSmall ></_Text>}
+
                     >
                         {(item.image_name).map((page, index) => this.renderScreen(page, index))}
                     </Swiper>
@@ -127,8 +141,6 @@ export default class BannerImage extends Component {
         )
     }
 
-
-    // 7738368891 9819
 
     carausalView2 = (bannerData) => {
         let { width, height } = Dimensions.get('window')
@@ -184,11 +196,8 @@ export default class BannerImage extends Component {
 
     render() {
         const { bannerDataImagePath, baseUrl } = this.state
-        console.log("bannerDataImagePath", bannerDataImagePath);
         return (
             <SafeAreaView style={{ height: hp(100), backgroundColor: color.white }}>
-
-
 
                 <View style={{ height: hp(7), backgroundColor: color.white }}>
                     <View
@@ -205,10 +214,8 @@ export default class BannerImage extends Component {
                     </View>
                 </View>
 
-
-
                 <View style={{ marginTop: hp(1), }}>
-                    {this.carausalView2(bannerDataImagePath.image_name)}
+                    {this.carausalView(bannerDataImagePath)}
                 </View>
 
             </SafeAreaView>

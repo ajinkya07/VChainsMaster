@@ -57,7 +57,7 @@ class SearchProductGrid extends Component {
       isProductImageModalVisibel: false,
       productImageToBeDisplayed: '',
       clickedLoadMore: false,
-      selectedSortById: '2',
+      selectedSortById: '6',
       fromCodeSearch: from,
 
       successProductGridVersion: 0,
@@ -101,7 +101,7 @@ class SearchProductGrid extends Component {
       countData.append('user_id', userId);
       countData.append('record', 10);
       countData.append('page_no', 0);
-      countData.append('sort_by', '2');
+      countData.append('sort_by', '6');
 
       this.props.getProductTotalCount(countData)
 
@@ -529,14 +529,14 @@ class SearchProductGrid extends Component {
                   onPress={() => this.addProductToWishlist(item)}>
                   <Image
                     source={require('../../../assets/Hertfill.png')}
-                    style={{ height: hp(3.1), width: hp(3), marginTop: 2 }}
+                    style={{ height: hp(3.1), width: hp(3) }}
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => this.addProductToCart(item)}>
                   <Image
                     source={require('../../../assets/Cart1.png')}
-                    style={{ height: hp(3.1), width: hp(3), marginTop: 2 }}
+                    style={{ height: hp(3.1), width: hp(3) }}
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
@@ -758,7 +758,7 @@ class SearchProductGrid extends Component {
       data.append('user_id', userId);
       data.append('record', 10);
       data.append('page_no', page);
-      data.append('sort_by', '2');
+      data.append('sort_by', '6');
 
       this.props.getProductSubCategoryData(data);
     }

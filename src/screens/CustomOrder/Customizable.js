@@ -307,31 +307,40 @@ class Customizable extends Component {
     var date1 = moment(timeStampDate, 'DD-MM-YYYY').valueOf();
     var date2 = moment(date, 'DD-MM-YYYY').valueOf();
 
-    var photo = {
-      uri:
-        Platform.OS === 'android'
-          ? imageData.path
-          : imageData.path.replace('file://', ''),
-      type: imageData.mime,
-      name: imageData.modificationDate + '.jpg',
-    };
+    console.log("this.state", this.state);
+
+    if (imageData) {
+      var photo = {
+        uri:
+          Platform.OS === 'android'
+            ? imageData.path
+            : imageData.path.replace('file://', ''),
+        type: imageData.mime,
+        name: imageData.modificationDate + '.jpg',
+      };
+    }
 
 
     if (!netWeight) {
       this.showToast('Please enter net weight', 'danger');
-    } else if (!length) {
-      this.showToast('Please enter length', 'danger');
-    } else if (!quantity) {
-      this.showToast('Please enter quantity', 'danger');
-    } else if (!date) {
-      this.showToast('Please select delivery date', 'danger');
-    } else if (date != '' && date1 > date2) {
-      // here showing alert hence > , in cart hitting api hence <
-      alert('Date must be 10 days greater');
     }
+    // else if (!length) {
+    //   this.showToast('Please enter length', 'danger');
+    // }
+    //  else if (!quantity) {
+    //   this.showToast('Please enter quantity', 'danger');
+    // } 
+    // else if (!date) {
+    //   this.showToast('Please select delivery date', 'danger');
+    // }
+    //  else if (date != '' && date1 > date2) {
+    //   // here showing alert hence > , in cart hitting api hence <
+    //   alert('Date must be 10 days greater');
+    // }
     else if (!imageUrl) {
-      this.showToast('Please add image', 'danger');
-    } else {
+      this.showToast('Please add an image', 'danger');
+    }
+    else {
       const data = new FormData();
 
       data.append('user_id', userId);

@@ -54,14 +54,14 @@ export function validatePassword(password) {
   if (password.length < 4) {
     return false
   }
-  if (password.length > 10) {
+  if (password.length > 50) {
     return false
   }
-  else{
+  else {
     return true
   }
   // var pass = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{4,10}$/;
-    //return pass.test(password) ? true :true;
+  //return pass.test(password) ? true :true;
 }
 
 export const validateMobNum = number => {
@@ -70,13 +70,13 @@ export const validateMobNum = number => {
   const whiteSpace = /^\s+$/; // Avoid space
   return re.test(number) && !mFormat.test(number) && !whiteSpace.test(number)
     ? true
-    : false; 
+    : false;
 };
 
 
 
-export const validateName =text => {
+export const validateName = text => {
   var regex = new RegExp(`^[a-zA-z]`);
-  return regex.test(text) ? true :false;
+  return regex.test(text) ? true : false;
 };
 

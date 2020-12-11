@@ -74,7 +74,7 @@ class ProductGrid extends Component {
       toValue: 0.0,
       fromValue: 0.0,
 
-      selectedSortById: '2',
+      selectedSortById: '6',
 
       gridData: [],
       loadingExtraData: false,
@@ -130,7 +130,7 @@ class ProductGrid extends Component {
       data.append('user_id', userId);
       data.append('record', 10);
       data.append('page_no', page);
-      data.append('sort_by', '2');
+      data.append('sort_by', '6');
 
       this.props.getProductSubCategoryData(data);
 
@@ -141,7 +141,7 @@ class ProductGrid extends Component {
       productCountData.append('user_id', userId);
       productCountData.append('record', 10);
       productCountData.append('page_no', 0);
-      productCountData.append('sort_by', '2');
+      productCountData.append('sort_by', '6');
 
       this.props.getProductTotalCount(productCountData)
     }
@@ -163,7 +163,7 @@ class ProductGrid extends Component {
       excl.append('user_id', userId);
       excl.append('record', 10);
       excl.append('page_no', page);
-      excl.append('sort_by', '2');
+      excl.append('sort_by', '6');
       excl.append('my_collection_id', categoryData.id);
 
       this.props.getProductSubCategoryData(excl);
@@ -175,7 +175,7 @@ class ProductGrid extends Component {
       productCountData2.append('user_id', userId);
       productCountData2.append('record', 10);
       productCountData2.append('page_no', 0);
-      productCountData2.append('sort_by', '2');
+      productCountData2.append('sort_by', '6');
       productCountData2.append('my_collection_id', categoryData.id);
 
       this.props.getProductTotalCount(productCountData2)
@@ -559,7 +559,7 @@ class ProductGrid extends Component {
       data.append('user_id', userId);
       data.append('record', 10);
       data.append('page_no', page);
-      data.append('sort_by', '2');
+      data.append('sort_by', '6');
 
       await this.props.getProductSubCategoryData(data);
     }
@@ -571,7 +571,7 @@ class ProductGrid extends Component {
       excl.append('user_id', userId);
       excl.append('record', 10);
       excl.append('page_no', page);
-      excl.append('sort_by', '2');
+      excl.append('sort_by', '6');
       excl.append('my_collection_id', categoryData.id);
 
       await this.props.getProductSubCategoryData(excl);
@@ -691,14 +691,14 @@ class ProductGrid extends Component {
                   onPress={() => isSelectPressed ? this.selectProduct(item, item.product_inventory_id) : this.addProductToWishlist(item)}>
                   <Image
                     source={require('../../../assets/Hertfill.png')}
-                    style={{ height: hp(3.1), width: hp(3), marginTop: 2 }}
+                    style={{ height: hp(3.1), width: hp(3), }}
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => isSelectPressed ? this.selectProduct(item, item.product_inventory_id) : this.addProductToCart(item)}>
                   <Image
                     source={require('../../../assets/Cart1.png')}
-                    style={{ height: hp(3.1), width: hp(3), marginTop: 2 }}
+                    style={{ height: hp(3.1), width: hp(3), }}
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
@@ -890,7 +890,7 @@ class ProductGrid extends Component {
                   }>
                   <Image
                     source={require('../../../assets/Hertfill.png')}
-                    style={{ height: hp(3.1), width: hp(3), marginTop: 2 }}
+                    style={{ height: hp(3.1), width: hp(3), }}
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
@@ -902,7 +902,7 @@ class ProductGrid extends Component {
                   }>
                   <Image
                     source={require('../../../assets/Cart1.png')}
-                    style={{ height: hp(3.1), width: hp(3), marginTop: 2 }}
+                    style={{ height: hp(3.1), width: hp(3), }}
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
@@ -1317,7 +1317,7 @@ class ProductGrid extends Component {
         data.append('user_id', userId);
         data.append('record', 10);
         data.append('page_no', page);
-        data.append('sort_by', '2');
+        data.append('sort_by', '6');
 
         this.props.getProductSubCategoryData(data);
       }
@@ -1329,7 +1329,7 @@ class ProductGrid extends Component {
         excl3.append('user_id', userId);
         excl3.append('record', 10);
         excl3.append('page_no', page);
-        excl3.append('sort_by', '2');
+        excl3.append('sort_by', '6');
         excl3.append('my_collection_id', categoryData.id);
 
         this.props.getProductSubCategoryData(excl3);
@@ -1466,7 +1466,7 @@ class ProductGrid extends Component {
     filterData.append('user_id', userId);
     filterData.append('record', 10);
     filterData.append('page_no', 0);
-    filterData.append('sort_by', '2');
+    filterData.append('sort_by', '6');
     filterData.append('min_gross_weight', fromValue);
     filterData.append('max_gross_weight', toValue);
 

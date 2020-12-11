@@ -268,8 +268,8 @@ class SignIn extends React.Component {
                       value={password ? password : null}
                       type="password"
                       inputKey="password"
-                      maxLength={10}
-                      minLength={6}
+                      maxLength={50}
+                      minLength={4}
                       onChangeText={this.onInputChanged}
                       placeholder="Password"
                       returnKeyType="done"

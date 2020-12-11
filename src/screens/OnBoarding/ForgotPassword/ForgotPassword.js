@@ -245,8 +245,8 @@ class ForgotPassword extends React.Component {
                       value={password ? password : null}
                       type="password"
                       inputKey="password"
-                      maxLength={10}
-                      minLength={10}
+                      maxLength={50}
+                      minLength={4}
                       onChangeText={this.onInputChanged}
                       placeholder="New Password"
                       returnKeyType="done"
