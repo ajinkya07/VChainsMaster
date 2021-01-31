@@ -44,6 +44,7 @@ export default class SubCategoryList extends Component {
                                 }}
                                 source={{ uri: baseUrl + item.image_name }}
                                 defaultSource={IconPack.APP_LOGO}
+                                resizeMode='stretch'
                             />
                         </View>
 

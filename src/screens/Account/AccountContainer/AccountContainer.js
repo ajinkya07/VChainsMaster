@@ -155,7 +155,7 @@ class AccountContainer extends Component {
 
   showAppVersion = () => {
     Toast.show({
-      text: 'App version:  ' + '1.0.1',
+      text: 'App version:  ' + '1.0.2',
 
       duration: 5000,
     });
@@ -230,10 +230,6 @@ class AccountContainer extends Component {
     Linking.openURL(
       `mailto:${email}?subject=write a subject`,
     );
-
-    // this.setState({
-    //   accountEmailModal:false
-    // })
   }
 
   openSocialMediaModal = () => {
@@ -278,6 +274,8 @@ class AccountContainer extends Component {
     const aboutUS = allParameterData.about_us
     const privacyPolicy = allParameterData.privacy_policy
     const terms = allParameterData.terms_and_conditions
+    const call_us = allParameterData.call_us
+
     const whatsApp = allParameterData.whatsapp
     const emailID = allParameterData.email
     const call = allParameterData.call
@@ -287,7 +285,6 @@ class AccountContainer extends Component {
     const catalog = allParameterData.catalogue
 
     let headerTheme = allParameterData.theme_color ? allParameterData.theme_color : ''
-
     return (
 
       <View style={{ flex: 1, width: wp(100) }}>
@@ -341,14 +338,15 @@ class AccountContainer extends Component {
             <AccountRow
               title="Terms & Conditions"
               icon={IconPack.ABOUT}
-              // onPress={() => Linking.openURL(terms)}
               onPress={() => this.props.navigation.navigate('CustomWebview', { link: terms, title: 'Terms & Conditions' })}
             />
 
             <AccountRow
               title="Call / Email Us"
               icon={IconPack.EMAIL}
-              onPress={() => this.showCallEmailModal()}
+              // onPress={() => this.showCallEmailModal()}
+              onPress={() => this.props.navigation.navigate('CustomWebview', { link: call_us, title: 'Call / Email Us' })}
+
             />
             <AccountRow
               title="Social Media"
@@ -657,17 +655,13 @@ const styles = StyleSheet.create({
   },
   accountRowViewContainer: {
     flexDirection: 'row',
-    //justifyContent: 'space-between',
-    marginHorizontal: 25,
+    marginHorizontal: 20,
     alignItems: 'center',
     padding: 10,
   },
   titleText: {
-    // fontSize: hp(2.2),
     color: '#FFFFFF',
-    // fontFamily: 'Lato-Regular',
     ...Theme.ffLatoMedium18,
-
   },
   borderStyle: {
     borderBottomColor: '#d2d2d2',
@@ -681,7 +675,7 @@ const styles = StyleSheet.create({
 
   titleView: {
     flex: 1,
-    marginLeft: 50,
+    marginLeft: 52,
   },
   border: {
     borderBottomColor: 'gray',

@@ -300,14 +300,13 @@ class Customizable extends Component {
 
 
     var timeStamp = new Date().getTime() + 10 * 24 * 60 * 60 * 1000;
-    var timeStampDate = moment(
-      new Date(timeStamp).toISOString().slice(0, 10),
-    ).format('DD-MM-YYYY');
+    var timeStampDate = moment(new Date(timeStamp).toISOString().slice(0, 10),).format('DD-MM-YYYY');
 
     var date1 = moment(timeStampDate, 'DD-MM-YYYY').valueOf();
     var date2 = moment(date, 'DD-MM-YYYY').valueOf();
 
-    console.log("this.state", this.state);
+    let ddd = moment(new Date().toISOString().slice(0, 10)).format('DD-MM-YYYY',);
+
 
     if (imageData) {
       var photo = {
@@ -344,7 +343,6 @@ class Customizable extends Component {
       const data = new FormData();
 
       data.append('user_id', userId);
-      // data.append('gross_wt', grossWeight);
       data.append('net_wt', netWeight);
       data.append('length', length);
       data.append('delivery_date', date);
@@ -385,7 +383,8 @@ class Customizable extends Component {
     return (
       <View>
         <Picker
-          iosIcon={<Icon type='FontAwesome' name='chevron-circle-down' style={{ fontSize: 20, }} />}
+          // iosIcon={<Icon type='FontAwesome' name='chevron-circle-down' style={{ fontSize: 20, }} />}
+          iosIcon={<Icon type='Feather' name="arrow-down" style={{ fontSize: 22, }} />}
           mode="dropdown"
           style={{ height: 40, width: wp(55), top: 3 }}
           selectedValue={karatValue}

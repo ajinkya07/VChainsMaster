@@ -93,8 +93,7 @@ export function signInRequest(data) {
 
 
 export function sendFCM(data) {
-  console.warn("sendFCM", data);
-
+  console.log("data==sendfcm", data);
   return dispatch => {
     axios.post(urls.sendFCMToken.url, data, header).then(response => {
       if (response.data.ack === '1') {

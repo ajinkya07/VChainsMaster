@@ -272,6 +272,7 @@ class Register extends React.Component {
                     inputKey="fullName"
                     maxLength={100}
                     minLength={3}
+                    autoCapitalize={true}
                     onChangeText={this.onInputChanged}
                     placeholder="Full name"
                     returnKeyType="next"
@@ -475,6 +476,7 @@ class LoginFields extends Component {
       returnKeyType,
       textInputRef,
       onSubmitEditing,
+      autoCapitalize
     } = this.props;
     const { isPasswordField, secureInput } = this.state;
 
@@ -489,7 +491,7 @@ class LoginFields extends Component {
           underlineColorAndroid="transparent"
           autoCorrect={false}
           selectionColor={'#FFFFFF'}
-          autoCapitalize="none"
+          autoCapitalize={autoCapitalize ? 'autoCapitalize' : 'none'}
           placeholder={placeholder}
           placeholderTextColor={placeholderTextColor}
           onChangeText={this.onChangeText}

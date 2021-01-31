@@ -257,10 +257,13 @@ class ProductDetails extends React.Component {
 
   renderScreen = (data, k) => {
     const { productDetailsStateData } = this.state;
+    const { allParameterData } = this.props
     let url2 =
       urls.imageUrl +
       (productDetailsStateData !== undefined &&
         productDetailsStateData.zoom_image);
+
+    let headerTheme = allParameterData.theme_color ? allParameterData.theme_color : ''
 
     return (
       <TouchableOpacity
@@ -350,10 +353,14 @@ class ProductDetails extends React.Component {
 
   _renderItem = (data, k) => {
     const { productDetailsStateData } = this.state;
+    const { allParameterData } = this.props
+
     let url2 =
       urls.imageUrl +
       (productDetailsStateData !== undefined &&
         productDetailsStateData.zoom_image);
+
+    let headerTheme = allParameterData.theme_color ? allParameterData.theme_color : ''
 
     let item = data.item
     let index = data.index
@@ -364,6 +371,7 @@ class ProductDetails extends React.Component {
           this.props.navigation.navigate('BannerImage', {
             bannerDataImagePath: productDetailsStateData,
             baseUrl: url2,
+            colorCode: headerTheme
           })
         }>
         <View key={index}>
@@ -388,7 +396,7 @@ class ProductDetails extends React.Component {
         <Carousel
           ref={c => this._slider1Ref = c}
           hasParallaxImages={true}
-          loop={true}
+          loop={false}
           loopClonesPerSide={2}
           autoplay={true}
           autoplayDelay={1400}
@@ -752,7 +760,7 @@ class ProductDetails extends React.Component {
                         style={styles.remarksInput}
                         onChangeText={remark => this.setState({ remark })}
                         value={String(this.state.remark)}
-                        placeholder="Remarks"
+                        placeholder="Write any specifications here"
                         placeholderTextColor="#000000"
                       />
                     </View>
@@ -1073,6 +1081,7 @@ const styles = StyleSheet.create({
     width: hp(3.5),
     height: hp(3.5),
     resizeMode: 'contain',
+    top: -2
   },
   remarksInput: {
     borderBottomWidth: 0.8,
@@ -1082,6 +1091,7 @@ const styles = StyleSheet.create({
     ...Theme.ffLatoRegular16,
     color: '#000000',
     borderBottomColor: '#d7d7d7',
+    fontSize: 18
   },
   descriptionContainer: {
     backgroundColor: color.white,

@@ -267,3 +267,6 @@ export const FCM_DATA_RESET_REDUCER = "fcmDataResetReducer";
 export const PRODUCT_TOTAL_COUNT = "productTotalcount";
 export const PRODUCT_TOTAL_COUNT_SUCCESS = "productTotalcountSuccess";
 export const PRODUCT_TOTAL_COUNT_ERROR = "productTotalcountError";
+
+export const FILTERED_TOTAL_COUNT_SUCCESS = "filteredTotalcountSuccess";
+export const FILTERED_TOTAL_COUNT_ERROR = "filteredTotalcountError";

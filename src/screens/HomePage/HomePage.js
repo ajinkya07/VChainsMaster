@@ -86,7 +86,6 @@ class HomePage extends Component {
 
   componentDidMount = async () => {
     const type = Platform.OS === 'ios' ? 'ios' : 'android';
-    console.log("userId", userId);
     await this.getHomePage()
     await this.getTotalCart()
 

@@ -3,7 +3,7 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 import com.facebook.react.ReactActivity;
-import org.devio.rn.splashscreen.SplashScreen; // here
+import org.devio.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends ReactActivity {
 

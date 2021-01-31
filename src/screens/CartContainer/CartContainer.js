@@ -1286,6 +1286,8 @@ class CartContainer extends Component {
   placeOrderFromCart = async () => {
     const { comments1, date } = this.state;
 
+    let ddd = moment(new Date().toISOString().slice(0, 10)).format('DD-MM-YYYY',);
+
     const type = Platform.OS === 'ios' ? 'ios' : 'android';
 
     let name = await AsyncStorage.getItem('fullName');
@@ -1308,18 +1310,21 @@ class CartContainer extends Component {
     var date1 = moment(timeStampDate, 'DD-MM-YYYY').valueOf();
     var date2 = moment(date, 'DD-MM-YYYY').valueOf();
 
-    if (!date) {
-      Toast.show({
-        text: 'Please select a date',
-        type: 'danger',
-        duration: 2500,
-      });
-      alert('Please select a date');
-    } else if (date != '' && date1 < date2) {
-      this.props.placeOrderFromCart(orderData);
-    } else {
-      alert('Date must be 10 days greater');
-    }
+    // if (!date) {
+    //   Toast.show({
+    //     text: 'Please select a date',
+    //     type: 'danger',
+    //     duration: 2500,
+    //   });
+    //   alert('Please select a date');
+    // } else if (date != '' && date1 < date2) {
+    //   this.props.placeOrderFromCart(orderData);
+    // } else {
+    //   alert('Date must be 10 days greater');
+    // }
+
+    this.props.placeOrderFromCart(orderData);
+
   };
 
   render() {
@@ -1817,7 +1822,7 @@ class CartContainer extends Component {
                                 this.showDateTimePicker();
                               }}>
                               <Text style={styles.textDatePickerStyle}>
-                                {!this.state.date ? 'Date' : this.state.date}
+                                {!this.state.date ? 'Select Date' : this.state.date}
                               </Text>
                             </TouchableOpacity>
                           </View>
@@ -1841,7 +1846,6 @@ class CartContainer extends Component {
                               onButonPress={() => this.placeOrderFromCart()}
                               // containerStyle={styles.buttonStyle}
                               color={headerTheme}
-
                             />
                           ) : (
                             <ActivityIndicator size="small" color={color.brandColor} />

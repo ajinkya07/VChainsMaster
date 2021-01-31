@@ -157,8 +157,8 @@ PODS:
   - OpenSSL-Universal (1.0.2.19):
     - OpenSSL-Universal/Static (= 1.0.2.19)
   - OpenSSL-Universal/Static (1.0.2.19)
-  - PromisesObjC (1.2.10)
-  - Protobuf (3.13.0)
+  - PromisesObjC (1.2.12)
+  - Protobuf (3.14.0)
   - RCTRequired (0.63.2)
   - RCTTypeSafety (0.63.2):
     - FBLazyVector (= 0.63.2)
@@ -450,6 +450,7 @@ DEPENDENCIES:
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
   - Firebase/Analytics
+  - Firebase/Messaging
   - Flipper (~> 0.41.1)
   - Flipper-DoubleConversion (= 1.1.7)
   - Flipper-Folly (~> 2.2)
@@ -664,8 +665,8 @@ SPEC CHECKSUMS:
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
-  PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
-  Protobuf: 3dac39b34a08151c6d949560efe3f86134a3f748
+  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  Protobuf: 0cde852566359049847168e51bd1c690e0f70056
   RCTRequired: f13f25e7b12f925f1f6a6a8c69d929a03c0129fe
   RCTTypeSafety: 44982c5c8e43ff4141eb519a8ddc88059acd1f3a
   React: e1c65dd41cb9db13b99f24608e47dd595f28ca9a
@@ -710,6 +711,6 @@ SPEC CHECKSUMS:
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 318019e26b394995e29a17a4bc2e5056b4179994
+PODFILE CHECKSUM: 5bde27b3811b00130884f3d672a9ab2f95852692
 
 COCOAPODS: 1.9.3

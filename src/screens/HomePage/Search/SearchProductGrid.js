@@ -401,7 +401,7 @@ class SearchProductGrid extends Component {
         <View
           style={{
             backgroundColor: color.white,
-            height: Platform.OS === 'android' ? hp(34) : hp(32),
+            // height: hp(34),
             width: wp(46),
             marginHorizontal: hp(1),
             borderRadius: 15,
@@ -521,7 +521,8 @@ class SearchProductGrid extends Component {
                 </_Text>
               </View>
             </View>
-            <View style={border}></View>
+
+            <View style={border} />
 
             {item.quantity == 0 && (
               <View style={iconView}>
@@ -571,6 +572,7 @@ class SearchProductGrid extends Component {
                 </TouchableOpacity>
               </View>
             )}
+
           </View>
         </View>
       </TouchableOpacity>
@@ -842,7 +844,7 @@ class SearchProductGrid extends Component {
             showsHorizontalScrollIndicator={true}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
-              <View style={{ marginBottom: hp(1), marginTop: hp(1) }}>
+              <View style={{ marginVertical: hp(1) }}>
                 {this.gridView(item)}
               </View>
             )}

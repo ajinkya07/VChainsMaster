@@ -48,8 +48,8 @@ class _Header extends Component {
                 <View style={{ marginTop: 2, marginBottom: 2, width: wp(40) }}>
 
                   <Image
-                    source={require('../../assets/vchain.png')}
-                    style={{ height: hp(5.5), width: wp(35), left: -25 }}
+                    source={require('../../assets/logo1.png')}
+                    style={{ height: hp(6), width: wp(35), left: -25 }}
                     resizeMode={'contain'}
                   />
                   {/* <Text

@@ -38,7 +38,6 @@ export default function dataReducer(state = initialState, action) {
       };
 
     case LOGIN_DATA_SUCCESS:
-      console.log("action.data", action.data);
       return {
         ...state,
         errorMsg: "",

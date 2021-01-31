@@ -23,13 +23,12 @@ import DatePickerComponent from './DatePickerComponent';
 import DatePickerComponent1 from './DatePickerComponent1';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import _CustomHeader from '@customHeader/_CustomHeader';
-import { Toast } from 'native-base'
+import { Toast, Icon } from 'native-base'
 import { getProfile, getStateList, getCityList, updateUserProfile } from '@editProfile/EditProfileAction';
 import { connect } from 'react-redux'
 import { allParameters } from '@homepage/HomePageAction';
 import { strings } from '@values/strings'
 import Theme from '../../../values/Theme';
-
 
 
 const { width } = Dimensions.get('window');
@@ -707,15 +706,17 @@ class EditProfile extends Component {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}>
-                    <Text style={{ fontSize: 16, color: '#000000' }}>{selectedCountry}</Text>
-                    <Image
+                    <Text numberOfLines={1} style={{ fontSize: 16, color: '#000000' }}>{selectedCountry}</Text>
+                    {/* <Image
                       source={require('../../../assets/image/DownArrow.png')}
                       style={{
                         width: wp(2.5),
                         height: hp(1.5),
                         resizeMode: 'cover',
                       }}
-                    />
+                    /> */}
+                    <Icon type='Feather' name="arrow-down" style={{ fontSize: 22, }} />
+
                   </View>
                 </TouchableOpacity>
 
@@ -728,15 +729,17 @@ class EditProfile extends Component {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}>
-                    <Text style={{ fontSize: 16, color: '#000000' }}>{selectedState}</Text>
-                    <Image
+                    <Text numberOfLines={1} style={{ fontSize: 16, color: '#000000' }}>{selectedState}</Text>
+                    {/* <Image
                       source={require('../../../assets/image/DownArrow.png')}
                       style={{
                         width: wp(2.5),
                         height: hp(1.5),
                         resizeMode: 'cover',
                       }}
-                    />
+                    /> */}
+                    <Icon type='Feather' name="arrow-down" style={{ fontSize: 22, }} />
+
                   </View>
                 </TouchableOpacity>
 
@@ -749,15 +752,17 @@ class EditProfile extends Component {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}>
-                    <Text style={{ fontSize: 16, color: '#000000' }}>{selectedCity}</Text>
-                    <Image
+                    <Text numberOfLines={1} style={{ fontSize: 16, color: '#000000' }}>{selectedCity}</Text>
+                    {/* <Image
                       source={require('../../../assets/image/DownArrow.png')}
                       style={{
                         width: wp(2.5),
                         height: hp(1.5),
                         resizeMode: 'cover',
                       }}
-                    />
+                    /> */}
+                    <Icon type='Feather' name="arrow-down" style={{ fontSize: 22, }} />
+
                   </View>
                 </TouchableOpacity>
                 <View style={styles.buttonContainer}>

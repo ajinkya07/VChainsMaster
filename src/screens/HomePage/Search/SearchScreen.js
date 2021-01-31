@@ -354,26 +354,11 @@ class SearchScreen extends Component {
                     <_Text fsMedium style={{ marginTop: hp(1.5) }}>AND   </_Text>
 
                     <View style={{ flexDirection: 'row', width: wp(40) }}>
-                        {/* <DatePicker
-                            defaultDate={new Date()}
-                            // minimumDate={new Date(2018, 1, 1)}
-                            //maximumDate={new Date(2018, 12, 31)}
-                            locale={"en"}
-                            // timeZoneOffsetInMinutes={undefined}
-                            modalTransparent={false}
-                            animationType={"fade"}
-                            androidMode={"default"}
-                            placeHolderText="To Date"
-                            textStyle={{ marginTop: hp(0.5), fontSize: 20 }}
-                            placeHolderTextStyle={{ color: "gray", fontSize: 20 }}
-                            onDateChange={() => this.setToDate()}
-                        /> */}
                         <ToDatePicker
                             dateLabel="To Date"
                             setToDate={(d) => this.setToDate(d)}
                             toDate={this.state.toDate}
                         />
-
                     </View>
                 </View>
             </View>
@@ -385,36 +370,34 @@ class SearchScreen extends Component {
         const { selectedKarat, isOkKaratClicked } = this.state
         return (
             <View style={{ marginHorizontal: wp(3) }}>
-                <_Text fsHeading>Melting:</_Text>
+                {/* <_Text fsHeading>Melting:</_Text> */}
                 <TouchableOpacity onPress={() => this.karatModal()}>
                     <View style={{
                         marginTop: hp(1), flexDirection: 'row',
                         justifyContent: 'space-between', width: wp(92),
                     }}>
                         {!isOkKaratClicked &&
-                            <_Text fsHeading textColor={'gray'} style={{ marginLeft: wp(3) }}>Select Melting:</_Text>
+                            <_Text fsHeading style={{ marginLeft: wp(1) }}> Select Melting:</_Text>
                         }
                         {selectedKarat.length > 0 && isOkKaratClicked &&
                             <View style={{ flexDirection: 'row', flexWrap: 'wrap', }}>
                                 {selectedKarat.map(s => {
-                                    return <_Text fsHeading style={{ marginLeft: wp(3) }}> {s.value},</_Text>
+                                    return <_Text fsHeading style={{ marginLeft: wp(1) }}>{s.value},</_Text>
                                 })}
                             </View>
                         }
 
-                        <Image
-                            style={{ height: hp(2.5), width: hp(2.5), marginTop: hp(1) }}
+                        {/* <Image
+                            style={{ height: hp(2.5), width: hp(2.5), marginTop: hp(1), marginRight: 4 }}
                             source={require('../../../assets/image/DownArrow.png')}
-                        />
+                        /> */}
+                        <Icon type='Feather' name="arrow-down" style={{ fontSize: 22, left: 2 }} />
+
                     </View>
                 </TouchableOpacity>
             </View>
         )
     }
-
-
-
-
 
     continuecategoryModal = () => {
         const { selectedCategories } = this.state
@@ -647,7 +630,7 @@ class SearchScreen extends Component {
                         {this.productReleaseDate()}
                     </View>
 
-                    <View style={{ paddingVertical: hp(1), marginHorizontal: wp(3) }}>
+                    {/* <View style={{ paddingTop: hp(1), marginHorizontal: wp(3) }}>
                         <_Text fsHeading>Product Status:</_Text>
                         <Picker
                             iosIcon={<Icon type='Feather' name="arrow-down" style={{ marginRight: hp(1.5), fontSize: 22, }} />}
@@ -660,20 +643,22 @@ class SearchScreen extends Component {
                                 <Picker.Item key={(s.id).toString()} label={(s.status)} value={parseInt(s.id)} />
                             ))}
                         </Picker>
-                    </View>
+                    </View> */}
 
 
-                    <View style={{ paddingVertical: hp(1), }}>
+                    <View style={{ paddingTop: hp(2), }}>
                         {this.selectKarat()}
                     </View>
 
-                    <View style={{ paddingHorizontal: wp(2), }}>
+                    {/* CATEGORY SEARCH */}
+
+                    <View style={{ paddingTop: hp(1), paddingHorizontal: wp(2), }}>
                         <SectionedMultiSelect
                             items={collection}
                             IconRenderer={Icon2}
                             uniqueKey="id"
                             subKey="children"
-                            selectText="Select categories"
+                            selectText="Select Categories"
                             showDropDowns={true}
                             readOnlyHeadings={true}
                             onSelectedItemsChange={this.onSelectedItemsChange}
@@ -1142,19 +1127,16 @@ const styles = StyleSheet.create({
     },
     searchBar: {
         ...Theme.ffLatoRegular14,
-        margin: 10,
+        margin: 12,
         height: 38,
         backgroundColor: 'white',
         borderColor: '#d2d2d2',
         borderWidth: 1,
-        //marginLeft: 7,
+        paddingLeft: 10
     },
     itemText: {
         margin: 1,
-        // color: '#FFFFFF',
-
         ...Theme.ffLatoBold15,
-        //backgroundColor: '#657fd6',
         height: 45,
         padding: 12,
     },

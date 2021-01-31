@@ -74,11 +74,8 @@ export default class FloatingLabelInput extends Component {
               justifyContent: 'center',
             }}>
             <Image
-              source={
-                !isFocused
-                  ? require('../../assets/USer.png')
-                  : require('../../assets/USer.png')
-              }
+              // source={ !isFocused? require('../../assets/USer.png'): require('../../assets/USer.png')}
+              source={require('../../assets/image/ProfilePic.png')}
               style={{ width: 25, height: 25, resizeMode: 'cover' }}
             />
           </View>

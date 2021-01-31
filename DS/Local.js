@@ -1,4 +1,6 @@
 import PushNotification from "react-native-push-notification"
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import { Platform } from "react-native";
 
 class Local {
     configure = (onOpenNotification) => {
@@ -12,7 +14,13 @@ class Local {
                     return
                 }
                 notification.userInteraction = true;
+                // onOpenNotification(Platform.OS === 'ios' ? notification.data.item : notification.data);
                 onOpenNotification(notification.data);
+
+                //only call callback if not from foreground
+                if (Platform.OS === 'ios') {
+                    notification.finish(PushNotificationIOS.FetchResult.NoData)
+                }
             },
             // IOS ONLY (optional): default: all - Permissions to register.
             permissions: {
@@ -44,13 +52,15 @@ class Local {
         PushNotification.localNotification({
             /* Android Only Properties */
             ...this.buildAndroidNotification(id, title, message, data, options),
+            /* Android and ios Only Properties */
+            ...this.buildIOSNotification(id, title, message, data, options),
             title: title || "",
             message: message || "",
             playSound: options.playSound || false,
             soundName: options.soundName || 'default',
             userInteraction: false, // BOOLEAN : If notification was opened by the user from notification
-            channelId: "32",
-            badge: true,
+            // channelId: "32",
+            // badge: true,
         });
     }
 
@@ -70,8 +80,24 @@ class Local {
         }
     }
 
+    buildIOSNotification = (id, title, message, data = {}, options = {}) => {
+        return {
+            alertAction: options.alertAction || 'view',
+            category: options.category || "",
+            userInfo: {
+                id: id,
+                item: data
+            }
+
+        }
+    }
+
     cancelAllLocalNotifications = () => {
-        PushNotification.cancelAllLocalNotifications();
+        if (Platform.OS === 'ios') {
+            PushNotificationIOS.removeAllDeliveredNotifications();
+        } else {
+            PushNotification.cancelAllLocalNotifications();
+        }
     }
 
     removeDeliveredNotificationByID = (notificationId) => {

@@ -140,6 +140,7 @@ export default function _Tabs() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
+      shifting={false}
       tabBarOptions={{
         style: { height: Platform.OS === 'ios' ? hp(10) : hp(9) },
         activeTintColor: color.brandColor,

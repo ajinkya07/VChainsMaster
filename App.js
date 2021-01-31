@@ -9,6 +9,7 @@ import SplashScreen from 'react-native-splash-screen'
 import AsyncStorage from '@react-native-community/async-storage';
 import { fcmService } from './DS/FCMService';
 import { local } from './DS/Local';
+import messaging from '@react-native-firebase/messaging';
 
 
 const store = configureStore();
@@ -27,10 +28,12 @@ class App extends React.Component {
     fcmService.register(this.onRegister, this.onNotification, this.onOpenNotification);
     local.configure(this.onOpenNotification)
 
-
   };
 
+
+
   onRegister = (token) => {
+    console.log("token", token);
     AsyncStorage.setItem('fcmToken', token)
   }
 

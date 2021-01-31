@@ -20,7 +20,11 @@ import { urls } from '@api/urls'
 import ImageZoom from 'react-native-image-pan-zoom';
 import IconPack from '@login/IconPack';
 import Carousel, { Pagination, ParallaxImage, SliderEntry } from 'react-native-snap-carousel';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
+
+
+const { width, height } = Dimensions.get('window')
 
 
 export default class BannerImage extends Component {
@@ -29,12 +33,16 @@ export default class BannerImage extends Component {
 
         const data = this.props.route.params.bannerDataImagePath;
         const url = this.props.route.params.baseUrl;
+        const colorCode = this.props.route.params.colorCode;
+
+
 
         this.state = {
             bannerDataImagePath: data,
             baseUrl: url,
             currentPage: 0,
-            slider1ActiveSlide: 0
+            slider1ActiveSlide: 0,
+            colorCode: colorCode
 
         };
     }
@@ -58,11 +66,7 @@ export default class BannerImage extends Component {
 
     renderScreen = (item, k) => {
         const { bannerDataImagePath } = this.state
-
-        // let item = data.item
-        // let index = data.index
         let url2 = urls.imageUrl + (bannerDataImagePath !== undefined && bannerDataImagePath.zoom_image)
-
         return (
             <View key={k}>
                 <ImageZoom
@@ -86,14 +90,28 @@ export default class BannerImage extends Component {
                     /> */}
 
                 </ImageZoom>
-
-
             </View>
         )
     }
 
 
+    renderPagination = (index, total) => {
+
+        return (
+            <View style={{
+                position: 'absolute',
+                right: wp(45),
+                bottom: hp(83),
+            }}>
+                <Text style={{ fontWeight: 'bold', fontSize: 16, textAlign: 'center' }}>
+                    <Text style={{ fontSize: 16 }}>{index + 1}</Text> / {total}
+                </Text>
+            </View>
+        )
+    }
+
     carausalView = (item) => {
+        const { colorCode, currentPage } = this.state
         return (
             <View style={{
                 height: hp(80), width: wp(100),
@@ -101,14 +119,12 @@ export default class BannerImage extends Component {
                 {item.image_name ?
                     <Swiper
                         removeClippedSubviews={false}
-                        style={{ flexGrow: 1, }}
                         showsButtons={item.image_name.length > 1 ? true : false}
                         ref={(swiper) => { this.swiper = swiper; }}
                         index={this.state.currentPage}
                         autoplay={false}
                         showsPagination={true}
-                        // loadMinimal={true}
-                        // loadMinimalLoader={<ActivityIndicator size="small" color='gray' />}
+                        renderPagination={() => this.renderPagination(this.state.currentPage, item.image_name.length)}
                         dot={<View style={{
                             backgroundColor: 'gray', width: 8, height: 8,
                             borderRadius: 4, marginLeft: 3,
@@ -120,16 +136,29 @@ export default class BannerImage extends Component {
                         }} />}
                         onIndexChanged={(page) => this.setCurrentPage(page)}
                         buttonWrapperStyle={{
-                            //backgroundColor: '#d7d7d7',
-                            flexDirection: 'row', height: hp(7),
+                            height: hp(7),
                             top: hp(100) - hp(26),
                             position: 'absolute',
-                            paddingHorizontal: 20, flex: 1,
-                            paddingVertical: 10, justifyContent: 'space-between', alignItems: 'center'
+                            flex: 1,
+                            alignItems: 'center',
+                            left: - 10
                         }}
-                        nextButton={<_Text bold fsPrimary style={{ textAlign: 'center', }}>SWIPE</_Text>}
-                        prevButton={<_Text bold style={{ textAlign: 'center', }} fsSmall ></_Text>}
-
+                    // nextButton={
+                    //     <View style={{
+                    //         alignItems: 'center', justifyContent: 'center', height: 40, width: 70, borderRadius: 20,
+                    //         backgroundColor: currentPage !== (item.image_name.length - 1) ? colorCode ? '#' + colorCode : 'gray' : color.white
+                    //     }}>
+                    //         <_Text bold fsPrimary textColor={color.white}>NEXT</_Text>
+                    //     </View>
+                    // }
+                    // prevButton={
+                    //     <TouchableOpacity style={{
+                    //         alignItems: 'center', justifyContent: 'center', height: 40, width: 70, borderRadius: 20,
+                    //         backgroundColor: (item.image_name.length - 1) <= currentPage ? colorCode ? '#' + colorCode : 'gray' : color.white
+                    //     }}>
+                    //         <_Text bold fsPrimary textColor={color.white}>PREV</_Text>
+                    //     </TouchableOpacity>
+                    // }
                     >
                         {(item.image_name).map((page, index) => this.renderScreen(page, index))}
                     </Swiper>
@@ -206,7 +235,7 @@ export default class BannerImage extends Component {
                             <Image
                                 defaultSource={require('../../assets/image/close1.png')}
                                 source={require('../../assets/image/close1.png')}
-                                style={{ height: hp(2.5), width: hp(2.5) }}
+                                style={{ height: hp(3), width: hp(3) }}
                             />
                         </TouchableOpacity>
                     </View>

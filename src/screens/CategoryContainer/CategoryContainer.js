@@ -195,9 +195,8 @@ class CategoryContainer extends Component {
                           borderWidth: 0.4, borderColor: color.gray
                         }}
                         source={{ uri: baseUrl + item.image_name }}
-                        // defaultSource={require('../../assets/image/default.png')}
                         defaultSource={IconPack.APP_LOGO}
-
+                        resizeMode='stretch'
                       />
                     </View>
 

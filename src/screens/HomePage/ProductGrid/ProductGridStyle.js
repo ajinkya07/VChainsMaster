@@ -133,8 +133,7 @@ export default {
 
   iconView: {
     width: wp(48),
-    marginTop: hp(1),
-    marginBottom: hp(1),
+    marginVertical: hp(1.5),
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
