@@ -475,8 +475,6 @@ class EditProfile extends Component {
 
 
   searchCountry = (s) => {
-    // this.setState({enteredCountry: s});
-
     let filteredData = this.state.countryData.filter(function (item) {
       return item.name.includes(s);
     });
@@ -707,16 +705,18 @@ class EditProfile extends Component {
                       justifyContent: 'space-between',
                     }}>
                     <Text numberOfLines={1} style={{ fontSize: 16, color: '#000000' }}>{selectedCountry}</Text>
-                    {/* <Image
-                      source={require('../../../assets/image/DownArrow.png')}
-                      style={{
-                        width: wp(2.5),
-                        height: hp(1.5),
-                        resizeMode: 'cover',
-                      }}
-                    /> */}
-                    <Icon type='Feather' name="arrow-down" style={{ fontSize: 22, }} />
-
+                    {Platform.OS === 'android' ?
+                      <Image
+                        source={require('../../../assets/image/DownArrow.png')}
+                        style={{
+                          width: wp(2.5),
+                          height: hp(1.5),
+                          resizeMode: 'cover',
+                        }}
+                      />
+                      :
+                      <Icon type='Ionicons' name="caret-down" style={{ fontSize: 20 }} />
+                    }
                   </View>
                 </TouchableOpacity>
 
@@ -730,16 +730,18 @@ class EditProfile extends Component {
                       justifyContent: 'space-between',
                     }}>
                     <Text numberOfLines={1} style={{ fontSize: 16, color: '#000000' }}>{selectedState}</Text>
-                    {/* <Image
-                      source={require('../../../assets/image/DownArrow.png')}
-                      style={{
-                        width: wp(2.5),
-                        height: hp(1.5),
-                        resizeMode: 'cover',
-                      }}
-                    /> */}
-                    <Icon type='Feather' name="arrow-down" style={{ fontSize: 22, }} />
-
+                    {Platform.OS === 'android' ?
+                      <Image
+                        source={require('../../../assets/image/DownArrow.png')}
+                        style={{
+                          width: wp(2.5),
+                          height: hp(1.5),
+                          resizeMode: 'cover',
+                        }}
+                      />
+                      :
+                      <Icon type='Ionicons' name="caret-down" style={{ fontSize: 20 }} />
+                    }
                   </View>
                 </TouchableOpacity>
 
@@ -753,18 +755,21 @@ class EditProfile extends Component {
                       justifyContent: 'space-between',
                     }}>
                     <Text numberOfLines={1} style={{ fontSize: 16, color: '#000000' }}>{selectedCity}</Text>
-                    {/* <Image
-                      source={require('../../../assets/image/DownArrow.png')}
-                      style={{
-                        width: wp(2.5),
-                        height: hp(1.5),
-                        resizeMode: 'cover',
-                      }}
-                    /> */}
-                    <Icon type='Feather' name="arrow-down" style={{ fontSize: 22, }} />
-
+                    {Platform.OS === 'android' ?
+                      <Image
+                        source={require('../../../assets/image/DownArrow.png')}
+                        style={{
+                          width: wp(2.5),
+                          height: hp(1.5),
+                          resizeMode: 'cover',
+                        }}
+                      />
+                      :
+                      <Icon type='Ionicons' name="caret-down" style={{ fontSize: 20 }} />
+                    }
                   </View>
                 </TouchableOpacity>
+
                 <View style={styles.buttonContainer}>
                   <ActionButtonRounded
                     title="UPDATE PROFILE"

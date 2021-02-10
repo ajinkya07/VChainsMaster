@@ -819,10 +819,13 @@ class CartContainer extends Component {
             <Text style={styles.moreDetailText}>More Details</Text>
           </View>
           <View>
-            <Image
-              source={require('../../assets/image/DownArrow.png')}
-              style={{ height: hp(2), width: hp(2) }}
-            />
+            {Platform.OS === 'android' ?
+              <Image
+                source={require('../../assets/image/DownArrow.png')}
+                style={{ height: hp(2), width: hp(2) }}
+              /> :
+              <Icon type='Ionicons' name='caret-down' style={{ fontSize: 18 }} />
+            }
           </View>
         </View>
         {isToggle && openMoreDetailsIdwish === data.cart_wish_id ? (
@@ -1049,10 +1052,13 @@ class CartContainer extends Component {
             <Text style={styles.moreDetailText}>More Details</Text>
           </View>
           <View>
-            <Image
-              source={require('../../assets/image/DownArrow.png')}
-              style={{ height: hp(2), width: hp(2) }}
-            />
+            {Platform.OS === 'android' ?
+              <Image
+                source={require('../../assets/image/DownArrow.png')}
+                style={{ height: hp(2), width: hp(2) }}
+              /> :
+              <Icon type='Ionicons' name='caret-down' style={{ fontSize: 18 }} />
+            }
           </View>
         </View>
         {isToogleTwo && openMoreDetailsIdCart === item.cart_wish_id ? (
@@ -1614,7 +1620,7 @@ class CartContainer extends Component {
                         Select Weight
                       </Text>
                       <Picker
-                        iosIcon={<Icon type='Feather' name='arrow-down' style={{ fontSize: 25 }} />}
+                        iosIcon={<Icon type='Ionicons' name='caret-down' style={{ fontSize: 25 }} />}
                         mode="dropdown"
                         style={{ height: 45, marginLeft: 60, width: '70%' }}
                         selectedValue={this.state.weight}
@@ -1636,7 +1642,7 @@ class CartContainer extends Component {
                           Select Length (Inches)
                        </Text>
                         <Picker
-                          iosIcon={<Icon type='Feather' name='arrow-down' style={{ fontSize: 25 }} />}
+                          iosIcon={<Icon type='Ionicons' name='caret-down' style={{ fontSize: 25 }} />}
                           mode="dropdown"
                           style={{ height: 45, marginLeft: 60, width: '70%' }}
                           selectedValue={this.state.length}

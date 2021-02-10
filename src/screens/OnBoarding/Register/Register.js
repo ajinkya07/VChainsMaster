@@ -491,7 +491,7 @@ class LoginFields extends Component {
           underlineColorAndroid="transparent"
           autoCorrect={false}
           selectionColor={'#FFFFFF'}
-          autoCapitalize={autoCapitalize ? 'autoCapitalize' : 'none'}
+          autoCapitalize={autoCapitalize ? 'sentences' : 'none'}
           placeholder={placeholder}
           placeholderTextColor={placeholderTextColor}
           onChangeText={this.onChangeText}

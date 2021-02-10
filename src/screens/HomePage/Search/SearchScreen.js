@@ -391,7 +391,7 @@ class SearchScreen extends Component {
                             style={{ height: hp(2.5), width: hp(2.5), marginTop: hp(1), marginRight: 4 }}
                             source={require('../../../assets/image/DownArrow.png')}
                         /> */}
-                        <Icon type='Feather' name="arrow-down" style={{ fontSize: 22, left: 2 }} />
+                        <Icon type='Ionicons' name="caret-down" style={{ fontSize: 22, left: 2 }} />
 
                     </View>
                 </TouchableOpacity>

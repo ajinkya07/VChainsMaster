@@ -26,3 +26,5 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
 });
 
 AppRegistry.registerComponent(appName, () => App);
+
+// V CHAINS JEWELLERY PVT LTD is family run business with extravagant product range

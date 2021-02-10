@@ -398,7 +398,7 @@ class ProductDetails extends React.Component {
           hasParallaxImages={true}
           loop={false}
           loopClonesPerSide={2}
-          autoplay={true}
+          autoplay={false}
           autoplayDelay={1400}
           autoplayInterval={8000}
           sliderWidth={sliderWidth}
@@ -494,7 +494,7 @@ class ProductDetails extends React.Component {
     return (
       <View>
         <Picker
-          iosIcon={<Icon type='Feather' name='arrow-down' style={{ marginRight: hp(3), fontSize: 22 }} />}
+          iosIcon={<Icon type='Ionicons' name="caret-down" style={{ marginRight: hp(3), fontSize: 22 }} />}
           mode="dropdown"
           style={{ height: 50, width: wp(55) }}
           selectedValue={karatValue}
@@ -525,7 +525,7 @@ class ProductDetails extends React.Component {
     return (
       <View>
         <Picker
-          iosIcon={<Icon type='Feather' name="arrow-down" style={{ marginRight: hp(3), fontSize: 22 }} />}
+          iosIcon={<Icon type='Ionicons' name="caret-down" style={{ marginRight: hp(3), fontSize: 22 }} />}
           mode="dropdown"
           style={{ height: 50, width: wp(55) }}
           selectedValue={this.state.weight}
@@ -549,7 +549,7 @@ class ProductDetails extends React.Component {
     return (
       <View>
         <Picker
-          iosIcon={<Icon type='Feather' name="arrow-down" style={{ marginRight: hp(3), fontSize: 22 }} />}
+          iosIcon={<Icon type='Ionicons' name="caret-down" style={{ marginRight: hp(3), fontSize: 22 }} />}
           mode="dropdown"
           style={{ height: 50, width: wp(55) }}
           selectedValue={this.state.length}
@@ -767,7 +767,8 @@ class ProductDetails extends React.Component {
 
                     <View style={styles.descriptionContainer}>
                       <TouchableOpacity
-                        onPress={() => this.toggleDescriptionDetails()}>
+                      //onPress={() => this.toggleDescriptionDetails()}
+                      >
                         <View style={styles.descriptionRowContainer}>
                           <Text
                             style={{
@@ -777,10 +778,13 @@ class ProductDetails extends React.Component {
                             }}>
                             Description
                           </Text>
-                          <Image
-                            source={IconPack.GRAY_DOWN_ARROW}
-                            style={styles.downArrow}
-                          />
+                          {Platform.OS === 'android' ?
+                            <Image
+                              source={IconPack.GRAY_DOWN_ARROW}
+                              style={styles.downArrow}
+                            /> :
+                            <Icon type='Ionicons' name="caret-down" style={{ marginRight: hp(2), fontSize: 22 }} />
+                          }
                         </View>
                       </TouchableOpacity>
                       {this.state.isHideDetail ? (
@@ -1106,11 +1110,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   downArrow: {
-    width: hp(2),
-    height: hp(2),
+    width: hp(1.5),
+    height: hp(1.5),
     top: 5,
     resizeMode: 'contain',
-    marginRight: 10,
+    marginRight: 5,
   },
   descriptionSubContainer: {
     flexDirection: 'row',

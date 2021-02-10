@@ -19,12 +19,12 @@ class BottomTabIcon extends Component {
         return (
             <View style={{ width: 24, height: 24, margin: 5 }}>
                 {focused ?
-                    <Image style={{ height: hp(3.5), width: hp(3.5), marginTop: -7 }}
+                    <Image style={{ height: hp(3), width: hp(3), marginTop: -7, bottom: 2 }}
                         source={require('../../assets/image/Tabs/cart_grey.png')}
                     />
 
                     :
-                    <Image style={{ height: hp(2.9), width: hp(2.9), marginTop: -1 }}
+                    <Image style={{ height: hp(3), width: hp(3), marginTop: -7 }}
                         source={require('../../assets/image/Tabs/cart_lightgrey.png')}
                     />
                 }
@@ -48,6 +48,7 @@ class BottomTabIcon extends Component {
                     </Text>
                 </View>
             </View>
+
         );
     }
 }

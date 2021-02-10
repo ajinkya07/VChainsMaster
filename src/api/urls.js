@@ -140,3 +140,8 @@ export const urls = {
     }
 
 }
+
+
+// Android Play store credentials- 
+// Email- vchainsjewellery@gmail.com
+// Password- Vinodjain8800

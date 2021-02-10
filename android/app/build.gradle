@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.vchains"
+        applicationId "com.vchainsnew"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 4
@@ -173,7 +173,7 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-           signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
 

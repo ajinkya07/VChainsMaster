@@ -8,6 +8,258 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:522647406488:android:aee6f35ad98ce1e977cded",
+        "android_client_info": {
+          "package_name": "com.dagina"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq8g1nVXyanzA3r-oYXZF6AjlJI1-CjNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "522647406488-3ledjr5qt7pck3541u41rd422fk1mj5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.NaishaGold"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522647406488:android:d0b8060ca012dc3077cded",
+        "android_client_info": {
+          "package_name": "com.jewelmart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq8g1nVXyanzA3r-oYXZF6AjlJI1-CjNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "522647406488-3ledjr5qt7pck3541u41rd422fk1mj5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.NaishaGold"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522647406488:android:7808cbc20cd7c6ec77cded",
+        "android_client_info": {
+          "package_name": "com.naishagold"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq8g1nVXyanzA3r-oYXZF6AjlJI1-CjNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "522647406488-3ledjr5qt7pck3541u41rd422fk1mj5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.NaishaGold"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522647406488:android:7658fd17cb0fe0e577cded",
+        "android_client_info": {
+          "package_name": "com.rajatgroup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq8g1nVXyanzA3r-oYXZF6AjlJI1-CjNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "522647406488-3ledjr5qt7pck3541u41rd422fk1mj5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.NaishaGold"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522647406488:android:438394fb3ad2720777cded",
+        "android_client_info": {
+          "package_name": "com.royalchains"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq8g1nVXyanzA3r-oYXZF6AjlJI1-CjNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "522647406488-3ledjr5qt7pck3541u41rd422fk1mj5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.NaishaGold"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522647406488:android:1a2623914ff0711f77cded",
+        "android_client_info": {
+          "package_name": "com.shreegurugold"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq8g1nVXyanzA3r-oYXZF6AjlJI1-CjNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "522647406488-3ledjr5qt7pck3541u41rd422fk1mj5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.NaishaGold"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522647406488:android:16d1be6046f5e0dc77cded",
+        "android_client_info": {
+          "package_name": "com.shubhornaments"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq8g1nVXyanzA3r-oYXZF6AjlJI1-CjNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "522647406488-3ledjr5qt7pck3541u41rd422fk1mj5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.NaishaGold"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:522647406488:android:1b8807bf065f2b9977cded",
         "android_client_info": {
           "package_name": "com.skychains"
@@ -30,6 +282,49 @@
             {
               "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "522647406488-3ledjr5qt7pck3541u41rd422fk1mj5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.NaishaGold"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522647406488:android:529b8856c8f1af4b77cded",
+        "android_client_info": {
+          "package_name": "com.swarnsarita"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq8g1nVXyanzA3r-oYXZF6AjlJI1-CjNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "522647406488-3ledjr5qt7pck3541u41rd422fk1mj5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.NaishaGold"
+              }
             }
           ]
         }
@@ -59,6 +354,49 @@
             {
               "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "522647406488-3ledjr5qt7pck3541u41rd422fk1mj5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.NaishaGold"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522647406488:android:08474dcfeceb5a4877cded",
+        "android_client_info": {
+          "package_name": "com.vchainsnew"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq8g1nVXyanzA3r-oYXZF6AjlJI1-CjNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522647406488-q72l42n87g8ceeo5rebdg62jei7q2f9r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "522647406488-3ledjr5qt7pck3541u41rd422fk1mj5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.NaishaGold"
+              }
             }
           ]
         }

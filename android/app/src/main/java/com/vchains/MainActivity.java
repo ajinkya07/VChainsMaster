@@ -1,7 +1,6 @@
-package com.vchains;
+package com.vchainsnew;
 import android.os.Bundle;
 import android.view.WindowManager;
-
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen;
 
@@ -24,6 +23,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "VChains";
+    return "Vchainsnew";
   }
 }

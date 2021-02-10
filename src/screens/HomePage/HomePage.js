@@ -487,7 +487,6 @@ class HomePage extends Component {
           itemHeight={itemHeight}
           data={bannerData}
           renderItem={this._renderItem}
-          hasParallaxImages={true}
           enableMomentum={true}
           activeSlideOffset={2}
           onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index })}
@@ -519,7 +518,6 @@ class HomePage extends Component {
       this.props.navigation.navigate('SubCategoryList', { subcategory: data });
     }
   };
-
 
 
 
@@ -1000,7 +998,7 @@ class HomePage extends Component {
           {/* CATEGORY DESIGNS */}
           {categoryData &&
             categoryData.map(item => (
-              <View style={{ top: -10 }}>
+              <View style={{ top: -10, left: 2 }}>
                 {this.categoryViewDesignNew(item, item.position)}
               </View>
             ))}

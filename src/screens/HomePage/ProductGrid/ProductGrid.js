@@ -635,7 +635,7 @@ class ProductGrid extends Component {
       iconView,
     } = ProductGridStyle;
 
-    let url = urls.imageUrl + 'public/backend/product_images/small_image/'
+    let url = urls.imageUrl + 'public/backend/product_images/thumb_image/'
 
     const { isSelectPressed, selectedItem, selectedProducts } = this.state
 

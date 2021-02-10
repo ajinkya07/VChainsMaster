@@ -39,7 +39,7 @@ export default class SubCategoryList extends Component {
                         <View style={{ flex: 0.25, justifyContent: 'flex-start', }}>
                             <Image
                                 style={{
-                                    height: hp(10), width: hp(10), borderRadius: 10,
+                                    height: hp(10), width: hp(10),
                                     borderWidth: 0.4, borderColor: color.gray
                                 }}
                                 source={{ uri: baseUrl + item.image_name }}

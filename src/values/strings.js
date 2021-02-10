@@ -1,5 +1,5 @@
 export const strings = {
-  appName: 'VChains',
+  appName: 'V Chains',
   //𝙶𝚞𝚛𝚞𝙰𝚙𝚙
   login: 'Log In',
   forgotPassText: 'Forgot Login Details?',

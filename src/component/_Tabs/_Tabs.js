@@ -142,19 +142,11 @@ export default function _Tabs() {
       initialRouteName="Home"
       shifting={false}
       tabBarOptions={{
-        style: { height: Platform.OS === 'ios' ? hp(10) : hp(9) },
         activeTintColor: color.brandColor,
         inactiveTintColor: 'gray',
-        labelStyle: {
-          fontSize: hp(1.8),
-          margin: 0,
-          padding: 0,
-          bottom: 2,
-          top: 2,
-        },
       }}
-      //barStyle={{ backgroundColor: '#EEF8F7', }}
-      barStyle={{ backgroundColor: '#FFFFFF' }}>
+      barStyle={{ height: 50, backgroundColor: color.white }}>
+
       <Tab.Screen
         name="Home"
         options={{
@@ -164,14 +156,14 @@ export default function _Tabs() {
             if (focused) {
               return (
                 <Image
-                  style={{ height: hp(3.5), width: hp(3.5), marginTop: -2 }}
+                  style={{ height: hp(3), width: hp(3), bottom: 2 }}
                   source={require('../../assets/image/Tabs/home_grey.png')}
                 />
               );
             } else {
               return (
                 <Image
-                  style={{ height: hp(3), width: hp(3), marginTop: 3 }}
+                  style={{ height: hp(3), width: hp(3), }}
                   source={require('../../assets/image/Tabs/home_lightgrey.png')}
                 />
               );
@@ -191,14 +183,14 @@ export default function _Tabs() {
             if (focused) {
               return (
                 <Image
-                  style={{ height: hp(3.2), width: hp(3.2), marginTop: -2 }}
+                  style={{ height: hp(2.8), width: hp(3), bottom: 2 }}
                   source={require('../../assets/image/Tabs/category_grey.png')}
                 />
               );
             } else {
               return (
                 <Image
-                  style={{ height: hp(2.5), width: hp(2.5), marginTop: 4 }}
+                  style={{ height: hp(2.8), width: hp(3), }}
                   source={require('../../assets/image/Tabs/category_lightgrey.png')}
                 />
               );
@@ -247,14 +239,14 @@ export default function _Tabs() {
             if (focused) {
               return (
                 <Image
-                  style={{ height: hp(3.5), width: hp(3.5), marginTop: -2 }}
+                  style={{ height: hp(3), width: hp(3), bottom: 2 }}
                   source={require('../../assets/image/Tabs/customeorder_grey.png')}
                 />
               );
             } else {
               return (
                 <Image
-                  style={{ height: hp(2.8), width: hp(2.8), marginTop: 3 }}
+                  style={{ height: hp(3), width: hp(3), }}
                   source={require('../../assets/image/Tabs/customorder_lightgrey.png')}
                 />
               );
@@ -273,14 +265,14 @@ export default function _Tabs() {
             if (focused) {
               return (
                 <Image
-                  style={{ height: hp(3.5), width: hp(3.5), marginTop: -2 }}
+                  style={{ height: hp(3), width: hp(3), bottom: 2 }}
                   source={require('../../assets/image/Tabs/profie_grey.png')}
                 />
               );
             } else {
               return (
                 <Image
-                  style={{ height: hp(2.8), width: hp(2.8), marginTop: 3 }}
+                  style={{ height: hp(3), width: hp(3) }}
                   source={require('../../assets/image/Tabs/profile_lightgrey.png')}
                 />
               );
