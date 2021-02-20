@@ -2,5 +2,6 @@
 <resources>
     <color name="status_bar_color">#000000</color>
     <color name="blue">#0D185C</color>
+    <color name="white">#FFFFFF</color>
 
 </resources>

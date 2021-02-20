@@ -791,6 +791,7 @@ class CartContainer extends Component {
     const { isToggle, openMoreDetailsIdwish } = this.state;
 
     let baseurl = urls.imageUrl + data.zoom_image;
+    const { wishlistData } = this.props
 
     return (
       <TouchableOpacity onPress={() => this.setToggleView(data)}>
@@ -831,30 +832,40 @@ class CartContainer extends Component {
         {isToggle && openMoreDetailsIdwish === data.cart_wish_id ? (
           <>
             <View style={styles.tabCartMiddleContainer}>
-              <View style={styles.cartDetail}>
-                <Text style={styles.textColor}>gross wt:</Text>
-                <Text style={styles.text}>{parseInt(data.values[0]).toFixed(2)}</Text>
+              <View style={{ flexDirection: 'column' }}>
+                {wishlistData[0].keys.map(
+                  (key, i) => {
+                    return (
+                      <Text
+                        style={{
+                          marginTop: 5,
+                          ...Theme.ffLatoRegular15,
+                          color: '#000000',
+                        }}>
+                        {key.replace('_', ' ')}
+                      </Text>
+                    );
+                  },
+                )}
               </View>
-              <View style={styles.cartDetail}>
-                <Text style={styles.textColor}>net wt:</Text>
-                <Text style={styles.text}>{parseInt(data.values[1]).toFixed(2)}</Text>
+              <View style={{ flexDirection: 'column' }}>
+                {wishlistData[0].values.map(
+                  (value, j) => {
+                    return (
+                      <Text
+                        style={{
+                          marginTop: 5,
+                          ...Theme.ffLatoRegular15,
+                          color: '#000000',
+                          textAlign: 'right',
+                        }}>
+                        {value ? value : '-'}
+                      </Text>
+                    );
+                  },
+                )}
               </View>
-              <View style={styles.cartDetail}>
-                <Text style={styles.textColor}>quantity:</Text>
-                <Text style={styles.text}>{data.values[2]}</Text>
-              </View>
-              <View style={styles.cartDetail}>
-                <Text style={styles.textColor}>remarks: </Text>
-                <Text style={styles.text}> {data.values[3]}</Text>
-              </View>
-              <View style={styles.cartDetail}>
-                <Text style={styles.textColor}>length:</Text>
-                <Text style={styles.text}>{data.values[4]}</Text>
-              </View>
-              <View style={styles.cartDetail}>
-                <Text style={styles.textColor}>weight:</Text>
-                <Text style={styles.text}>{parseInt(data.values[5]).toFixed(2)}</Text>
-              </View>
+
             </View>
             <View style={styles.tabCartBottomContainer}>
               <TouchableOpacity onPress={() => this.moveFromwishlist(data)}>
@@ -1024,6 +1035,7 @@ class CartContainer extends Component {
     const { isToogleTwo, openMoreDetailsIdCart } = this.state;
 
     let baseurl2 = urls.imageUrl + item.zoom_image;
+    const { cartData } = this.props
 
     return (
       <TouchableOpacity onPress={() => this.setCartToggleView(item)}>
@@ -1047,6 +1059,7 @@ class CartContainer extends Component {
             <Text style={styles.textColor}>{item.collection_name}</Text>
           </View>
         </View>
+
         <View style={styles.moreDetailView}>
           <View>
             <Text style={styles.moreDetailText}>More Details</Text>
@@ -1061,34 +1074,49 @@ class CartContainer extends Component {
             }
           </View>
         </View>
+
+
         {isToogleTwo && openMoreDetailsIdCart === item.cart_wish_id ? (
           <>
             <View style={styles.tabCartMiddleContainer}>
-              <View style={styles.cartDetail}>
-                <Text style={styles.textColor}>gross wt:</Text>
-                <Text style={styles.text}>{parseInt(item.values[0]).toFixed(2)}</Text>
+
+              <View style={{ flexDirection: 'column' }}>
+                {cartData[0].keys.map(
+                  (key, i) => {
+                    return (
+                      <Text
+                        style={{
+                          marginTop: 5,
+                          ...Theme.ffLatoRegular15,
+                          color: '#000000',
+                        }}>
+                        {key.replace('_', ' ')}
+                      </Text>
+                    );
+                  },
+                )}
               </View>
-              <View style={styles.cartDetail}>
-                <Text style={styles.textColor}>net wt:</Text>
-                <Text style={styles.text}>{parseInt(item.values[1]).toFixed(2)}</Text>
+              <View style={{ flexDirection: 'column' }}>
+                {cartData[0].values.map(
+                  (value, j) => {
+                    return (
+                      <Text
+                        style={{
+                          marginTop: 5,
+                          ...Theme.ffLatoRegular15,
+                          color: '#000000',
+                          textAlign: 'right',
+                        }}>
+                        {value ? value : '-'}
+                      </Text>
+                    );
+                  },
+                )}
               </View>
-              <View style={styles.cartDetail}>
-                <Text style={styles.textColor}>quantity:</Text>
-                <Text style={styles.text}>{item.values[2]}</Text>
-              </View>
-              <View style={styles.cartDetail}>
-                <Text style={styles.textColor}>remarks: </Text>
-                <Text style={styles.text}>{item.values[3]}</Text>
-              </View>
-              <View style={styles.cartDetail}>
-                <Text style={styles.textColor}>length:</Text>
-                <Text style={styles.text}>{item.values[4]}</Text>
-              </View>
-              <View style={styles.cartDetail}>
-                <Text style={styles.textColor}>weight:</Text>
-                <Text style={styles.text}>{parseInt(item.values[5]).toFixed(2)}</Text>
-              </View>
+
             </View>
+
+
             <View style={styles.tabCartBottomContainer}>
               <TouchableOpacity onPress={() => this.editCartProduct(item)}>
                 <View style={styles.tabCartBottomImgView}>
@@ -2235,8 +2263,10 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   tabCartMiddleContainer: {
-    marginTop: 10,
-    // marginHorizontal: 18,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+    marginVertical: 10
   },
   cartDetail: {
     flexDirection: 'row',

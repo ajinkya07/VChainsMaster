@@ -170,13 +170,6 @@ class SearchScreen extends Component {
             this.showToast(this.props.errorMsgSearch, 'danger')
         }
 
-        if (this.state.successAllParameterVersion > prevState.successAllParameterVersion) {
-
-        }
-        if (this.state.errorAllParamaterVersion > prevState.errorAllParamaterVersion) {
-
-        }
-
     }
 
 
@@ -433,7 +426,9 @@ class SearchScreen extends Component {
         const { gwFrom, gwTo, nwFrom, nwTo, fromDate, toDate, selectedCategories, selectedItems2,
             selectedKarat, selectedStatus } = this.state
 
-
+        console.log("fromDate", fromDate);
+        console.log("toDate", toDate);
+        console.log("selectedItems2", selectedItems2);
         if (selectedItems2.length > 0) {
 
             const s = new FormData()

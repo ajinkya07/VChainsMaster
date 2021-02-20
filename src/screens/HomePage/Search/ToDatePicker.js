@@ -32,8 +32,8 @@ export default class ToDatePicker extends Component {
   };
 
   handleDatePicked(date) {
-    let d = moment(new Date(date).toISOString().slice(0, 10)).format('DD-MM-YYYY');
-
+    let d = moment(new Date(date).toISOString().slice(0, 10)).format('YYYY-MM-DD');
+    //DD-MM-YYYY
     this.setState({
       date: d,
       isDateTimePickerVisible: false,

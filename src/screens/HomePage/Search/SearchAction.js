@@ -44,12 +44,12 @@ export function onFailure(error, type) {
 }
 
 export function searchProducts(data) {
-  console.warn("data--", data);
+  console.log("data--", data);
   return dispatch => {
     dispatch(showLoadingIndicator(SEARCH_BY_CATEGORY));
 
     axios.post(urls.SearchGrid.url, data, header).then(response => {
-      console.warn("response--", response);
+      console.log("response searchProducts--", response);
       if (response.data.ack === '1') {
         dispatch(
           onSuccess(response.data, SEARCH_BY_CATEGORY_SUCCESS)
@@ -62,7 +62,7 @@ export function searchProducts(data) {
       }
     })
       .catch(function (error) {
-        console.warn("error--", error.toString());
+        console.log("error--", error.toString());
 
         dispatch(
           onFailure(strings.serverFailedMsg, SEARCH_BY_CATEGORY_ERROR)
