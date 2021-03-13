@@ -37,15 +37,26 @@ export default class SubCategoryList extends Component {
                 <Animatable.View animation="flipInX" style={{ paddingTop: hp(0.5), paddingBottom: hp(0.5) }}>
                     <View style={{ flexDirection: 'row', flex: 1, marginLeft: hp(2), marginRight: hp(2) }}>
                         <View style={{ flex: 0.25, justifyContent: 'flex-start', }}>
-                            <Image
-                                style={{
-                                    height: hp(10), width: hp(10),
-                                    borderWidth: 0.4, borderColor: color.gray
-                                }}
-                                source={{ uri: baseUrl + item.image_name }}
-                                defaultSource={IconPack.APP_LOGO}
-                                resizeMode='stretch'
-                            />
+                            {item.image_name != '' ?
+                                <Image
+                                    style={{
+                                        height: hp(10), width: hp(10),
+                                        borderWidth: 0.4, borderColor: color.gray
+                                    }}
+                                    source={{ uri: baseUrl + item.image_name }}
+                                    defaultSource={IconPack.APP_LOGO}
+                                // resizeMode='stretch'
+                                />
+                                :
+                                <Image
+                                    style={{
+                                        height: hp(10), width: hp(10),
+                                        borderWidth: 0.4, borderColor: color.gray
+                                    }}
+                                    source={IconPack.APP_LOGO}
+                                // resizeMode='stretch'
+                                />
+                            }
                         </View>
 
                         <View style={{ alignContent: 'center', justifyContent: 'center', flex: 0.70 }}>

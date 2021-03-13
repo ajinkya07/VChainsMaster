@@ -48,30 +48,10 @@ class _Header extends Component {
                 <View style={{ marginTop: 2, marginBottom: 2, width: wp(40) }}>
 
                   <Image
-                    source={require('../../assets/logo1.png')}
+                    source={require('../../assets/logoNew.png')}
                     style={{ height: hp(6), width: wp(35), left: -25 }}
                     resizeMode={'contain'}
                   />
-                  {/* <Text
-                    style={{
-                      fontFamily: 'Lato-Bold',
-                      color: '#FFFFFF',
-                      fontSize: hp(2.5),
-                      letterSpacing: 0.2,
-                    }}>
-                    V CHAINS
-                </Text>
-                  <Text
-                    style={{
-                      //fontWeight: '700',
-                      fontFamily: 'Lato-Bold',
-                      color: '#000000',
-                      //marginTop: 2,
-                      fontSize: hp(1.5),
-                      letterSpacing: 1,
-                    }}>
-                    THE CHAIN WIZARDS
-                </Text> */}
                 </View>
               )}
           </Button>

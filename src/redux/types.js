@@ -218,6 +218,13 @@ export const SEARCH_BY_CODE_ERROR = "searchByCodeDataError";
 export const SEARCH_BY_CODE_RESET_REDUCER = "searchByCodeDataResetReducer";
 
 
+export const SEARCH_COUNT = "searchCount";
+export const SEARCH_COUNT_SUCCESS = "searchCountSuccess";
+export const SEARCH_COUNT_ERROR = "searchCountError";
+
+export const SEARCH_PAYLOAD = "searchPayload";
+
+
 export const NOTIFICATION_LIST = "notificationData";
 export const NOTIFICATION_LIST_SUCCESS = "notificationDataSuccess";
 export const NOTIFICATION_LIST_ERROR = "notificationDataError";

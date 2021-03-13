@@ -671,12 +671,13 @@ class ProductGrid extends Component {
               />
 
             </TouchableOpacity>
+
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 width: '100%',
-                paddingHorizontal: 6.5,
+                padding: 6, marginLeft: 8,
                 flex: 1,
               }}>
               <View style={{ flex: 1 }}>
@@ -1641,8 +1642,9 @@ class ProductGrid extends Component {
     const { sortByParamsData, filterParamsData, allParameterData } = this.props;
 
     let imageUrl = urls.imageUrl + 'public/backend/product_images/zoom_image/'
-
     let headerTheme = global.headerTheme
+
+
     // `(${gridData.length.toString()})` + ' ' +
     return (
 
@@ -1840,8 +1842,8 @@ class ProductGrid extends Component {
             data={gridData}
             showsHorizontalScrollIndicator={true}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <View style={{ marginBottom: hp(1), marginTop: hp(1) }}>
+            renderItem={({ item, index }) => (
+              <View key={'p' + index} style={{ marginVertical: hp(1), }}>
                 { this.gridView(item)}
               </View>
             )}
