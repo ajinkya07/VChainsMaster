@@ -707,11 +707,10 @@ class SearchProductGrid extends Component {
   };
 
   LoadMoreData = () => {
-    const { productTotalcount } = this.props
+    const { productTotalcount, isFetchingSearch } = this.props
     const { gridData, searchCount } = this.state
 
-
-    if (gridData.length !== searchCount && gridData.length < searchCount) {
+    if (gridData.length !== searchCount && gridData.length < searchCount && !isFetchingSearch) {
       this.setState({
         page: this.state.page + 1,
       },
@@ -772,46 +771,6 @@ class SearchProductGrid extends Component {
     }
   };
 
-  footer = () => {
-    return (
-      <View>
-        {!this.props.isFetching && this.state.gridData.length >= 10 ? (
-          <TouchableOpacity onPress={() => this.LoadMoreData()}>
-            <View
-              style={{
-                flex: 1,
-                height: hp(7),
-                width: wp(100),
-                backgroundColor: '#EEF8F7',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text
-                style={{ color: '#0d185c', fontSize: 18, fontWeight: 'bold' }}>
-                Load More
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ) : null}
-        {this.state.clickedLoadMore &&
-          this.props.isFetching &&
-          this.state.gridData.length >= 10 ? (
-            <View
-              style={{
-                flex: 1,
-                height: 40,
-                width: wp(100),
-                backgroundColor: '#EEF8F7',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <ActivityIndicator size="small" color={color.brandColor} />
-            </View>
-          ) : null}
-      </View>
-    );
-  };
-
 
   onTextChanged = (inputKey, value) => {
     this.setState({
@@ -830,7 +789,7 @@ class SearchProductGrid extends Component {
       <SafeAreaView style={{ flex: 1, backgroundColor: '#f3fcf9' }}>
         <_CustomHeader
           Title={`${!fromCodeSearch ? 'Advanced Search' : ' Search By Code'}`}
-          // Subtitle={ `(${(gridData.length).toString()})`}
+          // Subtitle={`(${(gridData.length).toString()})`}
           RightBtnIcon1={require('../../../assets/image/BlueIcons/Search-White.png')}
           RightBtnIcon2={require('../../../assets/shopping-cart.png')}
           RightBtnPressOne={() => this.props.navigation.navigate('SearchScreen')}
@@ -844,25 +803,22 @@ class SearchProductGrid extends Component {
         {gridData && (
           <FlatList
             data={gridData}
-            showsHorizontalScrollIndicator={true}
+            // showsHorizontalScrollIndicator={true}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item, index }) => (
+            renderItem={({ item, index }) =>
               <View key={'s' + index} style={{ marginVertical: hp(1) }}>
                 {this.gridView(item)}
               </View>
-            )}
+            }
             numColumns={2}
-            keyExtractor={(item, index) => item.product_inventory_id.toString()}
+            keyExtractor={(item, index) => index.toString()}
             style={{ marginTop: hp(1) }}
-            // ListFooterComponent={this.footer()}
             onEndReachedThreshold={0.4}
             onEndReached={() => this.LoadMoreData()}
-
           />
         )}
 
         {this.props.isFetchingSearch && this.renderLoader()}
-
 
 
         {/* LONG PRESS IMAGE MODAL */}

@@ -23,13 +23,9 @@ import Modal from 'react-native-modal';
 import Swiper from 'react-native-swiper';
 import { urls } from '@api/urls';
 import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
-
+import Gallery from 'react-native-image-gallery';
 import IconPack from '@login/IconPack';
-import Carousel, {
-    Pagination,
-    ParallaxImage,
-    SliderEntry,
-} from 'react-native-snap-carousel';
+
 
 export default class BannerImage extends Component {
     constructor(props) {
@@ -65,35 +61,54 @@ export default class BannerImage extends Component {
         this.setState({ currentPage: position });
     };
 
+    renderDefaultImg = () => {
+        return (
+            <View>
+                <Image
+                    style={{ height: hp(80), width: wp(100) }}
+                    source={IconPack.APP_LOGO}
+                    resizeMode='contain'
+                />
+            </View>
+        );
+    };
+
     renderScreen = (item, k) => {
         const { bannerDataImagePath } = this.state;
 
-        // let item = data.item
-        // let index = data.index
-        let url2 =
-            urls.imageUrl +
-            (bannerDataImagePath !== undefined && bannerDataImagePath.zoom_image);
+        let url2 = urls.imageUrl + (bannerDataImagePath !== undefined && bannerDataImagePath.zoom_image);
 
         return (
-            <View style={{ flex: 1 }}>
-                <ReactNativeZoomableView
-                    maxZoom={1.5}
-                    minZoom={0.5}
-                    zoomStep={0.5}
-                    initialZoom={1}
-                    bindToBorders={true}
-                    onZoomAfter={this.logOutZoomState}
-                >
-                    <FastImage
-                        style={{ height: hp(80), width: wp(100) }}
-                        source={{
-                            uri: url2 + item,
-                            priority: FastImage.priority.high,
-                        }}
-                        resizeMode={FastImage.resizeMode.contain}
+            <>
+                {Platform.OS == 'ios' ?
+                    <View style={{ flex: 1 }}>
+                        <ReactNativeZoomableView
+                            maxZoom={1.5}
+                            minZoom={0.5}
+                            zoomStep={0.5}
+                            initialZoom={1}
+                            bindToBorders={true}
+                            onZoomAfter={this.logOutZoomState}
+                        >
+                            <FastImage
+                                style={{ height: hp(80), width: wp(100) }}
+                                source={{
+                                    uri: url2 + item,
+                                    priority: FastImage.priority.high,
+                                }}
+                                resizeMode={FastImage.resizeMode.contain}
+                            />
+                        </ReactNativeZoomableView>
+                    </View>
+                    :
+                    <Gallery
+                        style={{ backgroundColor: color.white }}
+                        images={[{ source: { uri: url2 + item } }]}
+                        errorComponent={() => this.renderDefaultImg()}
                     />
-                </ReactNativeZoomableView>
-            </View>
+
+                }
+            </>
         );
     };
 
@@ -120,9 +135,9 @@ export default class BannerImage extends Component {
                             <View
                                 style={{
                                     backgroundColor: 'gray',
-                                    width: 8,
-                                    height: 8,
-                                    borderRadius: 4,
+                                    width: 6,
+                                    height: 6,
+                                    borderRadius: 3,
                                     marginLeft: 3,
                                     marginRight: 3,
                                 }}
@@ -131,12 +146,11 @@ export default class BannerImage extends Component {
                         activeDot={
                             <View
                                 style={{
-                                    backgroundColor: color.brandColor,
+                                    backgroundColor: color.black,
                                     width: 10,
                                     height: 10,
                                     borderRadius: 5,
-                                    marginLeft: 3,
-                                    marginRight: 3,
+                                    marginHorizontal: 3
                                 }}
                             />
                         }
@@ -164,52 +178,6 @@ export default class BannerImage extends Component {
         );
     };
 
-    carausalView2 = bannerData => {
-        let { width, height } = Dimensions.get('window');
-        let sliderWidth = width;
-        let itemHeight = hp(80);
-
-        return (
-            <View style={{ marginBottom: -10 }}>
-                <Carousel
-                    ref={c => (this._slider1Ref = c)}
-                    hasParallaxImages={true}
-                    loop={true}
-                    loopClonesPerSide={2}
-                    autoplay={false}
-                    autoplayDelay={1400}
-                    autoplayInterval={8000}
-                    sliderWidth={sliderWidth}
-                    sliderHeight={itemHeight}
-                    itemWidth={sliderWidth}
-                    itemHeight={itemHeight}
-                    data={bannerData}
-                    renderItem={(item, index) => this.renderScreen(item, index)}
-                    hasParallaxImages={true}
-                    enableMomentum={true}
-                    activeSlideOffset={2}
-                    onSnapToItem={index => this.setState({ slider1ActiveSlide: index })}
-                />
-                <Pagination
-                    dotsLength={bannerData.length}
-                    activeDotIndex={this.state.slider1ActiveSlide}
-                    containerStyle={{ marginTop: -120 }}
-                    dotColor={'#303030'}
-                    dotStyle={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 5,
-                        marginHorizontal: 0,
-                    }}
-                    inactiveDotColor={'gray'}
-                    inactiveDotOpacity={0.4}
-                    inactiveDotScale={0.6}
-                    carouselRef={this._slider1Ref}
-                    tappableDots={this._slider1Ref}
-                />
-            </View>
-        );
-    };
 
     render() {
         const { bannerDataImagePath, baseUrl } = this.state;

@@ -395,7 +395,6 @@ class ProductDetails extends React.Component {
       <View style={{ marginBottom: -10 }}>
         <Carousel
           ref={c => this._slider1Ref = c}
-          hasParallaxImages={true}
           loop={false}
           loopClonesPerSide={2}
           autoplay={false}
@@ -417,10 +416,10 @@ class ProductDetails extends React.Component {
           dotsLength={bannerData.length}
           activeDotIndex={this.state.slider1ActiveSlide}
           containerStyle={{ marginTop: -50 }}
-          dotColor={'#303030'}
+          dotColor={color.black}
           dotStyle={{
             width: 10,
-            height: 10,
+            height: 10, marginRight: -10,
             borderRadius: 5,
           }}
           inactiveDotColor={'gray'}

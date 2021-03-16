@@ -38,6 +38,7 @@
     "react-native-fast-image": "^8.3.2",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-image-crop-picker": "^0.32.2",
+    "react-native-image-gallery": "^2.1.5",
     "react-native-image-pan-zoom": "^2.1.12",
     "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-masonry-list": "^2.16.1",

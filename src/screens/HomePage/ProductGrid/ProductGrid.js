@@ -1341,13 +1341,13 @@ class ProductGrid extends Component {
   };
 
   LoadMoreData = () => {
-    const { productTotalcount, filteredTotalcount } = this.props
+    const { productTotalcount, filteredTotalcount, isFetching } = this.props
     const { gridData, isFromfilter } = this.state
 
     let count = isFromfilter ? filteredTotalcount.count : productTotalcount.count;
 
 
-    if (gridData.length !== count && gridData.length < count) {
+    if (gridData.length !== count && gridData.length < count && !isFetching) {
       this.setState({
         page: this.state.page + 1,
       },
@@ -1432,45 +1432,6 @@ class ProductGrid extends Component {
 
   };
 
-  footer = () => {
-    return (
-      <View>
-        {!this.props.isFetching && this.state.gridData.length >= 10 ? (
-          <TouchableOpacity onPress={() => this.LoadMoreData()}>
-            <View
-              style={{
-                flex: 1,
-                height: hp(7),
-                width: wp(100),
-                backgroundColor: '#EEF8F7',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text
-                style={{ color: '#0d185c', fontSize: 18, fontWeight: 'bold' }}>
-                Load More
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ) : null}
-        {this.state.clickedLoadMore &&
-          this.props.isFetching &&
-          this.state.gridData.length >= 10 ? (
-            <View
-              style={{
-                flex: 1,
-                height: 40,
-                width: wp(100),
-                backgroundColor: '#EEF8F7',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <ActivityIndicator size="small" color={color.brandColor} />
-            </View>
-          ) : null}
-      </View>
-    );
-  };
 
   toggleFilterModal = () => {
     const { filterParamsData } = this.props;
@@ -1842,13 +1803,13 @@ class ProductGrid extends Component {
             data={gridData}
             showsHorizontalScrollIndicator={true}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item, index }) => (
+            renderItem={({ item, index }) =>
               <View key={'p' + index} style={{ marginVertical: hp(1), }}>
-                { this.gridView(item)}
+                {this.gridView(item)}
               </View>
-            )}
+            }
             numColumns={2}
-            keyExtractor={item => '_' + item.product_inventory_id.toString()}
+            keyExtractor={(item, index) => '_' + index.toString()}
             style={{ marginTop: hp(1) }}
             onEndReachedThreshold={0.4}
             onEndReached={() => this.LoadMoreData()}
@@ -1860,13 +1821,13 @@ class ProductGrid extends Component {
             data={gridData}
             showsHorizontalScrollIndicator={true}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
+            renderItem={({ item }) =>
               <View style={{ marginBottom: hp(1), marginTop: hp(1) }}>
-                { this.gridViewFull(item)}
+                {this.gridViewFull(item)}
               </View>
-            )}
+            }
             numColumns={1}
-            keyExtractor={item => '#' + item.product_inventory_id.toString()}
+            keyExtractor={(item, index) => '#' + index.toString()}
             style={{ marginTop: hp(1) }}
             onEndReachedThreshold={0.4}
             onEndReached={() => this.LoadMoreData()}
