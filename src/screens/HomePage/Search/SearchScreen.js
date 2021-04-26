@@ -380,7 +380,6 @@ class SearchScreen extends Component {
         const { selectedKarat, isOkKaratClicked } = this.state
         return (
             <View style={{ marginHorizontal: wp(3) }}>
-                {/* <_Text fsHeading>Melting:</_Text> */}
                 <TouchableOpacity onPress={() => this.karatModal()}>
                     <View style={{
                         marginTop: hp(1), flexDirection: 'row',
@@ -442,7 +441,6 @@ class SearchScreen extends Component {
     searchProducts = () => {
         const { gwFrom, gwTo, nwFrom, nwTo, fromDate, toDate, selectedCategories, selectedItems2,
             selectedKarat, selectedStatus } = this.state
-        console.log("categoryIds", categoryIds);
         if (selectedItems2.length > 0) {
 
             const s = new FormData()
@@ -616,8 +614,6 @@ class SearchScreen extends Component {
         const { selectedItems2 } = this.state
 
         categoryIds = selectedItems2.map(x => { return x.id })
-
-
     }
 
     onCancelCategory = () => {
@@ -679,20 +675,7 @@ class SearchScreen extends Component {
                         {this.productReleaseDate()}
                     </View>
 
-                    {/* <View style={{ paddingTop: hp(1), marginHorizontal: wp(3) }}>
-                        <_Text fsHeading>Product Status:</_Text>
-                        <Picker
-                            iosIcon={<Icon type='Feather' name="arrow-down" style={{ marginRight: hp(1.5), fontSize: 22, }} />}
-                            mode="dropdown"
-                            style={{ height: 50, width: '70%', justifyContent: 'space-between', width: wp(95), marginTop: -5 }}
-                            selectedValue={this.state.selectedStatus}
-                            onValueChange={(value) => this.setSelectedStatus(value)
-                            }>
-                            {statusArray && statusArray.map(s => (
-                                <Picker.Item key={(s.id).toString()} label={(s.status)} value={parseInt(s.id)} />
-                            ))}
-                        </Picker>
-                    </View> */}
+
 
 
                     <View style={{ paddingTop: hp(2), }}>

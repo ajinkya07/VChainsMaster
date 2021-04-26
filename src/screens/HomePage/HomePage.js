@@ -305,7 +305,6 @@ class HomePage extends Component {
         });
       }
 
-      //  await this.getHomePage()
       await this.getTotalCart()
 
     }
@@ -353,7 +352,6 @@ class HomePage extends Component {
           duration: 2500,
         });
 
-        // await this.getHomePage()
         await this.getTotalCart()
       }
     }
