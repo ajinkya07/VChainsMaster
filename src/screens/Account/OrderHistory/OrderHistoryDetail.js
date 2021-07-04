@@ -245,6 +245,7 @@ class OrderHistoryDetail extends Component {
   };
 
   OrderHistoryDetailComponent = data => {
+    console.log("data", data);
     return (
       <View style={styles.container}>
         <Text style={styles.productIdText}>Product Id: {data.product_id}</Text>
@@ -259,35 +260,31 @@ class OrderHistoryDetail extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.contentView}>
-            <View style={styles.rowTextStyle}>
-              <Text style={styles.contentText}>order date:</Text>
-              <Text style={styles.contentText}>{data.value[0]}</Text>
+
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between', width: '100%',
+              flex: 1,
+            }}>
+              <View style={{ flex: 1 }}>
+                {data.key.map((key, i) => {
+                  return (
+                    <Text style={styles.contentText}>{(key.replace('_', ' ').charAt(0).toUpperCase() + key.replace('_', ' ').slice(1))}</Text>
+                  );
+                })}
+              </View>
+
+              <View style={{ flex: 1 }}>
+                {data.value.map((value, j) => {
+                  return (
+                    <Text style={styles.contentText}>{value ? value : '-'}</Text>
+                  );
+                })}
+              </View>
             </View>
-            <View style={styles.rowTextStyle}>
-              <Text style={styles.contentText}>delivery date:</Text>
-              <Text style={styles.contentText}>{data.value[1]}</Text>
-            </View>
-            <View style={styles.rowTextStyle}>
-              <Text style={styles.contentText}>quantity:</Text>
-              <Text style={styles.contentText}>{data.value[2]}</Text>
-            </View>
-            <View style={styles.rowTextStyle}>
-              <Text style={styles.contentText}>gross wt:</Text>
-              <Text style={styles.contentText}>{parseInt(data.value[3]).toFixed(2)}</Text>
-            </View>
-            <View style={styles.rowTextStyle}>
-              <Text style={styles.contentText}>net wt:</Text>
-              <Text style={styles.contentText}>{parseInt(data.value[4]).toFixed(2)}</Text>
-            </View>
-            <View style={styles.rowTextStyle}>
-              <Text style={styles.contentText}>order id:</Text>
-              <Text style={styles.contentText}>{data.value[5]}</Text>
-            </View>
-            <View style={styles.rowTextStyle}>
-              <Text style={styles.contentText}>order stage</Text>
-              <Text style={styles.contentText}>{data.value[6]}</Text>
-            </View>
+
             <View style={styles.bottomLine}></View>
+
           </View>
         </View>
       </View>
@@ -360,13 +357,9 @@ class OrderHistoryDetail extends Component {
         <SafeAreaView style={{ flex: 1, backgroundColor: color.white }}>
           <_CustomHeader
             Title="Order History Details"
-            //  RightBtnIcon1={require('../../../assets/image/BlueIcons/Search-White.png')}
             RightBtnIcon2={require('../../../assets/image/BlueIcons/Notification-White.png')}
             LeftBtnPress={() => this.props.navigation.goBack()}
-            // RightBtnPressOne={() =>this.props.navigation.navigate('SearchScreen')}
-            RightBtnPressTwo={() =>
-              this.props.navigation.navigate('Notification')
-            }
+            RightBtnPressTwo={() => this.props.navigation.navigate('Notification')}
             rightIconHeight2={hp(3.5)}
             backgroundColor="#19af81"
           />
@@ -375,10 +368,9 @@ class OrderHistoryDetail extends Component {
             <FlatList
               data={orderHistoryDetailsData.order_details}
               refreshing={this.props.isFetching}
-              // onRefresh={() => this.scrollDownToRefreshWishList()}
               showsVerticalScrollIndicator={false}
               renderItem={({ item }) => (
-                <View style={{}}>{this.OrderHistoryDetailComponent(item)}</View>
+                <View >{this.OrderHistoryDetailComponent(item)}</View>
               )}
               keyExtractor={(item, index) => index}
             />

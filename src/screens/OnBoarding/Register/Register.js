@@ -53,6 +53,8 @@ class Register extends React.Component {
       emailId: '',
       isEmail: false,
       organisation: '',
+      city: '',
+      isCity: false,
       isOrganisation: false,
       password: '',
       isPassword: false,
@@ -66,6 +68,8 @@ class Register extends React.Component {
     this.emailRef = React.createRef();
     this.organisationRef = React.createRef();
     this.passwordRef = React.createRef();
+    this.cityRef = React.createRef();
+
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -100,6 +104,7 @@ class Register extends React.Component {
           emailId: this.state.emailId,
           organisation: this.state.organisation,
           fullName: this.state.fullName,
+          city: this.state.city
         });
       } else {
         this.showToast('Please contact admin', 'danger');
@@ -129,6 +134,10 @@ class Register extends React.Component {
         validationKey = 'isOrganisation';
         break;
 
+      case 'city':
+        validationKey = 'isCity';
+        break;
+
       case 'password':
         validationKey = 'isPassword';
         break;
@@ -153,6 +162,7 @@ class Register extends React.Component {
       isFullName,
       organisation,
       isOrganisation,
+      city,
       emailId,
       isEmail,
     } = this.state;
@@ -163,34 +173,39 @@ class Register extends React.Component {
         error = 'Please enter full name';
         throw new Error();
       }
-      if (mobileNo === '') {
+      else if (mobileNo === '') {
         error = 'Please enter mobile number';
         throw new Error();
       }
-      if (!isMobile) {
+      else if (!isMobile) {
         error = 'Please enter valid mobile number';
         throw new Error();
       }
-      if (emailId === '') {
+      else if (emailId === '') {
         error = 'Please enter email address';
         throw new Error();
       }
-      if (!isEmail) {
+      else if (!isEmail) {
         error = 'Please enter valid email address';
         throw new Error();
       }
-      if (organisation === '') {
-        error = 'Please enter organisation name';
+      else if (organisation === '') {
+        error = 'Please enter shop name/ company';
         throw new Error();
       }
-      if (password == '') {
+      else if (city === '') {
+        error = 'Please enter city name';
+        throw new Error();
+      }
+      else if (password == '') {
         error = 'Please enter password';
         throw new Error();
       }
-      if (!isPassword) {
+      else if (!isPassword) {
         error = 'Password must be atleast 4 character long';
         throw new Error();
-      } else {
+      }
+      else {
         const data = new FormData();
         data.append('mobile_number', mobileNo);
 
@@ -217,9 +232,21 @@ class Register extends React.Component {
     });
   };
 
+
+  showLoader = () => {
+    return (
+      <View style={[actionButtonRoundedStyle.mainContainerStyle]}>
+        <View style={actionButtonRoundedStyle.innerContainer}>
+          <ActivityIndicator size="large" color={color.white} />
+        </View>
+      </View>
+    );
+  };
+
+
   render() {
 
-    const { fullName, emailId, organisation, mobileNo, password } = this.state;
+    const { fullName, emailId, organisation, city, mobileNo, password } = this.state;
 
     return (
       <Container>
@@ -288,7 +315,7 @@ class Register extends React.Component {
                     minLength={10}
                     onChangeText={this.onInputChanged}
                     placeholder="Mobile"
-                    returnKeyType="next"
+                    returnKeyType="done"
                     placeholderTextColor="#ffffff"
                     Icon={IconPack.MOBILE_LOGO}
                     keyboardType="phone-pad"
@@ -313,7 +340,7 @@ class Register extends React.Component {
                     value={organisation ? organisation : null}
                     type="organisation"
                     inputKey="organisation"
-                    placeholder="Organisation"
+                    placeholder="Shop Name/ Company"
                     maxLength={100}
                     minLength={3}
                     onChangeText={this.onInputChanged}
@@ -321,8 +348,24 @@ class Register extends React.Component {
                     placeholderTextColor="#ffffff"
                     Icon={IconPack.ORGANISATION}
                     textInputRef={this.organisationRef}
+                    onSubmitEditing={() => this.cityRef.current.focus()}
+                  />
+
+                  <LoginFields
+                    value={city ? city : null}
+                    type="city"
+                    inputKey="city"
+                    placeholder="City"
+                    maxLength={100}
+                    minLength={3}
+                    onChangeText={this.onInputChanged}
+                    returnKeyType="next"
+                    placeholderTextColor="#ffffff"
+                    Icon={IconPack.LOCATION}
+                    textInputRef={this.cityRef}
                     onSubmitEditing={() => this.passwordRef.current.focus()}
                   />
+
                   <LoginFields
                     value={password ? password : null}
                     type="password"
@@ -338,14 +381,19 @@ class Register extends React.Component {
                     Icon={IconPack.KEY_LOGO}
                     textInputRef={this.passwordRef}
                   />
+
                   <ActionButtonRounded
                     title="REGISTER"
                     onButonPress={() => this.register()}
                     containerStyle={styles.buttonStyle}
+                    isFetching={this.props.isFetching}
                   />
+
                 </View>
               </ScrollView>
-              {this.props.isFetching && this.renderLoader()}
+
+              {/* {this.props.isFetching && this.renderLoader()} */}
+
             </KeyboardAvoidingView>
           </SafeAreaView>
         </ImageBackground>
@@ -536,7 +584,6 @@ const loginFieldsStyles = StyleSheet.create({
   mainContainerStyle: {
     height: 70,
     width: width - 36,
-    //width: Appstore.wWidth -30,
   },
   userTextInputButtonRight: {
     resizeMode: 'contain',
@@ -581,19 +628,14 @@ const loginFieldsStyles = StyleSheet.create({
 
 
 //-------------ActionButtonCommon-----------//
-const ActionButtonRounded = ({ title, onButonPress, containerStyle }) => {
+const ActionButtonRounded = ({ title, onButonPress, containerStyle, isFetching }) => {
   return (
-    <TouchableOpacity
-      onPress={() => {
-        onButonPress();
-      }}>
+    <TouchableOpacity onPress={() => { onButonPress(); }}>
       <View
-        style={[
-          actionButtonRoundedStyle.mainContainerStyle,
-          containerStyle || null,
-        ]}>
+        style={[actionButtonRoundedStyle.mainContainerStyle, containerStyle || null,]}>
         <View style={actionButtonRoundedStyle.innerContainer}>
-          <Text style={actionButtonRoundedStyle.titleStyle}>{title}</Text>
+          {!isFetching && <Text style={actionButtonRoundedStyle.titleStyle}>{title}</Text>}
+          {isFetching && <ActivityIndicator size="large" color={color.white} />}
         </View>
       </View>
     </TouchableOpacity>

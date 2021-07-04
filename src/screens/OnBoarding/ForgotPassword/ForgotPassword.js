@@ -235,7 +235,7 @@ class ForgotPassword extends React.Component {
                       minLength={10}
                       onChangeText={this.onInputChanged}
                       placeholder="Mobile"
-                      returnKeyType="next"
+                      returnKeyType="done"
                       placeholderTextColor="#ffffff"
                       Icon={IconPack.MOBILE_LOGO}
                       keyboardType="phone-pad"

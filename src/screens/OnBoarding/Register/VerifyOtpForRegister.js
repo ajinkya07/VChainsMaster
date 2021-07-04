@@ -32,6 +32,7 @@ class VerifyOtpForRegister extends React.Component {
     const email = this.props.route.params.emailId;
     const org = this.props.route.params.organisation;
     const fullName = this.props.route.params.fullName;
+    const city = this.props.route.params.city;
 
 
     this.state = {
@@ -43,6 +44,8 @@ class VerifyOtpForRegister extends React.Component {
       receivedFullName: fullName,
       receivedEmail: email,
       receivedOrg: org,
+      receivedCity: city,
+
       successOTPRegisterVersion: 0,
       errorOTPRegisterVersion: 0,
       successRegisterVersion: 0,
@@ -151,7 +154,7 @@ class VerifyOtpForRegister extends React.Component {
   verifyOtpForRegister = () => {
     const {
       finalCode, receivedMobile, receivedOtp, receivedPassword,
-      receivedFullName, receivedOrg, receivedEmail
+      receivedFullName, receivedOrg, receivedEmail, receivedCity
     } = this.state;
 
     console.log("this.state", this.state);
@@ -178,6 +181,7 @@ class VerifyOtpForRegister extends React.Component {
         data.append('organization', receivedOrg);
         data.append('password', receivedPassword);
         data.append('reg_source', reg_source);
+        data.append('city', receivedCity);
 
         this.props.registerAfterOtpRequest(data)
       }

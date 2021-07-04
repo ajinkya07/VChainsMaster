@@ -638,7 +638,7 @@ class EditProfile extends Component {
                     value={this.state.designation}
                     onChangeText={this.handleDesignationChange}
                     resetValue={this.resetFieldDesignation}
-                    imageIcon="profile"
+                    imageIcon="company"
                     selectTextOnFocus={false}
                     width="95%"
                     style={10}
@@ -651,7 +651,7 @@ class EditProfile extends Component {
                     value={this.state.companyName}
                     onChangeText={this.handleCompanyNameChange}
                     resetValue={this.resetFieldCompanyName}
-                    imageIcon="profile"
+                    imageIcon="company"
                     selectTextOnFocus={false}
                     width="95%"
                     style={10}
@@ -663,7 +663,7 @@ class EditProfile extends Component {
                     value={this.state.gstNo}
                     onChangeText={this.handleGSTNoChange}
                     resetValue={this.resetFieldGSTNo}
-                    imageIcon="profile"
+                    imageIcon="gst"
                     selectTextOnFocus={false}
                     width="95%"
                     style={10}
@@ -675,7 +675,7 @@ class EditProfile extends Component {
                     value={this.state.pinCode}
                     onChangeText={this.handlePinCodeChange}
                     resetValue={this.resetFieldPinCode}
-                    imageIcon="profile"
+                    imageIcon="location"
                     keyboardType="numeric"
                     width="95%"
                     style={10}

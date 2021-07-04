@@ -135,7 +135,7 @@ class OrderHistory extends Component {
               Total Weight
             </Text>
             <Text style={{ ...Theme.ffLatoRegular13, color: '#000' }}>
-              {parseInt(item.total_weight).toFixed(2)}
+              {item.total_weight}
             </Text>
           </View>
           <View style={styles.rowTextStyle}>
@@ -238,8 +238,5 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  { getOrderHistoryList },
-)(OrderHistory);
+export default connect(mapStateToProps, { getOrderHistoryList })(OrderHistory);
 

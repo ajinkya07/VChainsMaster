@@ -8,10 +8,6 @@ import {
     Image, Platform, SafeAreaView,
     Dimensions, FlatList,
 } from 'react-native';
-import {
-    DatePicker, Footer
-} from "native-base";
-import moment from 'moment';
 
 import _CustomHeader from '@customHeader/_CustomHeader'
 import {
@@ -95,9 +91,7 @@ class SearchScreen extends Component {
         const { homePageData } = this.props
 
         if (homePageData && homePageData.search_collection) {
-            this.setState({
-                collection: homePageData.search_collection,
-            });
+            this.setState({ collection: homePageData.search_collection, });
         }
     }
 
@@ -169,7 +163,7 @@ class SearchScreen extends Component {
     }
 
     async componentDidUpdate(prevProps, prevState) {
-        const { searchByCategoryData, searchCountData, searchByCodeData, allParameterData } = this.props;
+        const { searchCountData, } = this.props;
 
 
         if (this.state.successSearchbyCategoryVersion > prevState.successSearchbyCategoryVersion) {
@@ -500,8 +494,6 @@ class SearchScreen extends Component {
             }
             this.props.saveSearchPayload(payload)
 
-
-            // http://vchains.jewelmarts.in/webservices/products_Grid/advanced_search_grid?table=product_master&user_id=194&mode_type=count_data&record=10&collection_ids=78&sort_by=2&page_no=0&min_gross_weight=5&max_gross_weight=150
         }
         else {
             this.showToast('Please select category')
@@ -624,10 +616,7 @@ class SearchScreen extends Component {
 
     render() {
 
-        const { collection, isModalVisible, isSearchCodeVisible, isKaratModalVisible,
-            selectedKarat, karatData, selectedStatus,
-            selectedItems2, selectedCategories, isContinueClicked
-        } = this.state
+        const { collection, isModalVisible, isSearchCodeVisible, isKaratModalVisible, } = this.state
         const { allParameterData } = this.props
 
         const list = allParameterData && allParameterData.melting

@@ -25,7 +25,7 @@ export default class _CustomHeader extends Component {
           hasTabs
           style={{
             width: wp(100),
-            height: hp(7.4),
+            height: hp(7),
             paddingVertical: Platform.OS === 'ios' ? hp(2) : 2,
             backgroundColor: headerTheme ? '#' + headerTheme : this.props.backgroundColor
           }}>
@@ -52,13 +52,14 @@ export default class _CustomHeader extends Component {
           </Left>
 
           {this.props.Title && (
-            <Body style={{ flex: 1 }}>
+            <Body style={{ flex: 2, }}>
               <Title
                 style={{
                   color: '#ffffff',
-                  fontSize: hp(2.6),
+                  fontSize: 19,
                   fontFamily: 'Lato-Bold',
                   letterSpacing: 1,
+                  left: 10
                 }}>
                 {this.props.Title ? this.props.Title : ''}
               </Title>
@@ -79,13 +80,10 @@ export default class _CustomHeader extends Component {
                 <Image
                   source={this.props.RightBtnIcon1}
                   style={{
-                    height: this.props.rightIconHeight1
-                      ? this.props.rightIconHeight1
-                      : hp(3.2),
-                    width: this.props.rightIconWidth1
-                      ? this.props.rightIconWidth1
-                      : hp(3.2),
+                    height: this.props.rightIconHeight1 ? this.props.rightIconHeight1 : hp(3.2),
+                    width: this.props.rightIconWidth1 ? this.props.rightIconWidth1 : hp(3.2),
                   }}
+                  resizeMode='contain'
                 />
               </Button>
             )}
@@ -97,13 +95,10 @@ export default class _CustomHeader extends Component {
                 <Image
                   source={this.props.RightBtnIcon2}
                   style={{
-                    height: this.props.rightIconHeight2
-                      ? this.props.rightIconHeight2
-                      : hp(3.2),
-                    width: this.props.rightIconHeight2
-                      ? this.props.rightIconHeight2
-                      : hp(3.2),
+                    height: this.props.rightIconHeight2 ? this.props.rightIconHeight2 : hp(3.2),
+                    width: this.props.rightIconHeight2 ? this.props.rightIconHeight2 : hp(3.2),
                   }}
+                  resizeMode='contain'
                 />
               </Button>
             )}

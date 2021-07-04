@@ -710,7 +710,7 @@ class ProductGrid extends Component {
               </View>
             </View>
 
-            <View style={border}></View>
+            <View style={border} />
 
             {item.quantity == 0 && (
               <View style={iconView}>

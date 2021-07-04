@@ -8,10 +8,6 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  TextInput,
-  ScrollView,
 } from 'react-native';
 import _CustomHeader from '@customHeader/_CustomHeader';
 import {
@@ -39,7 +35,6 @@ import { searchProducts } from '@search/SearchAction'
 import { Toast, CheckBox } from 'native-base';
 import Modal from 'react-native-modal';
 import { strings } from '@values/strings';
-import FastImage from 'react-native-fast-image';
 import Theme from '../../../values/Theme';
 
 var userId = '';
@@ -90,7 +85,6 @@ class SearchProductGrid extends Component {
 
   componentDidMount = () => {
     const { searchByCategoryData } = this.props
-    const { gridData, searchCount } = this.state
 
     if (searchByCategoryData && searchByCategoryData.data.products && searchByCategoryData.data.products.length > 0) {
       this.setState({
@@ -238,7 +232,6 @@ class SearchProductGrid extends Component {
       searchByCategoryData
     } = this.props;
 
-    const { categoryData, page, selectedSortById, gridData } = this.state;
 
     if (this.state.successSearchbyCategoryVersion > prevState.successSearchbyCategoryVersion) {
       this.setState({
@@ -386,8 +379,6 @@ class SearchProductGrid extends Component {
     }
 
   }
-
-
 
 
   renderLoader = () => {
@@ -735,16 +726,6 @@ class SearchProductGrid extends Component {
 
 
     if (accessCheck == '1') {
-      // const data = new FormData();
-      // data.append('table', 'product_master');
-      // data.append('mode_type', 'normal');
-      // data.append('collection_id', id);
-      // data.append('user_id', userId);
-      // data.append('record', 10);
-      // data.append('page_no', page);
-      // data.append('sort_by', '6');
-
-      // this.props.getProductSubCategoryData(data);
       const s = new FormData()
       s.append('table', 'product_master')
       s.append('mode_type', 'filter_data')
@@ -802,7 +783,6 @@ class SearchProductGrid extends Component {
         {gridData && (
           <FlatList
             data={gridData}
-            // showsHorizontalScrollIndicator={true}
             showsVerticalScrollIndicator={false}
             renderItem={({ item, index }) =>
               <View key={'s' + index} style={{ marginVertical: hp(1) }}>

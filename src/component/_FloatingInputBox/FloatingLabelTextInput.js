@@ -74,7 +74,6 @@ export default class FloatingLabelInput extends Component {
               justifyContent: 'center',
             }}>
             <Image
-              // source={ !isFocused? require('../../assets/USer.png'): require('../../assets/USer.png')}
               source={require('../../assets/image/ProfilePic.png')}
               style={{ width: 25, height: 25, resizeMode: 'cover' }}
             />
@@ -90,15 +89,12 @@ export default class FloatingLabelInput extends Component {
               justifyContent: 'center',
             }}>
             <Image
-              source={
-                !isFocused
-                  ? require('../../assets/image/Profile/Email.png')
-                  : require('../../assets/image/Profile/Email.png')
-              }
+              source={require('../../assets/image/Profile/Email.png')}
               style={{ width: 25, height: 25, resizeMode: 'cover' }}
             />
           </View>
         ) : null}
+
         {this.props.imageIcon === 'Mobile' ? (
           <View
             style={{
@@ -108,15 +104,12 @@ export default class FloatingLabelInput extends Component {
               justifyContent: 'center',
             }}>
             <Image
-              source={
-                !isFocused
-                  ? require('../../assets/image/Profile/mobile.png')
-                  : require('../../assets/image/Profile/mobile.png')
-              }
+              source={require('../../assets/image/Profile/mobile.png')}
               style={{ width: 25, height: 25, resizeMode: 'cover' }}
             />
           </View>
         ) : null}
+
         {this.props.imageIcon === 'comments' ? (
           <View
             style={{
@@ -126,7 +119,101 @@ export default class FloatingLabelInput extends Component {
               justifyContent: 'center',
             }}>
             <Image
-              source={!isFocused ? IconPack.REMARK : IconPack.REMARK}
+              source={IconPack.REMARK}
+              style={{ width: 25, height: 25, resizeMode: 'cover' }}
+            />
+          </View>
+        ) : null}
+
+        {this.props.imageIcon === 'location' ? (
+          <View
+            style={{
+              marginTop: 21,
+              marginRight: 5,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Image
+              source={require('../../assets/image/Profile/Location-PIn.png')}
+              style={{ width: 25, height: 24, resizeMode: 'cover' }}
+            />
+          </View>
+        ) : null}
+
+        {this.props.imageIcon === 'gst' ? (
+          <View
+            style={{
+              marginTop: 21,
+              marginRight: 5,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Image
+              source={require('../../assets/image/Profile/GST.png')}
+              style={{ width: 25, height: 24, resizeMode: 'cover' }}
+            />
+          </View>
+        ) : null}
+
+
+        {this.props.imageIcon === 'company' ? (
+          <View
+            style={{
+              marginTop: 21,
+              marginRight: 5,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Image
+              source={require('../../assets/image/Profile/ID2.png')}
+              style={{ width: 25, height: 24, resizeMode: 'cover' }}
+            />
+          </View>
+        ) : null}
+
+
+        {this.props.imageIcon === 'code' ? (
+          <View
+            style={{
+              marginTop: 21,
+              marginRight: 5,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Image
+              source={require('../../assets/promo.png')}
+              style={{ width: 25, height: 24, resizeMode: 'cover' }}
+            />
+          </View>
+        ) : null}
+
+
+        {this.props.imageIcon === 'product' ? (
+          <View
+            style={{
+              marginTop: 21,
+              marginRight: 5,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Image
+              source={require('../../assets/blackboard.png')}
+              style={{ width: 25, height: 24, resizeMode: 'cover' }}
+            />
+          </View>
+        ) : null}
+
+
+        {this.props.imageIcon === 'quantity' ? (
+          <View
+            style={{
+              marginTop: 21,
+              marginRight: 5,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Image
+              source={require('../../assets/quantity.png')}
               style={{ width: 25, height: 25, resizeMode: 'cover' }}
             />
           </View>
@@ -134,8 +221,7 @@ export default class FloatingLabelInput extends Component {
         <View
           style={[
             {
-              paddingTop: 16,
-              width: '95%',
+              paddingTop: 16, width: '95%',
             },
             { width: this.props.width },
           ]}>
@@ -176,6 +262,8 @@ export default class FloatingLabelInput extends Component {
             </TouchableOpacity>
           ) : null}
         </View>
+
+
       </View>
     );
   }

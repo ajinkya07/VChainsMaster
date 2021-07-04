@@ -39,9 +39,7 @@ class Notification extends Component {
 
 
     componentDidMount = async () => {
-
         const n = new FormData()
-
         n.append('user_id', userId)
         n.append('type', 'client')
 
@@ -82,11 +80,8 @@ class Notification extends Component {
 
         let url2 = urls.imageUrl
 
-
         return (
-            <TouchableOpacity
-                disabled={true}
-            >
+            <TouchableOpacity disabled={true}>
                 <View style={{ paddingTop: hp(0.5), paddingBottom: hp(0.5) }}>
                     <View style={{ flexDirection: 'row', flex: 1, marginLeft: hp(1.5), marginRight: hp(0.5) }}>
                         <View style={{ flex: 0.25, justifyContent: 'flex-start', }}>
@@ -177,14 +172,13 @@ class Notification extends Component {
                 style={{
                     justifyContent: 'center',
                     alignItems: 'center',
-                    bottom: hp(8),
-                    flex: 1
+                    flex: 1, marginBottom: 250
                 }}>
                 <Image
                     source={require('../../../assets/gif/noData.gif')}
                     style={{ height: hp(20), width: hp(20) }}
                 />
-                <Text style={{ fontSize: 18, fontWeight: '400', textAlign: 'center' }}>
+                <Text style={{ paddingTop: 10, fontSize: 18, fontWeight: '400', textAlign: 'center' }}>
                     {msg}
                 </Text>
             </View>

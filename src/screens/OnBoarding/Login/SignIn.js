@@ -260,7 +260,7 @@ class SignIn extends React.Component {
                       minLength={10}
                       onChangeText={this.onInputChanged}
                       placeholder="Mobile"
-                      returnKeyType="next"
+                      returnKeyType="done"
                       keyboardType="phone-pad"
                       placeholderTextColor="#ffffff"
                       Icon={IconPack.MOBILE_LOGO}
@@ -303,7 +303,7 @@ class SignIn extends React.Component {
 
                     {!this.props.isFetching && (
                       <ActionButtonRounded
-                        title="LOGIN"
+                        title="LOG IN"
                         onButonPress={() => this.loginRequest()}
                         containerStyle={styles.buttonStyle}
                       />
@@ -314,9 +314,8 @@ class SignIn extends React.Component {
                     <View style={{ flexDirection: 'row' }}>
                       <Text
                         style={{
-                          paddingTop: 12,
+                          paddingTop: 14,
                           fontSize: 18,
-                          //color: '#fbcb84',
                           color: '#FFFFFF',
                           fontFamily: 'Lato-Regular',
                         }}>
@@ -328,14 +327,14 @@ class SignIn extends React.Component {
                         }>
                         <Text
                           style={{
-                            fontSize: 18,
-                            //color: '#fbcb84',
-                            color: '#ffffff',
+                            fontSize: 21,
+                            color: color.hyperlinkColor,
                             fontFamily: 'Lato-Bold',
-                            paddingTop: 12,
-                            marginLeft: 5,
+                            paddingTop: 10,
+                            marginLeft: 10,
+                            textDecorationLine: 'underline',
                           }}>
-                          Signup
+                          Sign Up
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -525,7 +524,6 @@ const loginFieldsStyles = StyleSheet.create({
   mainContainerStyle: {
     height: 70,
     width: width - 36,
-    //width: Appstore.wWidth -30,
   },
   userTextInputButtonRight: {
     resizeMode: 'contain',

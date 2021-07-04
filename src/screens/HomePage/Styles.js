@@ -301,10 +301,10 @@ const Styles = {
         marginTop: -50,
     },
     paginationDot: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        marginHorizontal: 5
+        width: 8,
+        height: 8,
+        borderRadius: 8 / 2,
+        marginHorizontal: -20
     }
 
 }

@@ -63,7 +63,7 @@ export default class DatePickerComponent extends Component {
                     }}>
                     <View style={{ marginRight: 15 }}>
                         <Image
-                            source={require('../../../assets/image/DateGrey.png')}
+                            source={require('../../../assets/image/Profile/dob.png')}
                             style={{ width: 20, height: 20, resizeMode: 'cover' }}
                         />
                     </View>

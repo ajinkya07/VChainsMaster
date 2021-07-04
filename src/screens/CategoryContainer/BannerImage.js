@@ -38,7 +38,6 @@ export default class BannerImage extends Component {
             bannerDataImagePath: data,
             baseUrl: url,
             currentPage: 0,
-            slider1ActiveSlide: 0,
         };
     }
 

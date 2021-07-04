@@ -205,27 +205,7 @@ export default function _Tabs() {
         options={{
           tabBarLabel: 'Cart',
           activeTintColor: color.brandColor,
-          // tabBarBadge: totalCartCount ? totalCartCount : 0,
           tabBarIcon: (props) => <BottomTabIcon {...props} />
-
-          //   tabBarIcon: ({color, size, focused}) => {
-          //     if (focused) {
-          //       return (
-          //         <Image
-          //           style={{height: hp(3.5), width: hp(3.5), marginTop: -2}}
-          //           source={require('../../assets/image/BlueIcons/Cart.png')}
-          //         />
-          //       );
-          //     } else {
-          //       return (
-          //         <Image
-          //           style={{height: hp(2.8), width: hp(2.8), marginTop: 3}}
-          //           source={require('../../assets/image/BlueIcons/Cart-White.png')}
-          //         />
-          //       );
-          //     }
-          //   },
-
         }}
         component={CartScreen}
       />

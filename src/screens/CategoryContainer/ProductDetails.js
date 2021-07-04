@@ -384,7 +384,6 @@ class ProductDetails extends React.Component {
       </TouchableOpacity>
     );
   }
-  // 7738368891 9819
 
   carausalView2 = (bannerData) => {
     let { width, height } = Dimensions.get('window')
@@ -788,7 +787,7 @@ class ProductDetails extends React.Component {
                       </TouchableOpacity>
                       {this.state.isHideDetail ? (
                         <>
-                          <View style={{ marginTop: 0 }}>
+                          <View >
                             <View style={styles.descriptionSubContainer}>
                               <View style={{ flexDirection: 'column' }}>
                                 {productDetailsStateData.key_label.map(

@@ -4,7 +4,6 @@ export const capitalizeFirstLetter = (string) => {
 }
 
 export function validateEmail(emailId) {
-  // if (emailId.length === 0) {
   if (emailId.length === 0 || emailId.length < 10 || emailId.length > 50) {
     return false;
   }

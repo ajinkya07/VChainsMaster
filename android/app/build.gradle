@@ -132,8 +132,8 @@ android {
         applicationId "com.vchainsnew"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "1.0.4"
+        versionCode 7
+        versionName "1.0.5"
         multiDexEnabled true
 
     }
@@ -224,6 +224,7 @@ dependencies {
     implementation 'com.facebook.fresco:fresco:2.0.0'
     implementation 'com.facebook.fresco:animated-gif:2.0.0'
     implementation 'androidx.multidex:multidex:2.0.1'  // <-- for webview
+    implementation 'com.google.firebase:firebase-messaging:21.1.0'
 
 }
 

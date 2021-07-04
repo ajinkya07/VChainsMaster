@@ -34,6 +34,8 @@ export default {
   EDIT: require('../../../assets/image/BlueIcons/Edit.png'),
   DELETE: require('../../../assets/image/BlueIcons/Delete.png'),
   CLOSE: require('../../../assets/image/close1.png'),
+  LOCATION: require('../../../assets/location.png'),
+
 
   GRAY_DOWN_ARROW: require('../../../assets/image/DownArrow.png'),
   BLUE_PLUS: require('../../../assets/image/BlueIcons/Plus.png'),

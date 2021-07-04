@@ -27,7 +27,6 @@ const initialState = {
 
   successSearchbyCodeVersion: 0,
   errorSearchbyCodeVersion: 0,
-  // searchByCodeData:[]
 
   successSearchCountVersion: 0,
   errorSearchCountVersion: 0,

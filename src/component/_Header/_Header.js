@@ -33,7 +33,7 @@ class _Header extends Component {
       <Header
         style={{
           width: wp(100),
-          height: hp(7.5),
+          height: hp(7),
           paddingVertical: Platform.OS === 'ios' ? hp(2) : 2,
           backgroundColor: headerColor ? '#' + headerColor : '#fff',
         }}>
@@ -45,8 +45,7 @@ class _Header extends Component {
                 source={require('../../assets/image/Account/back_button.png')}
               />
             ) : (
-                <View style={{ marginTop: 2, marginBottom: 2, width: wp(40) }}>
-
+                <View style={{ marginVertical: 2, width: wp(40) }}>
                   <Image
                     source={require('../../assets/logoNew.png')}
                     style={{ height: hp(6), width: wp(35), left: -25 }}
@@ -63,6 +62,7 @@ class _Header extends Component {
           {showSearch ? (
             <Button transparent onPress={onSearchPress}>
               <Image
+                resizeMode='contain'
                 style={{ height: hp(3.2), width: hp(3.2) }}
                 source={require('../../assets/image/BlueIcons/Search-White.png')}
               />
@@ -72,7 +72,8 @@ class _Header extends Component {
           {showCalling ? (
             <Button transparent onPress={onCallingPress}>
               <Image
-                style={{ height: hp(3.5), width: hp(3.5) }}
+                resizeMode='contain'
+                style={{ height: hp(3.2), width: hp(3.2) }}
                 source={require('../../assets/image/BlueIcons/Mobile.png')}
               />
             </Button>
@@ -81,8 +82,8 @@ class _Header extends Component {
           {showNotification ? (
             <Button transparent onPress={onNotificationPress}>
               <Image
-                resizeMode={'cover'}
-                style={{ height: hp(3.6), width: hp(3.6), marginRight: wp(0) }}
+                resizeMode='contain'
+                style={{ height: hp(3.2), width: hp(3.2), }}
                 source={require('../../assets/image/BlueIcons/Notification-White.png')}
               />
             </Button>

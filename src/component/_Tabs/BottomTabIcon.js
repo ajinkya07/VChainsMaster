@@ -22,7 +22,6 @@ class BottomTabIcon extends Component {
                     <Image style={{ height: hp(3), width: hp(3), marginTop: -7, bottom: 2 }}
                         source={require('../../assets/image/Tabs/cart_grey.png')}
                     />
-
                     :
                     <Image style={{ height: hp(3), width: hp(3), marginTop: -7 }}
                         source={require('../../assets/image/Tabs/cart_lightgrey.png')}

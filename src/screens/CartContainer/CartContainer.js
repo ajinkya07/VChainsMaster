@@ -787,6 +787,8 @@ class CartContainer extends Component {
     await this.props.getTotalCartCount(d);
   };
 
+  // wishlist 
+
   wishListView = (data, index) => {
     const { isToggle, openMoreDetailsIdwish } = this.state;
 
@@ -867,6 +869,8 @@ class CartContainer extends Component {
               </View>
 
             </View>
+
+
             <View style={styles.tabCartBottomContainer}>
               <TouchableOpacity onPress={() => this.moveFromwishlist(data)}>
                 <View style={styles.tabCartBottomImgView}>
@@ -920,7 +924,7 @@ class CartContainer extends Component {
         onRefresh={() => this.scrollDownToRefreshWishList()}
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
-          <View style={{ marginBottom: hp(1), marginTop: hp(1) }}>
+          <View style={{ marginVertical: hp(1), }}>
             {this.wishListView(item, index)}
           </View>
         )}
@@ -946,7 +950,6 @@ class CartContainer extends Component {
   };
 
   editCartProduct = editData => {
-    console.log("editData", editData);
     this.setState({
       isModalVisible: true,
       productcode: editData.collection_sku_code,
@@ -1226,7 +1229,7 @@ class CartContainer extends Component {
         onRefresh={() => this.scrollDownToRefreshCart()}
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
-          <View style={{ marginBottom: hp(1), marginTop: hp(1), }}>
+          <View style={{ marginVertical: hp(1) }}>
             {this.cartView(item, index)}
           </View>
         )}
@@ -1396,6 +1399,7 @@ class CartContainer extends Component {
               backgroundColor="#19af81"
             />
           }
+
           <Tabs
             tabBarUnderlineStyle={{ backgroundColor: '#303030' }}
             onChangeTab={({ i }) => this.setState({ currentPage: i })}>
@@ -1405,11 +1409,7 @@ class CartContainer extends Component {
                   <Image
                     resizeMode="contain"
                     style={{ width: 22, height: 22 }}
-                    source={
-                      this.state.currentPage
-                        ? require('../../assets/image/GreyCart.png')
-                        : require('../../assets/Cart1.png')
-                    }
+                    source={this.state.currentPage ? require('../../assets/image/GreyCart.png') : require('../../assets/Cart1.png')}
                   />
                 </TabHeading>
               }>
@@ -1430,9 +1430,7 @@ class CartContainer extends Component {
                   />
                 </TabHeading>
               }>
-              {wishlistData.length > 0 &&
-                !isFetching &&
-                this.favoriteDetail(wishlistData)}
+              {wishlistData.length > 0 && !isFetching && this.favoriteDetail(wishlistData)}
             </Tab>
           </Tabs>
 
@@ -1467,6 +1465,7 @@ class CartContainer extends Component {
             this.state.currentPage === 0
             ? this.noDataFound(this.props.errorMsgCart)
             : null}
+
           {!this.props.isFetching &&
             this.props.wishlistData.length === 0 &&
             this.state.currentPage === 1
@@ -1575,7 +1574,10 @@ class CartContainer extends Component {
               onRequestClose={() => this.setState({ isModalVisible: false })}
               onBackdropPress={() => this.setState({ isModalVisible: false })}
               onBackButtonPress={() => this.setState({ isModalVisible: false })}>
-              <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => null}>
+              <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={Platform.select({ ios: -60, android: -140 })}
+              >
                 <View
                   style={[
                     styles.bottomContainer,
@@ -1614,7 +1616,7 @@ class CartContainer extends Component {
                         value={this.state.productcode}
                         onChangeText={this.handleProductcodeChange}
                         resetValue={this.resetFieldEmail}
-                        imageIcon="email"
+                        imageIcon="code"
                         editable={false}
                         selectTextOnFocus={false}
                         width="95%"
@@ -1625,7 +1627,7 @@ class CartContainer extends Component {
                         value={this.state.productName}
                         onChangeText={this.handleProductNameChange}
                         resetValue={this.resetFieldProductName}
-                        imageIcon="email"
+                        imageIcon="product"
                         editable={false}
                         width="95%"
                         marginLeft={8}
@@ -1635,7 +1637,7 @@ class CartContainer extends Component {
                         value={this.state.quantity}
                         onChangeText={q => this.handleQuantityChange(q)}
                         resetValue={() => this.resetFieldQuantity()}
-                        imageIcon="email"
+                        imageIcon="quantity"
                         keyboardType="numeric"
                         width="95%"
                         marginLeft={8}
@@ -1685,17 +1687,7 @@ class CartContainer extends Component {
                     }
 
                     <View style={{ marginHorizontal: 20, marginTop: 10 }}>
-                      {/* <FloatingLabelTextInput
-                        label="Length (inches)"
-                        value={this.state.length}
-                        onChangeText={l => this.handleLengthChange(l)}
-                        resetValue={this.resetFieldLength}
-                        imageIcon="email"
-                        keyboardType="numeric"
-                        width="95%"
-                        marginLeft={8}
-                        returnKeyType='done'
-                      /> */}
+
 
                       <FloatingLabelTextInput
                         label="Comments"
@@ -1722,9 +1714,10 @@ class CartContainer extends Component {
                         )}
                     </View>
                   </ScrollView>
+
                 </View>
-              </TouchableWithoutFeedback>
-              {/* </View> */}
+
+              </KeyboardAvoidingView>
             </Modal>
           }
           {/* PLACE ORDER */}
@@ -1851,10 +1844,7 @@ class CartContainer extends Component {
                               width: '88%',
                               marginLeft: 6,
                             }}>
-                            <TouchableOpacity
-                              onPress={() => {
-                                this.showDateTimePicker();
-                              }}>
+                            <TouchableOpacity onPress={() => this.showDateTimePicker()}>
                               <Text style={styles.textDatePickerStyle}>
                                 {!this.state.date ? 'Select Date' : this.state.date}
                               </Text>
@@ -1910,7 +1900,7 @@ class CartContainer extends Component {
                   <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => null}>
                     <View>
                       <View style={[styles.alertContainer, { backgroundColor: headerTheme ? '#' + headerTheme : '#303030', }]}>
-                        <Image source={IconPack.RATE} style={styles.alertIcon} />
+                        {/* <Image source={IconPack.RATE} style={styles.alertIcon} /> */}
                         <Text style={styles.alertText}>Alert !</Text>
                       </View>
 
@@ -1927,15 +1917,14 @@ class CartContainer extends Component {
                         <View style={styles.middleViewContainer}>
                           <Text style={styles.middleText}>Product Master :</Text>
                           <Text style={styles.middleText}>
-                            Gross Weight : {cartSummary && cartSummary.gross_wt ? parseInt(cartSummary.gross_wt).toFixed(2) : ''}
+                            Gross Weight : {cartSummary && cartSummary.gross_wt ? cartSummary.gross_wt : ''}
                           </Text>
                           <Text style={styles.middleText}>Quantity : {cartSummary && cartSummary.quantity ? cartSummary.quantity : ''}</Text>
                         </View>
-                        <View style={{ marginHorizontal: 20 }}>
+                        <View style={{ marginHorizontal: 10 }}>
                           <Text style={styles.middleText}>
-                            Are you sure ? You want to check out, Click continue to
-                            proceed further
-                      </Text>
+                            {`Are you sure you want to check out ?\n Click continue to proceed further`}
+                          </Text>
                         </View>
                         <View style={styles.btnView}>
                           <ActionButtonRounded
@@ -1971,8 +1960,7 @@ class CartContainer extends Component {
                 <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => null}>
                   <View>
                     <View style={[styles.alertContainer, { backgroundColor: headerTheme ? '#' + headerTheme : '#303030', }]}>
-                      <Image source={IconPack.RATE}
-                        style={styles.alertIcon} />
+                      {/* <Image source={IconPack.RATE} style={styles.alertIcon} /> */}
                       <Text style={styles.alertText}>Alert !</Text>
                     </View>
                     <TouchableOpacity
@@ -1981,19 +1969,16 @@ class CartContainer extends Component {
                       <Image source={IconPack.WHITE_CLOSE} style={styles.closeIcon} />
                     </TouchableOpacity>
                     <View style={styles.bottomContainer}>
-                      <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                      <View style={{ marginHorizontal: 10, marginTop: 20 }}>
                         <Text style={styles.middleText}>
-                          Are you sure ? You want to delete all item, Click
-                          continue to proceed further
-                      </Text>
+                          {`Are you sure you want to delete all items ?\n Click continue to proceed further`}
+                        </Text>
                       </View>
                       <View style={styles.btnView}>
                         <ActionButtonRounded
                           title="CONTINUE"
                           onButonPress={() => this.deleteAllProduct()}
-                          // containerStyle={styles.buttonStyle}
                           color={headerTheme}
-
                         />
                       </View>
                     </View>
@@ -2051,9 +2036,9 @@ class CartContainer extends Component {
                         {item.cat_data.map(m => {
                           return (
                             <View>
-                              <Text style={{ marginBottom: 2 }}>
+                              <Text style={{ marginBottom: 5 }}>
                                 - Design No: {m.product_id} (Gross Wt:
-                              {parseInt(m.gross_wt).toFixed(2)}, Net Wt:{parseInt(m.net_wt).toFixed(2)}, Quantity:
+                              {m.gross_wt}, Net Wt:{m.net_wt}, Quantity:
                               {m.quantity} )
                             </Text>
                             </View>
@@ -2083,7 +2068,7 @@ class CartContainer extends Component {
                       marginTop: 25, marginBottom: 5
                     }}>
                     <View>
-                      <Text style={{ fontWeight: '200', fontSize: 16 }}>Total WT: {totalWT && parseInt(totalWT).toFixed(2)}</Text>
+                      <Text style={{ fontWeight: '200', fontSize: 16 }}>Total WT: {totalWT}</Text>
                     </View>
                     <View style={{ marginLeft: 30 }}>
                       <Text style={{ fontSize: 16, fontWeight: '200' }}>Total Quantity: {totalQuantity}</Text>
@@ -2149,7 +2134,7 @@ const styles = StyleSheet.create({
   },
 
   alertContainer: {
-    height: 80,
+    height: 50,
     alignItems: 'center',
     justifyContent: 'space-around',
     borderTopLeftRadius: 16,
@@ -2198,9 +2183,8 @@ const styles = StyleSheet.create({
   },
   textDatePickerStyle: {
     color: '#303030',
-    //textAlign: 'left',
-    marginTop: 3,
     fontSize: 18,
+    marginBottom: 5
   },
   bottomView: {
     width: hp(5.8),
